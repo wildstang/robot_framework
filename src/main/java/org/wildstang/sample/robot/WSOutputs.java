@@ -3,9 +3,7 @@ package org.wildstang.sample.robot;
 // expand this and edit if trouble with Ws
 import org.wildstang.framework.core.Outputs;
 import org.wildstang.framework.hardware.OutputConfig;
-import org.wildstang.hardware.roborio.outputs.config.WsServoConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsPhoenixConfig;
-import org.wildstang.hardware.roborio.outputs.config.WsPhoenixFollowerConfig;
 
 /**
  * Output mappings are stored here.
@@ -20,19 +18,19 @@ public enum WSOutputs implements Outputs {
     // ---------------------------------
     // Motors
     // ---------------------------------
-    //TEST_PAIRED_MOTOR("Test Paired Motor", new WsPhoenixConfig(CANConstants.EXAMPLE_PAIRED_CONTROLLERS[0], 0, true), false),
-    //TEST_FOLLOWER_MOTOR("Test Follower Motor", new WsPhoenixFollowerConfig(TEST_PAIRED_MOTOR, CANConstants.EXAMPLE_PAIRED_CONTROLLERS[1], true, false), false),
-    //TEST_MOTOR("Test Motor", new WsPhoenixConfig(CANConstants.EXAMPLE_MOTOR_CONTROLLER, 0, true), false),
+    DRIVE_LEFT_MOTOR("Left Drive Motor", new WsPhoenixConfig(CANConstants.DRIVE_MOTOR_CONTROLLERS[0], 0, true, false), false),
+    DRIVE_RIGHT_MOTOR("Right Drive Motor", new WsPhoenixConfig(CANConstants.DRIVE_MOTOR_CONTROLLERS[1], 0, true, true), false),
+    OUTTAKE_MOTOR("Outtake Motor", new WsPhoenixConfig(CANConstants.OUTTAKE_MOTOR_CONTROLLER, 0, false), false),
+    HIGHFUEL_MOTOR("High Fuel Motor", new WsPhoenixConfig(CANConstants.HIGHFUEL_MOTOR_CONTROLLER, 0, false), false),
+    INTAKE_MOTOR("Intake Motor", new WsPhoenixConfig(CANConstants.INTAKE_MOTOR_CONTROLLER, 0, false, true), false),
 
     // ---------------------------------
     // Servos
     // ---------------------------------
-    //TEST_SERVO("Test Servo", new WsServoConfig(0, 0), false),
 
     // ********************************
     // DIO Outputs
     // ********************************
-    //DIO_O_0("Test Digital Output 0", WSOutputType.DIGITAL_OUTPUT, new WsDigitalOutputConfig(0, true), false), // Channel 0, Initially Low
 
     // ********************************
     // Solenoids

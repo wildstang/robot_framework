@@ -57,10 +57,10 @@ public enum WSInputs implements Inputs {
     // ---------------------------------
     // Driver Joysticks
     // ---------------------------------
-    DRIVER_LEFT_JOYSTICK_Y  ("Driver left joystick y",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_Y),  false),
+    DRIVER_LEFT_JOYSTICK_Y  ("Drive Speed",             new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_Y),  false),
     DRIVER_LEFT_JOYSTICK_X  ("Driver left joystick x",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_X),  false),
     DRIVER_RIGHT_JOYSTICK_Y ("Driver right joystick y", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_Y), false),
-    DRIVER_RIGHT_JOYSTICK_X ("Driver right joystick x", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_X), false),
+    DRIVER_RIGHT_JOYSTICK_X ("Drive Heading",           new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_X), false),
     
     // ---------------------------------
     // Driver DPAD Buttons
@@ -75,7 +75,7 @@ public enum WSInputs implements Inputs {
     // --------------------------------- 
     DRIVER_FACE_DOWN             ("Driver face down",             new WsJSButtonInputConfig(0, 0), false),
     DRIVER_FACE_LEFT             ("Driver face left",             new WsJSButtonInputConfig(0, 2), false),
-    DRIVER_FACE_RIGHT            ("Driver face right",            new WsJSButtonInputConfig(0, 1), false),
+    DRIVER_FACE_RIGHT            ("Coast",                        new WsJSButtonInputConfig(0, 1), false),
     DRIVER_FACE_UP               ("Driver face up",               new WsJSButtonInputConfig(0, 3), false),
     DRIVER_LEFT_SHOULDER         ("Driver left shoulder",         new WsJSButtonInputConfig(0, 4), false),
     DRIVER_RIGHT_SHOULDER        ("Driver right shoulder",        new WsJSButtonInputConfig(0, 5), false),
@@ -87,8 +87,8 @@ public enum WSInputs implements Inputs {
     // ---------------------------------
     // Driver Triggers
     // ---------------------------------
-    DRIVER_LEFT_TRIGGER  ("Driver left trigger",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_TRIGGER),  false),
-    DRIVER_RIGHT_TRIGGER ("Driver right trigger", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_TRIGGER), false),
+    DRIVER_LEFT_TRIGGER  ("Rotate Left",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_TRIGGER),  false),
+    DRIVER_RIGHT_TRIGGER ("Rotate Right", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_TRIGGER), false),
 
     // ---------------------------------
     // Manipulator Joysticks
@@ -110,11 +110,11 @@ public enum WSInputs implements Inputs {
     // Manipulator Buttons
     // ---------------------------------
     MANIPULATOR_FACE_DOWN             ("Manipulator face down",             new WsJSButtonInputConfig(1, 0), false),
-    MANIPULATOR_FACE_LEFT             ("Manipulator face left",             new WsJSButtonInputConfig(1, 2), false),
-    MANIPULATOR_FACE_RIGHT            ("Manipulator face right",            new WsJSButtonInputConfig(1, 1), false),
+    MANIPULATOR_FACE_LEFT             ("High fuel down",                    new WsJSButtonInputConfig(1, 2), false),
+    MANIPULATOR_FACE_RIGHT            ("High fuel up",                      new WsJSButtonInputConfig(1, 1), false),
     MANIPULATOR_FACE_UP               ("Manipulator face up",               new WsJSButtonInputConfig(1, 3), false),
-    MANIPULATOR_LEFT_SHOULDER         ("Manipulator left shoulder",         new WsJSButtonInputConfig(1, 4), false),
-    MANIPULATOR_RIGHT_SHOULDER        ("Manipulator right shoulder",        new WsJSButtonInputConfig(1, 5), false),
+    MANIPULATOR_LEFT_SHOULDER         ("Outtake down",                      new WsJSButtonInputConfig(1, 4), false),
+    MANIPULATOR_RIGHT_SHOULDER        ("Outtake up",                        new WsJSButtonInputConfig(1, 5), false),
     MANIPULATOR_SELECT                ("Manipulator select",                new WsJSButtonInputConfig(1, 6), false),
     MANIPULATOR_START                 ("Manipulator start",                 new WsJSButtonInputConfig(1, 7), false),
     MANIPULATOR_LEFT_JOYSTICK_BUTTON  ("Manipulator left joystick button",  new WsJSButtonInputConfig(1, 8), false),
@@ -123,8 +123,8 @@ public enum WSInputs implements Inputs {
     // ---------------------------------
     // Manipulator Triggers
     // ---------------------------------
-    MANIPULATOR_LEFT_TRIGGER  ("Manipulator left trigger",  new WsJSJoystickInputConfig(1, JoystickConstants.LEFT_TRIGGER),  false),
-    MANIPULATOR_RIGHT_TRIGGER ("Manipulator right trigger", new WsJSJoystickInputConfig(1, JoystickConstants.RIGHT_TRIGGER), false),
+    MANIPULATOR_LEFT_TRIGGER  ("Intake Reverse",            new WsJSJoystickInputConfig(1, JoystickConstants.LEFT_TRIGGER),  false),
+    MANIPULATOR_RIGHT_TRIGGER ("Intake",                    new WsJSJoystickInputConfig(1, JoystickConstants.RIGHT_TRIGGER), false),
 
     // ********************************
     // Digital IOs
