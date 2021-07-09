@@ -158,18 +158,25 @@ implements <a href="../../../../framework/hardware/OutputConfig.html" title="int
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,double)">WsSparkMaxConfig</a></span>&#8203;(int&nbsp;channel,
-                boolean&nbsp;brushless,
-                double&nbsp;p_default)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean)">WsSparkMaxConfig</a></span>&#8203;(int&nbsp;channel,
+                boolean&nbsp;brushless)</code></th>
 <td class="colLast">
 <div class="block">Construct the Phoenix config.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,double,boolean)">WsSparkMaxConfig</a></span>&#8203;(int&nbsp;channel,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,boolean)">WsSparkMaxConfig</a></span>&#8203;(int&nbsp;channel,
                 boolean&nbsp;brushless,
-                double&nbsp;p_default,
                 boolean&nbsp;invert)</code></th>
+<td class="colLast">
+<div class="block">Construct the Phoenix config.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,boolean,double)">WsSparkMaxConfig</a></span>&#8203;(int&nbsp;channel,
+                boolean&nbsp;brushless,
+                boolean&nbsp;invert,
+                double&nbsp;p_default)</code></th>
 <td class="colLast">
 <div class="block">Construct the Phoenix config.</div>
 </td>
@@ -251,7 +258,23 @@ implements <a href="../../../../framework/hardware/OutputConfig.html" title="int
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(int,boolean,double)">
+<a id="&lt;init&gt;(int,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>WsSparkMaxConfig</h4>
+<pre>public&nbsp;WsSparkMaxConfig&#8203;(int&nbsp;channel,
+                        boolean&nbsp;brushless)</pre>
+<div class="block">Construct the Phoenix config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>channel</code> - Controller CAN constant.</dd>
+<dd><code>brushless</code> - True if the motor is brushless, false if brushed.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(int,boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -259,17 +282,17 @@ implements <a href="../../../../framework/hardware/OutputConfig.html" title="int
 <h4>WsSparkMaxConfig</h4>
 <pre>public&nbsp;WsSparkMaxConfig&#8203;(int&nbsp;channel,
                         boolean&nbsp;brushless,
-                        double&nbsp;p_default)</pre>
+                        boolean&nbsp;invert)</pre>
 <div class="block">Construct the Phoenix config.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>channel</code> - Hardware port number.</dd>
+<dd><code>channel</code> - Controller CAN constant.</dd>
 <dd><code>brushless</code> - True if the motor is brushless, false if brushed.</dd>
-<dd><code>p_default</code> - Default output value.</dd>
+<dd><code>invert</code> - True if motor output should be inverted.</dd>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,boolean,double,boolean)">
+<a id="&lt;init&gt;(int,boolean,boolean,double)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -277,15 +300,15 @@ implements <a href="../../../../framework/hardware/OutputConfig.html" title="int
 <h4>WsSparkMaxConfig</h4>
 <pre>public&nbsp;WsSparkMaxConfig&#8203;(int&nbsp;channel,
                         boolean&nbsp;brushless,
-                        double&nbsp;p_default,
-                        boolean&nbsp;invert)</pre>
+                        boolean&nbsp;invert,
+                        double&nbsp;p_default)</pre>
 <div class="block">Construct the Phoenix config.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>channel</code> - Controller CAN constant.</dd>
 <dd><code>brushless</code> - True if the motor is brushless, false if brushed.</dd>
-<dd><code>p_default</code> - Default output value.</dd>
 <dd><code>invert</code> - True if motor output should be inverted.</dd>
+<dd><code>p_default</code> - Default output value.</dd>
 </dl>
 </li>
 </ul>

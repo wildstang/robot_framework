@@ -1,4 +1,4 @@
-package org.wildstang.sample.robot;
+package org.wildstang.sample.subsystems;
 
 import org.wildstang.framework.core.Core;
 import org.wildstang.framework.io.inputs.DigitalInput;
@@ -6,9 +6,16 @@ import org.wildstang.framework.io.inputs.AnalogInput;
 import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.hardware.roborio.inputs.WsJoystickAxis;
+import org.wildstang.sample.robot.WSInputs;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Subsystem used to test all controller buttons and axes.
+ * Each Input has a SmartDashboard widget for its state.
+ * A pre-arranged Shuffleboard config can be found at /shuffleboards/input-test.json
+ * @author Liam
+ */
 public class InputTestSubsystem implements Subsystem {
 
     WSInputs axes[] = {

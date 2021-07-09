@@ -18,6 +18,16 @@ public class WsPhoenixFollowerConfig implements OutputConfig {
      * @param following Enumeration of motor controller being followed.
      * @param channel Hardware port number.
      * @param talon True if Talon, false if Victor.
+     */
+    public WsPhoenixFollowerConfig(Outputs following, int channel, boolean talon) {
+        this(following, channel, talon, false);
+    }
+
+    /**
+     * Construct the Phoenix config.
+     * @param following Enumeration of motor controller being followed.
+     * @param channel Hardware port number.
+     * @param talon True if Talon, false if Victor.
      * @param oppose True if the follow should oppose the direction of this motor.
      */
     public WsPhoenixFollowerConfig(Outputs following, int channel, boolean talon, boolean oppose) {

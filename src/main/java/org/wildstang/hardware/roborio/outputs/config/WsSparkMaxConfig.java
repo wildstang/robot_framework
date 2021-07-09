@@ -14,26 +14,35 @@ public class WsSparkMaxConfig implements OutputConfig {
 
     /**
      * Construct the Phoenix config.
-     * @param channel Hardware port number.
+     * @param channel Controller CAN constant.
      * @param brushless True if the motor is brushless, false if brushed.
-     * @param p_default Default output value.
      */
-    public WsSparkMaxConfig(int channel, boolean brushless, double p_default) {
-        this(channel, brushless, p_default, false);
+    public WsSparkMaxConfig(int channel, boolean brushless) {
+        this(channel, brushless, false, 0);
     }
 
     /**
      * Construct the Phoenix config.
      * @param channel Controller CAN constant.
      * @param brushless True if the motor is brushless, false if brushed.
-     * @param p_default Default output value.
      * @param invert True if motor output should be inverted.
      */
-    public WsSparkMaxConfig(int channel, boolean brushless, double p_default, boolean invert) {
+    public WsSparkMaxConfig(int channel, boolean brushless, boolean invert) {
+        this(channel, brushless, invert, 0);
+    }
+
+    /**
+     * Construct the Phoenix config.
+     * @param channel Controller CAN constant.
+     * @param brushless True if the motor is brushless, false if brushed.
+     * @param invert True if motor output should be inverted.
+     * @param p_default Default output value.
+     */
+    public WsSparkMaxConfig(int channel, boolean brushless, boolean invert, double p_default) {
         m_channel = channel;
-        m_default = p_default;
         this.brushless = brushless;
         this.invert = invert;
+        m_default = p_default;
     }
 
     /**

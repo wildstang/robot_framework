@@ -14,26 +14,35 @@ public class WsPhoenixConfig implements OutputConfig {
 
     /**
      * Construct the Phoenix config.
-     * @param channel Hardware port number.
-     * @param p_default Default output value.
+     * @param channel Controller CAN constant.
      * @param talon True if Talon, false if Victor.
      */
-    public WsPhoenixConfig(int channel, double p_default, boolean talon) {
-        this(channel, p_default, talon, false);
+    public WsPhoenixConfig(int channel, boolean talon) {
+        this(channel, talon, false, 0);
     }
 
     /**
      * Construct the Phoenix config.
      * @param channel Controller CAN constant.
-     * @param p_default Default output value.
      * @param talon True if Talon, false if Victor.
      * @param invert True if motor output should be inverted.
      */
-    public WsPhoenixConfig(int channel, double p_default, boolean talon, boolean invert) {
+    public WsPhoenixConfig(int channel, boolean talon, boolean invert) {
+        this(channel, talon, invert, 0);
+    }
+
+    /**
+     * Construct the Phoenix config.
+     * @param channel Controller CAN constant.
+     * @param talon True if Talon, false if Victor.
+     * @param invert True if motor output should be inverted.
+     * @param p_default Default output value.
+     */
+    public WsPhoenixConfig(int channel, boolean talon, boolean invert, double p_default) {
         m_channel = channel;
-        m_default = p_default;
         this.talon = talon;
         this.invert = invert;
+        m_default = p_default;
     }
 
     /**

@@ -158,18 +158,25 @@ implements <a href="../../../../framework/hardware/OutputConfig.html" title="int
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,double,boolean)">WsPhoenixConfig</a></span>&#8203;(int&nbsp;channel,
-               double&nbsp;p_default,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean)">WsPhoenixConfig</a></span>&#8203;(int&nbsp;channel,
                boolean&nbsp;talon)</code></th>
 <td class="colLast">
 <div class="block">Construct the Phoenix config.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,double,boolean,boolean)">WsPhoenixConfig</a></span>&#8203;(int&nbsp;channel,
-               double&nbsp;p_default,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,boolean)">WsPhoenixConfig</a></span>&#8203;(int&nbsp;channel,
                boolean&nbsp;talon,
                boolean&nbsp;invert)</code></th>
+<td class="colLast">
+<div class="block">Construct the Phoenix config.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,boolean,boolean,double)">WsPhoenixConfig</a></span>&#8203;(int&nbsp;channel,
+               boolean&nbsp;talon,
+               boolean&nbsp;invert,
+               double&nbsp;p_default)</code></th>
 <td class="colLast">
 <div class="block">Construct the Phoenix config.</div>
 </td>
@@ -251,41 +258,57 @@ implements <a href="../../../../framework/hardware/OutputConfig.html" title="int
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(int,double,boolean)">
+<a id="&lt;init&gt;(int,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>WsPhoenixConfig</h4>
 <pre>public&nbsp;WsPhoenixConfig&#8203;(int&nbsp;channel,
-                       double&nbsp;p_default,
                        boolean&nbsp;talon)</pre>
 <div class="block">Construct the Phoenix config.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>channel</code> - Hardware port number.</dd>
-<dd><code>p_default</code> - Default output value.</dd>
+<dd><code>channel</code> - Controller CAN constant.</dd>
 <dd><code>talon</code> - True if Talon, false if Victor.</dd>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,double,boolean,boolean)">
+<a id="&lt;init&gt;(int,boolean,boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>WsPhoenixConfig</h4>
 <pre>public&nbsp;WsPhoenixConfig&#8203;(int&nbsp;channel,
-                       double&nbsp;p_default,
                        boolean&nbsp;talon,
                        boolean&nbsp;invert)</pre>
 <div class="block">Construct the Phoenix config.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>channel</code> - Controller CAN constant.</dd>
-<dd><code>p_default</code> - Default output value.</dd>
 <dd><code>talon</code> - True if Talon, false if Victor.</dd>
 <dd><code>invert</code> - True if motor output should be inverted.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(int,boolean,boolean,double)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>WsPhoenixConfig</h4>
+<pre>public&nbsp;WsPhoenixConfig&#8203;(int&nbsp;channel,
+                       boolean&nbsp;talon,
+                       boolean&nbsp;invert,
+                       double&nbsp;p_default)</pre>
+<div class="block">Construct the Phoenix config.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>channel</code> - Controller CAN constant.</dd>
+<dd><code>talon</code> - True if Talon, false if Victor.</dd>
+<dd><code>invert</code> - True if motor output should be inverted.</dd>
+<dd><code>p_default</code> - Default output value.</dd>
 </dl>
 </li>
 </ul>

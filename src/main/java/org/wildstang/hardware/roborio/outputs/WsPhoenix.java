@@ -182,10 +182,11 @@ public class WsPhoenix extends AnalogOutput {
     }
 
     /**
-     * Sets the motors to 0 speed.
+     * Sets the motors to 0 speed and enables brake mode.
      */
     public void stop() {
         setSpeed(0);
+        setBrake();
     }
 
     /**

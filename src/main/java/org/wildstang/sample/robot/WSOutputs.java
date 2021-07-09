@@ -18,11 +18,11 @@ public enum WSOutputs implements Outputs {
     // ---------------------------------
     // Motors
     // ---------------------------------
-    DRIVE_LEFT_MOTOR("Left Drive Motor", new WsPhoenixConfig(CANConstants.DRIVE_MOTOR_CONTROLLERS[0], 0, true, false), false),
-    DRIVE_RIGHT_MOTOR("Right Drive Motor", new WsPhoenixConfig(CANConstants.DRIVE_MOTOR_CONTROLLERS[1], 0, true, true), false),
-    OUTTAKE_MOTOR("Outtake Motor", new WsPhoenixConfig(CANConstants.OUTTAKE_MOTOR_CONTROLLER, 0, false), false),
-    HIGHFUEL_MOTOR("High Fuel Motor", new WsPhoenixConfig(CANConstants.HIGHFUEL_MOTOR_CONTROLLER, 0, false), false),
-    INTAKE_MOTOR("Intake Motor", new WsPhoenixConfig(CANConstants.INTAKE_MOTOR_CONTROLLER, 0, false, true), false),
+    DRIVE_LEFT_MOTOR("Left Drive Motor", new WsPhoenixConfig(CANConstants.DRIVE_MOTOR_CONTROLLERS[0], true, false), false),
+    DRIVE_RIGHT_MOTOR("Right Drive Motor", new WsPhoenixConfig(CANConstants.DRIVE_MOTOR_CONTROLLERS[1], true, true), false),
+    OUTTAKE_MOTOR("Outtake Motor", new WsPhoenixConfig(CANConstants.OUTTAKE_MOTOR_CONTROLLER, false, false), false),
+    HIGHFUEL_MOTOR("High Fuel Motor", new WsPhoenixConfig(CANConstants.HIGHFUEL_MOTOR_CONTROLLER, false, false), false),
+    INTAKE_MOTOR("Intake Motor", new WsPhoenixConfig(CANConstants.INTAKE_MOTOR_CONTROLLER, false, true), false),
 
     // ---------------------------------
     // Servos
