@@ -11,7 +11,7 @@ public class SampleAutoProgram extends AutoProgram {
 
     @Override
     protected void defineSteps() {
-        addStep(new AutoStepDelay(10));
+        addStep(new AutoStepDelay(10000));
     }
 
     @Override

@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopInit() {
-        Log.danger("Engaging teleoperation mode.");
+        Log.danger("Engaging teleoperated mode.");
         Core.getSubsystemManager().resetState();
     }
 
@@ -112,7 +112,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        core.executeUpdate();
+        update();
 
         if (AutoFirstRun) {
             AutoFirstRun = false;
@@ -124,6 +124,13 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        update();
+    }
+
+    /**
+     * Run core update and display statistics on dashboard.
+     */
+    private void update() {
         // update log level from chooser
         Log.setLevel(logChooser.getSelected());
         try {

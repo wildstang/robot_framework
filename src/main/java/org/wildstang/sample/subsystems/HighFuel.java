@@ -1,42 +1,44 @@
-package org.wildstang.sample.robot;
+package org.wildstang.sample.subsystems;
 
 import org.wildstang.framework.core.Core;
 import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.hardware.roborio.inputs.WsJoystickButton;
 import org.wildstang.hardware.roborio.outputs.WsPhoenix;
+import org.wildstang.sample.robot.WSInputs;
+import org.wildstang.sample.robot.WSOutputs;
 
-public class Outtake implements Subsystem {
+public class HighFuel implements Subsystem {
 
-    WsPhoenix outtakeMotor;
+    WsPhoenix armMotor;
 
     WsJoystickButton forwardButton;
     WsJoystickButton reverseButton;
 
-    double outtakeSpeed;
+    double armSpeed;
 
     @Override
     public void init() {
-        outtakeMotor = (WsPhoenix) Core.getOutputManager().getOutput(WSOutputs.OUTTAKE_MOTOR);
+        armMotor = (WsPhoenix) Core.getOutputManager().getOutput(WSOutputs.HIGHFUEL_MOTOR);
 
-        forwardButton = (WsJoystickButton) Core.getInputManager().getInput(WSInputs.MANIPULATOR_RIGHT_SHOULDER);
+        forwardButton = (WsJoystickButton) Core.getInputManager().getInput(WSInputs.MANIPULATOR_FACE_RIGHT);
         forwardButton.addInputListener(this);
-        reverseButton = (WsJoystickButton) Core.getInputManager().getInput(WSInputs.MANIPULATOR_LEFT_SHOULDER);
+        reverseButton = (WsJoystickButton) Core.getInputManager().getInput(WSInputs.MANIPULATOR_FACE_LEFT);
         reverseButton.addInputListener(this);
     }
 
     @Override
     public void update() {
-        outtakeMotor.setSpeed(outtakeSpeed);
+        armMotor.setSpeed(armSpeed);
     }
 
     @Override
     public void inputUpdate(Input source) {
         if (source == forwardButton) {
-            outtakeSpeed = forwardButton.getValue() ? 1 : 0;
+            armSpeed = forwardButton.getValue() ? 0.25 : 0;
         }
         else if (source == reverseButton) {
-            outtakeSpeed = reverseButton.getValue() ? -1 : 0;
+            armSpeed = reverseButton.getValue() ? -0.1 : 0;
         }
     }
 
@@ -45,12 +47,12 @@ public class Outtake implements Subsystem {
 
     @Override
     public void resetState() {
-        outtakeSpeed = 0;
-        outtakeMotor.setBrake();
+        armSpeed = 0;
+        armMotor.setBrake();
     }
 
     @Override
     public String getName() {
-        return "Outtake";
+        return "High Fuel";
     }
 }

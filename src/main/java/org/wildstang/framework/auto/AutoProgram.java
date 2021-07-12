@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import org.wildstang.framework.auto.steps.control.AutoStepStopAutonomous;
 import org.wildstang.framework.core.Core;
+import org.wildstang.framework.logger.Log;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,7 +40,7 @@ public abstract class AutoProgram {
         currentStep = 0;
         finishedPreviousStep = false;
         finished = false;
-        programSteps.get(0).initialize();
+        startStep(currentStep);
         s_log.logp(Level.FINE, "Auton", "Step Starting", programSteps.get(0).toString());
     }
 
@@ -63,10 +64,9 @@ public abstract class AutoProgram {
             if (currentStep >= programSteps.size()) {
                 finished = true;
                 return;
-            } else {
-                s_log.logp(Level.FINE, "Auton", "Step Start",
-                        programSteps.get(currentStep).toString());
-                programSteps.get(currentStep).initialize();
+            }
+            else {
+                startStep(currentStep);
             }
         }
         if (programSteps.size() > currentStep) {
@@ -78,6 +78,16 @@ public abstract class AutoProgram {
                 finishedPreviousStep = true;
             }
         }
+    }
+
+    /**
+     * Starts a given AutoStep and announces it at Info level.
+     * @param stepIdx The index of the new program to run.
+     */
+    private void startStep(int stepIdx) {
+        AutoStep step = programSteps.get(stepIdx);
+        step.initialize();
+        Log.info("Starting auto step: " + step.toString());
     }
 
     /**

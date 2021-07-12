@@ -59,6 +59,6 @@ public class AutoStepDelay extends AutoStep {
      */
     @Override
     public String toString() {
-        return "Delay for " + (delay * 1000) + "  ms";
+        return "Delay for " + (int)(delay * 1000) + " ms (" + (int)((10 - timer.get()) * 1000) + " ms remaining)";
     }
 }

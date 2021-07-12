@@ -1,6 +1,10 @@
 package org.wildstang.sample.robot;
 
 import org.wildstang.framework.core.Subsystems;
+import org.wildstang.sample.subsystems.Drive;
+import org.wildstang.sample.subsystems.Intake;
+import org.wildstang.sample.subsystems.Outtake;
+import org.wildstang.sample.subsystems.HighFuel;
 
 /**
  * All subsystems are enumerated here.

@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.wildstang.framework.auto.program.Sleeper;
+import org.wildstang.framework.logger.Log;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -62,24 +63,28 @@ public class AutoManager {
      */
     public void startCurrentProgram() {
         if (lockinChooser.getSelected()) {
-            runningProgram = chooser.getSelected();
+            startProgram(chooser.getSelected());
         } else {
-            runningProgram = programs.get(0);
+            startSleeper();
         }
-        
-        SmartDashboard.putBoolean("Checkpoint 606 yay", true);
-        
-        s_log.logp(Level.ALL, "Auton", "Running Autonomous Program", runningProgram.toString());
-        runningProgram.initialize();
-        SmartDashboard.putString("Running Autonomous Program", runningProgram.toString());
     }
 
     /**
      * Starts the default program, Sleeper, which does nothing and never ends.
      */
     public void startSleeper() {
-        runningProgram = programs.get(0);
-        runningProgram.initialize();
+        startProgram(programs.get(0));
+    }
+
+    /**
+     * Starts a given AutoProgram and announces it at Info level and on dashboard.
+     * @param program New program to run.
+     */
+    private void startProgram(AutoProgram program) {
+        runningProgram = program;
+        program.initialize();
+        Log.info("Starting auto program: " + program.toString());
+        SmartDashboard.putString("Running Autonomous Program", program.toString());
     }
 
     /**

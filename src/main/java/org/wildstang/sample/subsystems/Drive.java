@@ -1,4 +1,4 @@
-package org.wildstang.sample.robot;
+package org.wildstang.sample.subsystems;
 
 import org.wildstang.framework.core.Core;
 import org.wildstang.framework.io.inputs.Input;
@@ -6,6 +6,8 @@ import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.hardware.roborio.inputs.WsJoystickAxis;
 import org.wildstang.hardware.roborio.inputs.WsJoystickButton;
 import org.wildstang.hardware.roborio.outputs.WsPhoenix;
+import org.wildstang.sample.robot.WSInputs;
+import org.wildstang.sample.robot.WSOutputs;
 
 public class Drive implements Subsystem {
 

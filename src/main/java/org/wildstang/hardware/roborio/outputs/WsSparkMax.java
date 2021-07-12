@@ -116,12 +116,11 @@ public class WsSparkMax extends AnalogOutput {
     }
 
     /**
-     * Sets the motor value and applys it to the controller.
+     * Wraps setValue().
      * @param value New motor percent speed, from -1.0 to 1.0.
      */
     public void setSpeed(double value) {
         setValue(value);
-        sendDataToOutput();
     }
 
     /**
