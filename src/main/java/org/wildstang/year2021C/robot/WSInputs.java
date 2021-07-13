@@ -1,4 +1,4 @@
-package org.wildstang.sample.robot;
+package org.wildstang.year2021C.robot;
 
 import org.wildstang.framework.core.Inputs;
 import org.wildstang.framework.hardware.InputConfig;

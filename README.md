@@ -12,6 +12,10 @@ Second, there is the hardware component, it implements others' APIs to connect t
 The framework for this reason should not import any external libraries for specific robot functions, such as WPILib.
 The framework may import libraries for utility purposes, in this case WPILib's Timer is okay.
 
+This branch "111C" is a real world implementation of the framework for WildStang's internal 2021 tournament "Fuel Duel".
+Specifically it is for team 111C's robot, hense the branch name.
+Their robot was chosen because it was one of the most straight forward designs.
+
 ## Robot Framework Initialization
 
 In order to create a new code base for a new robot follow these steps:

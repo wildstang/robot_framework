@@ -1,7 +1,6 @@
-package org.wildstang.sample.robot;
+package org.wildstang.year2021C.robot;
 
 import org.wildstang.framework.core.AutoPrograms;
-import org.wildstang.sample.auto.SampleAutoProgram;
 
 /**
  * All active AutoPrograms are enumerated here.
