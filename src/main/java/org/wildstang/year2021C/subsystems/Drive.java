@@ -62,7 +62,7 @@ public class Drive implements Subsystem {
         }
         else if (source == headingAxis) {
             heading = headingAxis.getValue();
-            heading = Math.abs(heading) > DEADZONE ? heading : 0;
+            heading = Math.abs(heading) > DEADZONE ? heading * 0.8 : 0;
         }
         else if (source == rotateLeftAxis) {
             rotation = rotateLeftAxis.getValue();
