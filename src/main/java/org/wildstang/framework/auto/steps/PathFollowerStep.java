@@ -1,13 +1,7 @@
 package org.wildstang.framework.auto.steps;
 
-import java.io.File;
-
-import org.wildstang.framework.CoreUtils;
 import org.wildstang.framework.auto.AutoStep;
-import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.subsystems.drive.PathFollowingDrive;
-
-import edu.wpi.first.wpilibj.Filesystem;
 
 public class PathFollowerStep extends AutoStep {
 
