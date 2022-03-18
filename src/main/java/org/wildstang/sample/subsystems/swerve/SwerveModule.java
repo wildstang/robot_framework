@@ -1,14 +1,9 @@
 package org.wildstang.sample.subsystems.swerve;
 
-import org.wildstang.sample.subsystems.swerve.DriveConstants;
-
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.CANSparkMax;
+
 import org.wildstang.hardware.roborio.outputs.WsSparkMax;
-import com.revrobotics.ControlType;
-import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

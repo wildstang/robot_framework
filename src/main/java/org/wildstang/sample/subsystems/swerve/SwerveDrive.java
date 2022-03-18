@@ -4,21 +4,17 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.wildstang.framework.core.Core;
-import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.io.inputs.AnalogInput;
 import org.wildstang.framework.io.inputs.DigitalInput;
-import org.wildstang.framework.subsystems.Subsystem;
+import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
+import org.wildstang.hardware.roborio.outputs.WsSparkMax;
 import org.wildstang.sample.robot.CANConstants;
 import org.wildstang.sample.robot.WSInputs;
 import org.wildstang.sample.robot.WSOutputs;
-import org.wildstang.sample.subsystems.swerve.DriveConstants;
-import org.wildstang.sample.subsystems.swerve.SwerveSignal;
-import org.wildstang.sample.subsystems.swerve.WSSwerveHelper;
-import org.wildstang.hardware.roborio.outputs.WsSparkMax;
 
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**Class: SwerveDrive

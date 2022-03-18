@@ -8,7 +8,6 @@ import org.wildstang.hardware.roborio.outputs.config.WsPhoenixConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsI2COutputConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsMotorControllers;
 import org.wildstang.hardware.roborio.outputs.config.WsDigitalOutputConfig;
-import org.wildstang.hardware.roborio.outputs.config.WsPhoenixFollowerConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsSparkMaxConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsSparkMaxFollowerConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsSolenoidConfig;

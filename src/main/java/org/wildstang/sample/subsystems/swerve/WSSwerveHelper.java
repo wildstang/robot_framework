@@ -1,8 +1,5 @@
 package org.wildstang.sample.subsystems.swerve;
 
-import org.wildstang.sample.subsystems.swerve.SwerveSignal;
-import org.wildstang.sample.subsystems.swerve.DriveConstants;
-
 public class WSSwerveHelper {
 
     private double magnitude;
