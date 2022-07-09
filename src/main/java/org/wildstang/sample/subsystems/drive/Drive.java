@@ -150,4 +150,8 @@ public class Drive extends PathFollowingDrive {
         setupMotor.enableVoltageCompensation();
     }
 
+    public void setGyro(double degrees){
+        gyro.reset();
+        gyro.setAngleAdjustment(degrees);
+    }
 }

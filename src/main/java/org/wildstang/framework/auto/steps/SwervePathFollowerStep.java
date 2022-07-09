@@ -4,6 +4,9 @@ import org.wildstang.framework.auto.AutoStep;
 import org.wildstang.framework.core.Core;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class SwervePathFollowerStep extends AutoStep {
 
     private static final double ftToIn = 12;
@@ -17,6 +20,9 @@ public class SwervePathFollowerStep extends AutoStep {
     private double[][] pathData;
 
     private int counter;
+    private double lastPos;
+
+    private Timer timer;
 
     /** Sets the robot to track a new path
      * finishes after all values have been read to robot
@@ -26,26 +32,40 @@ public class SwervePathFollowerStep extends AutoStep {
     public SwervePathFollowerStep(double[][] pathData, SwerveDriveTemplate drive) {
         this.pathData = pathData;
         m_drive = drive;
+        timer = new Timer();
     }
 
     @Override
     public void initialize() {
         //start path
         counter = 0;
+        lastPos = 0;
         m_drive.resetDriveEncoders();
+        m_drive.setToAuto();
+        timer.start();
     }
 
     @Override
     public void update() {
-        if (counter >= pathData.length){
-            //end path
-            m_drive.stopMoving();
-            setFinished(true);
+        if (counter >= pathData.length) {
+            setFinished();
         } else {
-            //update values the robot is tracking to
-            m_drive.setAutoValues(pathData[counter][positionP]*ftToIn, pathData[counter][velocityP]*ftToIn, Math.toDegrees(pathData[counter][headingP]));
-            counter++;
+            SmartDashboard.putNumber("Auto Time", counter*0.02);
+            SmartDashboard.putNumber("Auto Attempted position", pathData[counter][positionP]);
+            if (lastPos == pathData[counter][positionP]){
+                //end path
+                m_drive.setAutoValues(pathData[counter][positionP]*ftToIn, 0, -Math.toDegrees(pathData[counter][headingP]));
+                counter = pathData.length;
+            } else if (timer.get()>=0.02){
+                //update values the robot is tracking to
+                System.out.println("Target position: " + pathData[counter][positionP]*ftToIn);
+                m_drive.setAutoValues(pathData[counter][positionP]*ftToIn, ((pathData[counter][positionP] - lastPos)/0.02)*ftToIn, -Math.toDegrees(pathData[counter][headingP]));
+                lastPos = pathData[counter][positionP];
+                counter++;
+                timer.advanceIfElapsed(0.02);
+            }
         }
+        //System.out.println("Time: " + timer.get() + ", counter " + (counter-1));
     }
 
     @Override
