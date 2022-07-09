@@ -129,6 +129,7 @@ public class WsSparkMax extends WsMotorController {
      */
     public void setCurrentLimit(int stallLimitAmps, int freeLimitAmps, int limitRPM) {
         motor.setSmartCurrentLimit(stallLimitAmps, freeLimitAmps, limitRPM);
+        enableVoltageCompensation();
         motor.burnFlash();
     }
 

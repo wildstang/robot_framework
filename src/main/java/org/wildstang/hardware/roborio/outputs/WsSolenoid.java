@@ -14,6 +14,7 @@ public class WsSolenoid extends DigitalOutput {
 
     /**
      * Constructs the solenoid from config.
+     * TODO: take module number as input for non-default PCM CAN IDs (see 112 code)
      * @param name Descriptive name of the solenoid.
      * @param module CAN id of the PCM the solenoid is connected to.
      * @param channel1 Hardware port number the solenoid is connected to.
