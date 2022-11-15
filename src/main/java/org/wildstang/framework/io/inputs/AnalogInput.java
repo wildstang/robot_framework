@@ -1,14 +1,10 @@
 package org.wildstang.framework.io.inputs;
 
-import java.text.DecimalFormat;
-
 /**
  * First abstraction of Input representing "analog" Inputs
  * such as joysticks and gyros. 
  */
 public abstract class AnalogInput extends Input {
-
-    private static final DecimalFormat s_format = new DecimalFormat("#.###");
 
     private double m_currentValue = 0.0d;
 

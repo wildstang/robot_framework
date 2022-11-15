@@ -1,10 +1,7 @@
 package org.wildstang.framework.auto.steps;
 
 import org.wildstang.framework.auto.AutoStep;
-import org.wildstang.framework.core.Core;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
-import org.wildstang.sample.robot.WSSubsystems;
-import org.wildstang.sample.subsystems.swerve.SwerveDrive;
 
 public class PathHeadingStep extends AutoStep {
 
