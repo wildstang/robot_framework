@@ -94,9 +94,6 @@ public class InputTestSubsystem implements Subsystem {
     public void inputUpdate(Input source) {}
 
     @Override
-    public void selfTest() {}
-
-    @Override
     public void resetState() {}
 
     @Override

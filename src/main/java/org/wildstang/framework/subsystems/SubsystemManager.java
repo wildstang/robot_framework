@@ -112,15 +112,6 @@ public class SubsystemManager {
     }
 
     /**
-     * Tests all subsystems registered with the manager.
-     */
-    public void selfTestAll() {
-        for (Subsystem s : m_subsystems) {
-            s.selfTest();
-        }
-    }
-
-    /**
      * Deregisters all subsystems from the manager.
      */
     public void removeAll() {

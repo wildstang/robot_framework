@@ -34,11 +34,6 @@ public class SampleSubsystem implements Subsystem {
     }
 
     @Override
-    public void selfTest() {
-
-    }
-
-    @Override
     public void resetState() {
 
     }

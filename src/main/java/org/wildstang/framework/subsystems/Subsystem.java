@@ -13,11 +13,6 @@ public interface Subsystem extends InputListener {
     public void init();
 
     /**
-     * Performs a self test of the subsystem.
-     */
-    public void selfTest();
-
-    /**
      * Called to cause the subsystem to update its state and set new values on
      * outputs.
      *

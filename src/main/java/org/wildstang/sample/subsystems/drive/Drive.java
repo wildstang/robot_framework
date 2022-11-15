@@ -46,12 +46,6 @@ public class Drive extends PathFollowingDrive {
     }
 
     @Override
-    public void selfTest() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void update() {
         switch (state){
             case TELEOP: 
