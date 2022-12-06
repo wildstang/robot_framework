@@ -1,7 +1,9 @@
 package org.wildstang.sample.robot;
 
+import org.wildstang.framework.core.Core;
 import org.wildstang.framework.core.Inputs;
 import org.wildstang.framework.hardware.InputConfig;
+import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.hardware.JoystickConstants;
 import org.wildstang.hardware.roborio.inputs.config.WsJSButtonInputConfig;
 import org.wildstang.hardware.roborio.inputs.config.WsDPadButtonInputConfig;
@@ -176,4 +178,11 @@ public enum WSInputs implements Inputs {
         return m_config;
     }
 
+    /**
+     * Returns the actual Input object from the InputManager
+     * @return The corresponding input.
+     */
+    public Input get() {
+        return Core.getInputManager().getInput(this);
+    }
 }
