@@ -10,8 +10,9 @@ Please fill out the fields below by replacing their explaination text.
 
 Describe your changes in a few sentences.
 
-**Tested:** Yes/No was your code tested?
+**Tested:** Yes/No was your code tested on a robot or simulator?
 
+Checking that the code has built locally is important, but that is not testing.
 If yes, please elaborate.
 
 **Collaborators:** List anyone else who worked on this PR, preferably with @s
