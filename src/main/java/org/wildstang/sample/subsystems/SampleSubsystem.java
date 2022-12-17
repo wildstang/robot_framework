@@ -1,6 +1,5 @@
 package org.wildstang.sample.subsystems;
 
-import org.wildstang.framework.core.Core;
 import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.hardware.roborio.inputs.WsJoystickAxis;
@@ -13,38 +12,47 @@ import org.wildstang.sample.robot.WSOutputs;
  * @author Liam
  */
 public class SampleSubsystem implements Subsystem {
+    // inputs
+    WsJoystickAxis joystick;
 
+    // outputs
     WsPhoenix motor;
-    WsJoystickAxis js;
+
+    // states
+    double speed;
+
 
     @Override
     public void init() {
-        motor = (WsPhoenix) Core.getOutputManager().getOutput(WSOutputs.TEST_MOTOR);
-        js = (WsJoystickAxis) Core.getInputManager().getInput(WSInputs.DRIVER_LEFT_JOYSTICK_Y);
-    }
+        joystick = (WsJoystickAxis) WSInputs.DRIVER_LEFT_JOYSTICK_Y.get();
 
-    @Override
-    public void update() {
-        motor.setValue(js.getValue());
-    }
-
-    @Override
-    public void inputUpdate(Input source) {
-
-    }
-
-    @Override
-    public void selfTest() {
-
+        motor = (WsPhoenix) WSOutputs.TEST_MOTOR.get();
     }
 
     @Override
     public void resetState() {
+        speed = 0;
+    }
 
+    @Override
+    public void update() {
+        motor.setValue(speed);
+    }
+
+    @Override
+    public void inputUpdate(Input source) {
+        if (source == joystick) {
+            speed = joystick.getValue();
+        }
     }
 
     @Override
     public String getName() {
         return "Sample";
+    }
+
+    @Override
+    public void selfTest() {
+
     }
 }
