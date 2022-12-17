@@ -1,8 +1,10 @@
 package org.wildstang.sample.robot;
 
 // expand this and edit if trouble with Ws
+import org.wildstang.framework.core.Core;
 import org.wildstang.framework.core.Outputs;
 import org.wildstang.framework.hardware.OutputConfig;
+import org.wildstang.framework.io.outputs.Output;
 import org.wildstang.hardware.roborio.outputs.config.WsServoConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsPhoenixConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsI2COutputConfig;
@@ -107,4 +109,11 @@ public enum WSOutputs implements Outputs {
         return m_config;
     }
 
+    /**
+     * Returns the actual Output object from the OutputManager
+     * @return The corresponding output.
+     */
+    public Output get() {
+        return Core.getOutputManager().getOutput(this);
+    }
 }
