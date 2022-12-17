@@ -73,6 +73,8 @@ To open the command palette use:
 
 `./gradlew javadoc`
 
+Note: if you have multiple version of the JDK installed you may need to set `JAVA_HOME` specifically to 11.
+
 ## External Documentation Links
 
 - [WPILib Docs Site](https://docs.wpilib.org/en/stable/index.html)

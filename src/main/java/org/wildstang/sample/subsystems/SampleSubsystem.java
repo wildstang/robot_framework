@@ -53,6 +53,5 @@ public class SampleSubsystem implements Subsystem {
 
     @Override
     public void selfTest() {
-
     }
 }
