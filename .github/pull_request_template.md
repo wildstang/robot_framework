@@ -22,4 +22,6 @@ If yes, please elaborate.
 **Before submitting:**
 - Review that your code meets our [coding standards](https://docs.google.com/document/d/1NYH8vcqnpTLwwoejcgZDW0JBeTLSNMsuck6DAYoMAuA/edit?usp=sharing)
 - Confirm there is a green ✔️ (not a red ❌) next to your last commit's date
+- Replace all text above with appropriate descriptions
+- Remove header and footer from this template
 - Add @smccrorie and @fruzyna as reviewers
