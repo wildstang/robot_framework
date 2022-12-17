@@ -10,7 +10,7 @@ public class SwervePathFollowerStep extends AutoStep {
 
     private static final double ftToIn = 12;
     private static final int positionP = 7;
-    private static final int velocityP = 8;
+    //private static final int velocityP = 8;
     private static final int headingP = 15;
     //dt, x, y, leftPos, leftVel, leftAcc, leftJer, centerPos, centerVel, centerAcc, centerJer, rightPos, rightVel, rightAcc, rightJer, heading
     //0   1  2    3          4       5        6          7          8         9          10        11         12       13        14       15
