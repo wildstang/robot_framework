@@ -13,9 +13,11 @@ public interface Subsystem extends InputListener {
     public void init();
 
     /**
-     * Performs a self test of the subsystem.
+     * Can be called to reset any state variables. Can be used when changing modes
+     * or reenabling system to reset to a default state without reinitialising
+     * connected components. Called after init().
      */
-    public void selfTest();
+    public void resetState();
 
     /**
      * Called to cause the subsystem to update its state and set new values on
@@ -27,17 +29,15 @@ public interface Subsystem extends InputListener {
     public void update();
 
     /**
-     * Can be called to reset any state variables. Can be used when changing modes
-     * or reenabling system to reset to a default state without reinitialising
-     * connected components.
-     */
-    public void resetState();
-
-    /**
      * Returns the name of the subsystem.
      *
      * @return the name of the subsystem
      */
     public String getName();
+
+    /**
+     * Performs a self test of the subsystem.
+     */
+    public void selfTest();
 
 }

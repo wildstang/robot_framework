@@ -28,6 +28,7 @@ public class SubsystemManager {
         for (Subsystem sub : m_subsystems) {
             // Init all subsystems.
             sub.init();
+            sub.resetState();
         }
     }
 
