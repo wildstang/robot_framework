@@ -37,9 +37,10 @@ deploy {
     }
 }
 
-// build docs in /docs folder
+// build docs in /docs folder, don't build for sample
 javadoc {
     destinationDir = file("docs")
+    exclude 'org/wildstang/sample/**'
 }
 
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava

@@ -6,15 +6,16 @@
 <title>PathFollowingDrive (robot_framework API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
 <script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -133,10 +134,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../io/InputListener.html" title="interface in org.wildstang.framework.io">InputListener</a></code>, <code><a href="../Subsystem.html" title="interface in org.wildstang.framework.subsystems">Subsystem</a></code></dd>
 </dl>
-<dl>
-<dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../../../sample/subsystems/Drive.html" title="class in org.wildstang.sample.subsystems">Drive</a></code></dd>
-</dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">PathFollowingDrive</span>
 extends java.lang.Object
@@ -149,7 +146,7 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -172,7 +169,7 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -193,7 +190,7 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -280,7 +277,7 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.detail">
 <!--   -->
@@ -299,7 +296,7 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 </ul>
 </section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -318,7 +315,7 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -380,6 +377,10 @@ implements <a href="../Subsystem.html" title="interface in org.wildstang.framewo
 <h4>updatePathFollower</h4>
 <pre class="methodSignature">public abstract&nbsp;void&nbsp;updatePathFollower&#8203;(double[]&nbsp;trajectoryInfo)</pre>
 <div class="block">Update the motion profile.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>trajectoryInfo</code> - the line of double data for the current step of the path</dd>
+</dl>
 </li>
 </ul>
 <a id="stopPathFollower()">
