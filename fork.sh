@@ -64,7 +64,7 @@ if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     year=$(echo $fork | cut -c1-4)
 
     # make new year20XX package
-    cp -r src/main/java/org/wildstang/sample "src/main/java/org/wildstang/year${year}"
+    mv -r src/main/java/org/wildstang/sample "src/main/java/org/wildstang/year${year}"
     # rename package in all files
     grep -rlF "wildstang.sample" "src/main/java/org/wildstang/year${year}" | xargs sed -i "s/wildstang.sample/wildstang.year${year}/g"
     # update package name for gradle ROBOT_MAIN_CLASS
