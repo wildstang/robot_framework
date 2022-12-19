@@ -63,13 +63,6 @@ cd $fork
 if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     year=$(echo $fork | cut -c1-4)
 
-    # make new year20XX package
-    mv -r src/main/java/org/wildstang/sample "src/main/java/org/wildstang/year${year}"
-    # rename package in all files
-    grep -rlF "wildstang.sample" "src/main/java/org/wildstang/year${year}" | xargs sed -i "s/wildstang.sample/wildstang.year${year}/g"
-    # update package name for gradle ROBOT_MAIN_CLASS
-    sed -i "s/sample/year${year}/" build.gradle
-
     # don't overwrite up-to-date gradle versions
     if ! grep -q "\"${year}." build.gradle; then
         # update gradle version
@@ -81,6 +74,20 @@ if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     # update projectYear for wpilib
     sed -i "s/20[0-9]\{2\}/${year}/" .wpilib/wpilib_preferences.json
 
-    echo ""
-    echo "Project years updated, check git changes to confirm then commit and push."
+    # automatically push year update
+    git add --all
+    git commit -m "[fork.sh] Updated project year to ${year}"
+    git push
+
+    # make new year20XX package
+    mv src/main/java/org/wildstang/sample "src/main/java/org/wildstang/year${year}"
+    # rename package in all files
+    grep -rlF "wildstang.sample" "src/main/java/org/wildstang/year${year}" | xargs sed -i "s/wildstang.sample/wildstang.year${year}/g"
+    # update package name for gradle ROBOT_MAIN_CLASS
+    sed -i "s/sample/year${year}/" build.gradle
+
+    # automatically push year directory
+    git add --all
+    git commit -m "[fork.sh] Created year${year} package"
+    git push
 fi

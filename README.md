@@ -31,6 +31,8 @@ To fork a given branch to a given repo run the following:
 robot_framework/fork.sh [repo] [branch]
 ```
 Note, if you are looking to fork the framework to a non-WildStang owned repo you must edit the `GITHUB` variable in the script.
+Also, the script will automatically update the year in the project if the new repo is named `20XX_...`.
+These changes will be automatically committed and pushed.
 
 The fork script can also be used to keep your fork up-to-date with the latest changes on a given branch of the framework, simply run:
 ```
