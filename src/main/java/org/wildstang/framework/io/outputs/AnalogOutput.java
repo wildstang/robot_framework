@@ -1,14 +1,10 @@
 package org.wildstang.framework.io.outputs;
 
-import java.text.DecimalFormat;
-
 /**
  * First abstraction of Output representing "analog" Outputs
  * such as servos and motors. 
  */
 public abstract class AnalogOutput extends Output {
-
-    private static final DecimalFormat s_format = new DecimalFormat("#.###");
 
     private double m_value;
 

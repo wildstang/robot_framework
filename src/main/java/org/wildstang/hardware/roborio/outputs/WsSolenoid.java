@@ -15,7 +15,7 @@ public class WsSolenoid extends DigitalOutput {
     /**
      * Constructs the solenoid from config.
      * @param name Descriptive name of the solenoid.
-     * @param module CAN id of the PCM the solenoid is connected to.
+     * @param module Model of PCM used which the solenoid is connected to.
      * @param channel1 Hardware port number the solenoid is connected to.
      * @param p_default Default state.
      */
@@ -24,7 +24,22 @@ public class WsSolenoid extends DigitalOutput {
 
         solenoid = new Solenoid(module, channel1);
         solenoid.set(p_default);
+    }
 
+    /**
+     * Constructs the solenoid from config.
+     * This constructor is used if the CAN ID of the PCM is not the default value.
+     * @param name Descriptive name of the solenoid.
+     * @param canId CAN id of the PCM the solenoid is connected to.
+     * @param module Model of PCM used which the solenoid is connected to.
+     * @param channel1 Hardware port number the solenoid is connected to.
+     * @param p_default Default state.
+     */
+    public WsSolenoid(String name, int canId, PneumaticsModuleType module, int channel1, boolean p_default) {
+        super(name, p_default);
+
+        solenoid = new Solenoid(canId, module, channel1);
+        solenoid.set(p_default);
     }
 
     /**

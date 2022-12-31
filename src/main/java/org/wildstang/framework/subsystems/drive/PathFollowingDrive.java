@@ -54,4 +54,10 @@ public abstract class PathFollowingDrive implements Subsystem {
      * Disable the motion profile and stop its notifier. 
      */
     public abstract void stopPathFollower();
+
+    /**
+     * Sets the gyro to the given value
+     * @param degrees value you want the gyro to currently to be
+     */
+    public abstract void setGyro(double degrees);
 }

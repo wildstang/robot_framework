@@ -4,6 +4,7 @@ import org.wildstang.framework.core.Subsystems;
 import org.wildstang.sample.subsystems.SampleSubsystem;
 import org.wildstang.sample.subsystems.drive.Drive;
 import org.wildstang.sample.subsystems.swerve.SwerveDrive;
+import org.wildstang.sample.subsystems.targeting.AimHelper;
 
 /**
  * All subsystems are enumerated here.
@@ -14,6 +15,7 @@ public enum WSSubsystems implements Subsystems {
     // enumerate subsystems
     DRIVE("Drive", Drive.class),
     SWERVE_DRIVE("Swerve Drive", SwerveDrive.class),
+    AIM_HELPER("Aim Helper", AimHelper.class),
     SAMPLE("Sample", SampleSubsystem.class)
     ;
 
