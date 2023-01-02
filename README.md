@@ -51,9 +51,9 @@ The fork script can also be used to keep your fork up-to-date with the latest ch
 - RoboRIO Imager
   - [Instructions](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-3/imaging-your-roborio.html)
   - Included with Driver Station
-- 2022 Radio Configuration Utility
+- Radio Configuration Utility
   - [Instructions](https://docs.wpilib.org/en/stable/docs/zero-to-robot/step-3/radio-programming.html)
-  - [Download](https://firstfrc.blob.core.windows.net/frc2022/Radio/FRC_Radio_Configuration_22_0_1.zip)
+  - Download link in instructions, look for "FRC Radio Configuration XX.Y.Z"
 - REV Hardware Client
   - [Instructions](https://docs.revrobotics.com/rev-hardware-client/getting-started/installation-instructions)
   - [Download](https://github.com/REVrobotics/REV-Software-Binaries/releases/latest)
@@ -84,4 +84,4 @@ Note: if you have multiple version of the JDK installed you may need to set `JAV
 - [REV Robotics Docs](https://www.revrobotics.com/software/)
 - [CTR Electronics Docs](https://docs.ctre-phoenix.com/en/stable/)
 - [navX Docs](https://pdocs.kauailabs.com/navx-mxp/software/roborio-libraries/)
-- [2022 Season Materials](https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system)
+- [Season Materials](https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system)
