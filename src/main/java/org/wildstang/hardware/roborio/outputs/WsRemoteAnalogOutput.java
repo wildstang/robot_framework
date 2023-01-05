@@ -28,7 +28,7 @@ public class WsRemoteAnalogOutput extends AnalogOutput {
      */
     @Override
     protected void sendDataToOutput() {
-        remoteIOTable.getEntry(getName()).forceSetDouble(getValue());
+        remoteIOTable.getEntry(getName()).setDouble(getValue());
     }
 
     /**

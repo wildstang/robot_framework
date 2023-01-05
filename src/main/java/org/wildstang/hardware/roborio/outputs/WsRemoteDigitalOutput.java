@@ -28,7 +28,7 @@ public class WsRemoteDigitalOutput extends DigitalOutput {
      */
     @Override
     protected void sendDataToOutput() {
-        remoteIOTable.getEntry(getName()).forceSetBoolean(getValue());
+        remoteIOTable.getEntry(getName()).setBoolean(getValue());
     }
 
     /**
