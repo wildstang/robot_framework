@@ -7,6 +7,7 @@ import org.wildstang.framework.hardware.OutputConfig;
 import org.wildstang.framework.io.outputs.Output;
 import org.wildstang.hardware.roborio.outputs.config.WsServoConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsPhoenixConfig;
+import org.wildstang.hardware.roborio.outputs.config.WsRemoteAnalogOutputConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsI2COutputConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsMotorControllers;
 import org.wildstang.hardware.roborio.outputs.config.WsDigitalOutputConfig;
@@ -64,6 +65,12 @@ public enum WSOutputs implements Outputs {
     // ********************************
     // Relays
     // ********************************
+
+    // ********************************
+    // NetworkTables
+    // ********************************
+    LL_MODE("camMode", new WsRemoteAnalogOutputConfig("limelight", 0)),
+    LL_LEDS("ledMode", new WsRemoteAnalogOutputConfig("limelight", 0)),
 
     // ********************************
     // Others ...

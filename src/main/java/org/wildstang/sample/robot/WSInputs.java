@@ -8,6 +8,7 @@ import org.wildstang.hardware.JoystickConstants;
 import org.wildstang.hardware.roborio.inputs.config.WsJSButtonInputConfig;
 import org.wildstang.hardware.roborio.inputs.config.WsDPadButtonInputConfig;
 import org.wildstang.hardware.roborio.inputs.config.WsJSJoystickInputConfig;
+import org.wildstang.hardware.roborio.inputs.config.WsRemoteAnalogInputConfig;
 
 /**
  * Input mappings are stored here.
@@ -135,6 +136,10 @@ public enum WSInputs implements Inputs {
     // -------------------------------
     // Networked sensors
     // -------------------------------
+    LL_TX("tx", new WsRemoteAnalogInputConfig("limelight")),
+    LL_TY("ty", new WsRemoteAnalogInputConfig("limelight")),
+    LL_TV("tv", new WsRemoteAnalogInputConfig("limelight")),
+
     
     // ********************************
     // Others ...
