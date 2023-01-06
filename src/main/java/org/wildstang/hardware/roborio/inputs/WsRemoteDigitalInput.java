@@ -2,6 +2,7 @@ package org.wildstang.hardware.roborio.inputs;
 
 import org.wildstang.framework.io.inputs.DigitalInput;
 
+import edu.wpi.first.networktables.BooleanSubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -10,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class WsRemoteDigitalInput extends DigitalInput {
 
-    NetworkTable remoteIOTable;
+    BooleanSubscriber subscriber;
 
     /**
      * Construct the remote input.
@@ -19,7 +20,8 @@ public class WsRemoteDigitalInput extends DigitalInput {
      */
     public WsRemoteDigitalInput(String p_name, String p_networkTbl) {
         super(p_name);
-        remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        NetworkTable remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        subscriber = remoteIOTable.getBooleanTopic(p_name).subscribe(false);
     }
 
     /**
@@ -28,6 +30,6 @@ public class WsRemoteDigitalInput extends DigitalInput {
      */
     @Override
     public boolean readRawValue() {
-        return remoteIOTable.getEntry(getName()).getBoolean(false);
+        return subscriber.get();
     }
 }

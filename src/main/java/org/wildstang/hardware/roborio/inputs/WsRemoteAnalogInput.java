@@ -2,6 +2,7 @@ package org.wildstang.hardware.roborio.inputs;
 
 import org.wildstang.framework.io.inputs.AnalogInput;
 
+import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -10,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class WsRemoteAnalogInput extends AnalogInput {
 
-    NetworkTable remoteIOTable;
+    DoubleSubscriber subscriber;
 
     /**
      * Construct the remote input.
@@ -19,7 +20,8 @@ public class WsRemoteAnalogInput extends AnalogInput {
      */
     public WsRemoteAnalogInput(String p_name, String p_networkTbl) {
         super(p_name);
-        remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        NetworkTable remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        subscriber = remoteIOTable.getDoubleTopic(p_name).subscribe(0);
     }
 
     /**
@@ -28,7 +30,7 @@ public class WsRemoteAnalogInput extends AnalogInput {
      */
     @Override
     public double readRawValue() {
-        return remoteIOTable.getEntry(getName()).getDouble(0);
+        return subscriber.get();
     }
 
 }
