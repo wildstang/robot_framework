@@ -2,6 +2,7 @@ package org.wildstang.hardware.roborio.outputs;
 
 import org.wildstang.framework.io.outputs.AnalogOutput;
 
+import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -10,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class WsRemoteAnalogOutput extends AnalogOutput {
 
-    NetworkTable remoteIOTable;
+    DoublePublisher publisher;
 
     /**
      * Constructs the remote output from config.
@@ -20,7 +21,8 @@ public class WsRemoteAnalogOutput extends AnalogOutput {
      */
     public WsRemoteAnalogOutput(String name, String p_networkTbl, double p_default) {
         super(name, p_default);
-        remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        NetworkTable remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        publisher = remoteIOTable.getDoubleTopic(name).publish();
     }
 
     /**
@@ -28,7 +30,7 @@ public class WsRemoteAnalogOutput extends AnalogOutput {
      */
     @Override
     protected void sendDataToOutput() {
-        remoteIOTable.getEntry(getName()).setDouble(getValue());
+        publisher.set(getValue());
     }
 
     /**

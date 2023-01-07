@@ -2,13 +2,15 @@ package org.wildstang.sample.subsystems.targeting;
 
 // ton of imports
 import org.wildstang.framework.subsystems.Subsystem;
-
+import org.wildstang.hardware.roborio.inputs.WsRemoteAnalogInput;
+import org.wildstang.hardware.roborio.outputs.WsRemoteAnalogOutput;
 import org.wildstang.framework.core.Core;
 
 import org.wildstang.framework.io.inputs.AnalogInput;
 import org.wildstang.framework.io.inputs.DigitalInput;
 import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.sample.robot.WSInputs;
+import org.wildstang.sample.robot.WSOutputs;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -23,12 +25,11 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class AimHelper implements Subsystem {
     
-    private NetworkTable LimeTable;
-    private NetworkTableEntry ty; //y angle
-    private NetworkTableEntry tx; //x angle
-    private NetworkTableEntry tv;
-    private NetworkTableEntry ledModeEntry;
-    private NetworkTableEntry llModeEntry;
+    private WsRemoteAnalogInput ty; // y angle
+    private WsRemoteAnalogInput tx; // x angle
+    private WsRemoteAnalogInput tv;
+    private WsRemoteAnalogOutput ledModeEntry;
+    private WsRemoteAnalogOutput llModeEntry;
 
     //private SwerveDrive swerve;
     private WSSwerveHelper helper;
@@ -39,6 +40,7 @@ public class AimHelper implements Subsystem {
     private double modifier;
 
     public boolean TargetInView;
+    private boolean ledState;
 
     private double TargetDistance;
     private double xSpeed, ySpeed;
@@ -60,9 +62,9 @@ public class AimHelper implements Subsystem {
 
 
     public void calcTargetCoords() { //update target coords. 
-        if(tv.getDouble(0) == 1) {
-            x = tx.getDouble(0); 
-            y = ty.getDouble(0);
+        if(tv.getValue() == 1) {
+            x = tx.getValue(); 
+            y = ty.getValue();
             TargetInView = true;
         }
         else {
@@ -74,7 +76,7 @@ public class AimHelper implements Subsystem {
     }
 
     public void getMovingCoords() {
-        double robotAngle = (getGyroAngle() + 180 + tx.getDouble(0)) % 360;
+        double robotAngle = (getGyroAngle() + 180 + tx.getValue()) % 360;
         double movementAngle = helper.getDirection(xSpeed, ySpeed);
         double movementMagnitude = helper.getMagnitude(xSpeed, ySpeed);
         if (Math.abs(xSpeed) < 0.1 && Math.abs(ySpeed) < 0.1) {
@@ -100,7 +102,7 @@ public class AimHelper implements Subsystem {
 
     public double getDistance() {
         calcTargetCoords();
-        TargetDistance = (modifier *  12) + 36 + LC.TARGET_HEIGHT / Math.tan(Math.toRadians(ty.getDouble(0) + LC.CAMERA_ANGLE_OFFSET));
+        TargetDistance = (modifier *  12) + 36 + LC.TARGET_HEIGHT / Math.tan(Math.toRadians(ty.getValue() + LC.CAMERA_ANGLE_OFFSET));
         //return TargetDistance;
         return TargetDistance - perpFactor + 0.5 * Math.abs(parFactor);
     }
@@ -108,24 +110,31 @@ public class AimHelper implements Subsystem {
     public double getRotPID() {
         calcTargetCoords();
         //return tx.getDouble(0) * -0.015;
-        return (tx.getDouble(0) - parFactor) * -0.015;
+        return (tx.getValue() - parFactor) * -0.015;
     }
 
     public void turnOnLED(boolean onState) {
         if (onState) {
-            ledModeEntry.setNumber(0);//turn led on
-            llModeEntry.setNumber(0);//turn camera to vision tracking
+            ledModeEntry.setValue(3);
+            llModeEntry.setValue(0);
         }
         else {
-            ledModeEntry.setNumber(0);//turn led off
-            llModeEntry.setNumber(0);//turn camera to normal color mode
-            //set above to 0 for debug mode, or for perma limelight mode
+            ledModeEntry.setValue(1);
+            llModeEntry.setValue(1);
         }
     }
 
     @Override
     public void inputUpdate(Input source) {
-        turnOnLED(rightBumper.getValue());
+        if (rightBumper.getValue())
+        {
+            ledState = true;
+        }
+        else
+        {
+            // always on
+            ledState = true; 
+        }
         if (source == dup && dup.getValue()) {
             modifier++;
         }
@@ -150,14 +159,11 @@ public class AimHelper implements Subsystem {
         TargetInView = false; //is the target in view? only updated when calcTargetCoords is called.
         TargetDistance = 0; //distance to target in feet. Only updated when calcTargetCoords is called.
 
-
-        LimeTable  = NetworkTableInstance.getDefault().getTable("limelight");
-
-        ty = LimeTable.getEntry("ty");
-        tx = LimeTable.getEntry("tx");
-        tv = LimeTable.getEntry("tv");
-        ledModeEntry = LimeTable.getEntry("ledMode");
-        llModeEntry = LimeTable.getEntry("camMode");
+        ty = (WsRemoteAnalogInput) WSInputs.LL_TY.get();
+        tx = (WsRemoteAnalogInput) WSInputs.LL_TX.get();
+        tv = (WsRemoteAnalogInput) WSInputs.LL_TV.get();
+        ledModeEntry = (WsRemoteAnalogOutput) WSOutputs.LL_LEDS.get();
+        llModeEntry = (WsRemoteAnalogOutput) WSOutputs.LL_MODE.get();
 
         helper = new WSSwerveHelper();
 
@@ -180,13 +186,14 @@ public class AimHelper implements Subsystem {
 
     @Override
     public void update() {
+        turnOnLED(ledState);
         calcTargetCoords();
         //distanceFactor = distance.getEntry().getDouble(0);
         //angleFactor = angle.getEntry().getDouble(0);
-        SmartDashboard.putNumber("limelight distance", getDistance());    
-        SmartDashboard.putNumber("limelight tx", tx.getDouble(0));
-        SmartDashboard.putNumber("limelight ty", ty.getDouble(0));  
-        SmartDashboard.putBoolean("limelight target in view", tv.getDouble(0)==1);  
+        SmartDashboard.putNumber("limelight distance", getDistance()); 
+        SmartDashboard.putNumber("limelight tx", tx.getValue());
+        SmartDashboard.putNumber("limelight ty", ty.getValue());
+        SmartDashboard.putBoolean("limelight target in view", tv.getValue() == 1);
         SmartDashboard.putNumber("Distance Modifier", modifier);
         SmartDashboard.putNumber("SWM parFactor", parFactor);
         SmartDashboard.putNumber("SWM perpFactor", perpFactor);
@@ -194,7 +201,7 @@ public class AimHelper implements Subsystem {
 
     @Override
     public void resetState() {
-        turnOnLED(false);
+        ledState = true;
         modifier = 0;
         xSpeed = 0;
         ySpeed = 0;

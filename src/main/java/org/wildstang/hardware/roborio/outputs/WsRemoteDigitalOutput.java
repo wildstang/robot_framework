@@ -2,6 +2,7 @@ package org.wildstang.hardware.roborio.outputs;
 
 import org.wildstang.framework.io.outputs.DigitalOutput;
 
+import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
@@ -10,7 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class WsRemoteDigitalOutput extends DigitalOutput {
 
-    NetworkTable remoteIOTable;
+    BooleanPublisher publisher;
 
     /**
      * Constructs the remote output from config.
@@ -20,7 +21,8 @@ public class WsRemoteDigitalOutput extends DigitalOutput {
      */
     public WsRemoteDigitalOutput(String name, String p_networkTbl, boolean p_default) {
         super(name, p_default);
-        remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        NetworkTable remoteIOTable = NetworkTableInstance.getDefault().getTable(p_networkTbl);
+        publisher = remoteIOTable.getBooleanTopic(name).publish();
     }
 
     /**
@@ -28,7 +30,7 @@ public class WsRemoteDigitalOutput extends DigitalOutput {
      */
     @Override
     protected void sendDataToOutput() {
-        remoteIOTable.getEntry(getName()).setBoolean(getValue());
+        publisher.set(getValue());
     }
 
     /**
