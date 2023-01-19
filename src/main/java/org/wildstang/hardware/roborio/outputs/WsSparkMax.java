@@ -1,6 +1,7 @@
 package org.wildstang.hardware.roborio.outputs;
 
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -227,6 +228,26 @@ public class WsSparkMax extends WsMotorController {
         controller.setI(I);
         controller.setD(D);
         controller.setFF(FF);
+        isUsingController = true;
+    }
+
+    /**
+     * Sets up closed loop control for the motor
+     * @param P the P value
+     * @param I the I value
+     * @param D the D value
+     * @param FF the feed forward constant
+     */
+    public void initClosedLoop(double P, double I, double D, double FF, AbsoluteEncoder absEncoder){
+        controller = motor.getPIDController();
+        controller.setP(P);
+        controller.setI(I);
+        controller.setD(D);
+        controller.setFF(FF);
+        controller.setFeedbackDevice(absEncoder);
+        controller.setPositionPIDWrappingEnabled(true);
+        controller.setPositionPIDWrappingMinInput(0.0);
+        controller.setPositionPIDWrappingMaxInput(360.0);
         isUsingController = true;
     }
 
