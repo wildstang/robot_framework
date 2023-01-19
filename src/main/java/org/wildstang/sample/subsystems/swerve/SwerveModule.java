@@ -2,6 +2,9 @@ package org.wildstang.sample.subsystems.swerve;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
 import org.wildstang.hardware.roborio.outputs.WsSparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,10 +14,11 @@ public class SwerveModule {
     private double target;
     private double encoderTarget;
     private double drivePower;
+    private double chassisOffset;
 
     private WsSparkMax driveMotor;
     private WsSparkMax angleMotor;
-    private CANCoder canCoder;
+    private AbsoluteEncoder absEncoder;
 
     /** Class: SwerveModule
      *  controls a single swerve pod, featuring two motors and one offboard sensor
@@ -23,24 +27,24 @@ public class SwerveModule {
      * @param canCoder canCoder offboard encoder
      * @param offset double value of cancoder when module is facing forward
      */
-    public SwerveModule(WsSparkMax driveMotor, WsSparkMax angleMotor, CANCoder canCoder, double offset) {
+    public SwerveModule(WsSparkMax driveMotor, WsSparkMax angleMotor, double offset) {
         this.driveMotor = driveMotor;
         this.angleMotor = angleMotor;
-        this.canCoder = canCoder;
+        this.absEncoder = angleMotor.getController().getAbsoluteEncoder(Type.kDutyCycle);
+        this.absEncoder.setInverted(true);
+        this.absEncoder.setPositionConversionFactor(360.0);
+        this.absEncoder.setVelocityConversionFactor(360.0/60.0);
         this.driveMotor.setCoast();
         this.angleMotor.setBrake();
 
-        driveMotor.setCurrentLimit(DriveConstants.DRIVE_CURRENT_LIMIT, DriveConstants.DRIVE_CURRENT_LIMIT, 0);
-        angleMotor.setCurrentLimit(DriveConstants.ANGLE_CURRENT_LIMIT, DriveConstants.ANGLE_CURRENT_LIMIT, 0);
-
+        chassisOffset = offset;
+        
         //set up angle and drive with pid and kpid respectively
         driveMotor.initClosedLoop(DriveConstants.DRIVE_P, DriveConstants.DRIVE_I, DriveConstants.DRIVE_D, 0);
-        angleMotor.initClosedLoop(DriveConstants.ANGLE_P, DriveConstants.ANGLE_I, DriveConstants.ANGLE_D, 0);
-        
+        angleMotor.initClosedLoop(DriveConstants.ANGLE_P, DriveConstants.ANGLE_I, DriveConstants.ANGLE_D, 0, this.absEncoder);
 
-        CANCoderConfiguration canCoderConfiguration = new CANCoderConfiguration();
-        canCoderConfiguration.magnetOffsetDegrees = offset;
-        canCoder.configAllSettings(canCoderConfiguration);
+        driveMotor.setCurrentLimit(DriveConstants.DRIVE_CURRENT_LIMIT, DriveConstants.DRIVE_CURRENT_LIMIT, 0);
+        angleMotor.setCurrentLimit(DriveConstants.ANGLE_CURRENT_LIMIT, DriveConstants.ANGLE_CURRENT_LIMIT, 0);
 
     }
 
@@ -48,17 +52,17 @@ public class SwerveModule {
      * @return double for cancoder value (degrees)
     */
     public double getAngle() {
-        return 359.999 - canCoder.getAbsolutePosition();
+        return ((359.99 - absEncoder.getPosition()+chassisOffset)+360)%360;
     }
 
     /** displays module information, needs the module name from super 
      * @param name the name of this module
     */
     public void displayNumbers(String name) {
-        SmartDashboard.putNumber(name + " CANCoder", 359.999 - canCoder.getAbsolutePosition());
-        SmartDashboard.putNumber(name + " NEO angle encoder", angleMotor.getPosition());
-        SmartDashboard.putNumber(name + " NEO angle target", target);
-        SmartDashboard.putNumber(name + " NEO angle encoder target", encoderTarget);
+        SmartDashboard.putNumber(name + " true angle", getAngle());
+        SmartDashboard.putNumber(name + " raw angle", absEncoder.getPosition());
+        SmartDashboard.putNumber(name + " true target", target);
+        SmartDashboard.putNumber(name + " raw target", (359.99 - target + chassisOffset)%360);
         SmartDashboard.putNumber(name + " NEO drive power", drivePower);
         SmartDashboard.putNumber(name + " NEO drive position", driveMotor.getPosition());
     }
@@ -116,20 +120,7 @@ public class SwerveModule {
      * @param angle angle to run the module at, bearing degrees
     */
     private void runAtAngle(double angle) {
-        double currentRotation = getAngle();
-
-        if (currentRotation > 180 && angle + 180 < currentRotation) {
-            currentRotation -= 360.0;
-        }
-        else if (angle > 180 && currentRotation + 180 < angle) {
-            currentRotation += 360.0;
-        }
-        
-        double deltaRotation = currentRotation - angle;
-        double deltaTicks = deltaRotation / 360 * DriveConstants.TICKS_PER_REV * DriveConstants.ANGLE_RATIO;
-        double currentTicks = angleMotor.getPosition();
-        angleMotor.setPosition(currentTicks + deltaTicks);
-        encoderTarget = currentTicks + deltaTicks;
+        angleMotor.setPosition(((359.99 - angle)+chassisOffset)%360);
     }
 
     /**runs module drive at specified power [-1, 1] 

@@ -9,19 +9,19 @@ public final class DriveConstants {
     /**speed with which the robot rotates relative to drive speed */
     public static final double ROTATION_SPEED = 0.65;
     /**drive motor gear ratio */
-    public static final double DRIVE_RATIO = 6.86;
+    public static final double DRIVE_RATIO = (45*22)/(15*14);
     /**angle motor gear ratio */
-    public static final double ANGLE_RATIO = 12.8;
+    //public static final double ANGLE_RATIO = 12.8;
     /**diameter of drive wheel, in inches */
-    public static final double WHEEL_DIAMETER = 4.0;
+    public static final double WHEEL_DIAMETER = 3.0;
     /**offset of module 1, the front left module, in degrees */
-    public static final double FRONT_LEFT_OFFSET = -44.64+1.4;//-280.98;
+    public static final double FRONT_LEFT_OFFSET = -90;
     /**offset of module 2, the front right module, in degrees */
-    public static final double FRONT_RIGHT_OFFSET = -139.91+0.6;//-313.59;
+    public static final double FRONT_RIGHT_OFFSET = 0;
     /**offset of module 3, the rear left module, in degrees */
-    public static final double REAR_LEFT_OFFSET = -16.61-2.4;//-199.95;
+    public static final double REAR_LEFT_OFFSET = 180;
     /**offset of module 4, the rear right module, in degrees */
-    public static final double REAR_RIGHT_OFFSET = -284.19-0.1;//-52.03;
+    public static final double REAR_RIGHT_OFFSET = 90;
     /**deadband of the controller's joysticks */
     public static final double DEADBAND = 0.15;
     /**factor of thrust for the drive trigger */
@@ -46,7 +46,7 @@ public final class DriveConstants {
     /**PID values for drive F coefficient of inertia */
     public static final double DRIVE_F_I = 0;//0.003;
     /**PID values for angle P */
-    public static final double ANGLE_P = 0.5;
+    public static final double ANGLE_P = 0.01;
     /**PID values for angle I */
     public static final double ANGLE_I = 0.0;
     /**PID values for angle D */
@@ -54,7 +54,7 @@ public final class DriveConstants {
     /**Drive motor current limit */
     public static final int DRIVE_CURRENT_LIMIT = 50;
     /**Angle motor current limit */
-    public static final int ANGLE_CURRENT_LIMIT = 30;
+    public static final int ANGLE_CURRENT_LIMIT = 10;
     /**Swerve Module Names */
     public static final String[] POD_NAMES = new String[]{"FL", "FR", "BL", "BR"};
 

@@ -134,4 +134,9 @@ public class WSSwerveHelper {
         return measurement;
     }
     
+    public double scaleDeadband(double input, double deadband){
+        if (Math.abs(input) < Math.abs(deadband)) return 0.0;
+        return deadband*Math.signum(input) + ((input - deadband) / (1.0 - deadband));
+    }
+    
 }
