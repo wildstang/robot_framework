@@ -5,6 +5,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax.ControlType;
 
 import org.wildstang.framework.logger.Log;
 import org.wildstang.hardware.roborio.outputs.config.WsMotorControllers;
@@ -20,7 +21,8 @@ public class WsSparkMax extends WsMotorController {
     SparkMaxPIDController controller;
     boolean isUsingController;
     boolean isChanged;
-    CANSparkMax.ControlType controlType;
+    ControlType controlType;
+    int slotID;
     
     /**
      * Constructs the motor controller from config.
@@ -48,7 +50,7 @@ public class WsSparkMax extends WsMotorController {
         motor.setInverted(invert);
         isUsingController = false;
         isChanged = true;
-        controlType = CANSparkMax.ControlType.kDutyCycle;
+        controlType = ControlType.kDutyCycle;
     }
 
     /**
@@ -189,11 +191,11 @@ public class WsSparkMax extends WsMotorController {
             if (!isUsingController){
                 motor.set(getValue());
             } else {
-                if (controlType == CANSparkMax.ControlType.kPosition){
+                if (controlType == ControlType.kPosition){
+                    controller.setReference(super.getValue(), controlType, slotID);
+                } else if (controlType == ControlType.kVelocity){
                     controller.setReference(super.getValue(), controlType);
-                } else if (controlType == CANSparkMax.ControlType.kVelocity){
-                    controller.setReference(super.getValue(), controlType);
-                } else if (controlType == CANSparkMax.ControlType.kDutyCycle){
+                } else if (controlType == ControlType.kDutyCycle){
                     controller.setReference(super.getValue(), controlType);
                 }
             }
@@ -206,12 +208,12 @@ public class WsSparkMax extends WsMotorController {
      */
     @Override
     public void setSpeed(double value){
-        if (controlType == CANSparkMax.ControlType.kDutyCycle && super.getValue()==value){
+        if (controlType == ControlType.kDutyCycle && super.getValue()==value){
             isChanged = false;
         } else {
             isChanged = true;
         }
-        controlType = CANSparkMax.ControlType.kDutyCycle;
+        controlType = ControlType.kDutyCycle;
         super.setSpeed(value);
     }
 
@@ -224,11 +226,12 @@ public class WsSparkMax extends WsMotorController {
      */
     public void initClosedLoop(double P, double I, double D, double FF){
         controller = motor.getPIDController();
-        controller.setP(P);
-        controller.setI(I);
-        controller.setD(D);
-        controller.setFF(FF);
+        controller.setP(P, 0);
+        controller.setI(I, 0);
+        controller.setD(D, 0);
+        controller.setFF(FF, 0);
         isUsingController = true;
+        slotID = 0;
     }
 
     /**
@@ -240,15 +243,29 @@ public class WsSparkMax extends WsMotorController {
      */
     public void initClosedLoop(double P, double I, double D, double FF, AbsoluteEncoder absEncoder){
         controller = motor.getPIDController();
-        controller.setP(P);
-        controller.setI(I);
-        controller.setD(D);
-        controller.setFF(FF);
+        controller.setP(P, 0);
+        controller.setI(I, 0);
+        controller.setD(D, 0);
+        controller.setFF(FF, 0);
         controller.setFeedbackDevice(absEncoder);
         controller.setPositionPIDWrappingEnabled(true);
         controller.setPositionPIDWrappingMinInput(0.0);
         controller.setPositionPIDWrappingMaxInput(360.0);
         isUsingController = true;
+        slotID = 0;
+    }
+
+    /*
+     * Adds a closed loop control slot for the sparkmax
+     * @param slotID the slot number of the constants, 0 is default, either 1-3 otherwise
+     * @param PIDFF the constants values
+     */
+    public void addClosedLoop(int slotID, double P, double I, double D, double FF){
+        controller.setP(P, slotID);
+        controller.setI(I, slotID);
+        controller.setD(D, slotID);
+        controller.setFF(FF, slotID);
+
     }
 
     /**
@@ -256,13 +273,30 @@ public class WsSparkMax extends WsMotorController {
      * @param target the encoder target value to track to
      */
     public void setPosition(double target){
-        if (super.getValue() == target && controlType == CANSparkMax.ControlType.kPosition){
+        if (super.getValue() == target && controlType == ControlType.kPosition){
             isChanged = false;
         } else{
             isChanged = true;
         }
         super.setValue(target);
-        controlType = CANSparkMax.ControlType.kPosition;
+        controlType = ControlType.kPosition;
+        slotID = 0;
+    }
+
+    /**
+     * Sets the motor to track the given position with a specific PIDFF constants
+     * @param target the encoder target to track to
+     * @param slotID the ID slot of the sparkmax to use
+     */
+    public void setPosition(double target, int slotID){
+        if (super.getValue() == target && controlType == ControlType.kPosition){
+            isChanged = false;
+        } else{
+            isChanged = true;
+        }
+        super.setValue(target);
+        controlType = ControlType.kPosition;
+        this.slotID = slotID;
     }
 
     /**
@@ -270,13 +304,13 @@ public class WsSparkMax extends WsMotorController {
      * @param target the encoder target value velocity to track to
      */
     public void setVelocity(double target){
-        if (super.getValue() == target && controlType == CANSparkMax.ControlType.kVelocity){
+        if (super.getValue() == target && controlType == ControlType.kVelocity){
             isChanged = false;
         } else{
             isChanged = true;
         }
         super.setValue(target);
-        controlType = CANSparkMax.ControlType.kVelocity;
+        controlType = ControlType.kVelocity;
     }
 
     /**
