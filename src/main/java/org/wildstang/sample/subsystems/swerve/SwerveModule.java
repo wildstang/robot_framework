@@ -1,12 +1,12 @@
 package org.wildstang.sample.subsystems.swerve;
 
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import org.wildstang.hardware.roborio.outputs.WsSparkMax;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveModule {
@@ -34,7 +34,7 @@ public class SwerveModule {
         this.absEncoder.setInverted(true);
         this.absEncoder.setPositionConversionFactor(360.0);
         this.absEncoder.setVelocityConversionFactor(360.0/60.0);
-        this.driveMotor.setCoast();
+        this.driveMotor.setBrake();
         this.angleMotor.setBrake();
 
         chassisOffset = offset;
@@ -80,7 +80,8 @@ public class SwerveModule {
             driveMotor.setBrake();
         }
         else {
-            driveMotor.setCoast();
+            //driveMotor.setCoast();
+            driveMotor.setBrake();
         }
     }
 
@@ -154,5 +155,8 @@ public class SwerveModule {
 
     public WsSparkMax getDriveMotor() {
         return driveMotor;
+    }
+    public SwerveModulePosition odoPosition(){
+        return new SwerveModulePosition(getPosition()*0.0254*0.98, new Rotation2d(Math.toRadians(360-getAngle())));
     }
 }
