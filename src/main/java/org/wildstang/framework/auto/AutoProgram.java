@@ -17,7 +17,7 @@ public abstract class AutoProgram {
 
     protected final List<AutoStep> programSteps = new ArrayList<>();
     protected int currentStep;
-    protected boolean finishedPreviousStep, finished;
+    protected boolean finishedPreviousStep, finished, programStarted;
 
     /**
      * Use this method to set the steps for this program.
@@ -31,12 +31,17 @@ public abstract class AutoProgram {
      * Collects the defined steps and starts the auto program.
      */
     public void initialize() {
-        defineSteps();
+        // prevent the steps from being double defined, AutoManager attempts to pre-define steps
+        if (programSteps.isEmpty())
+        {
+            defineSteps();
+        }
         loadStopPosition();
         currentStep = 0;
         finishedPreviousStep = false;
         finished = false;
         startStep(currentStep);
+        programStarted = true;
     }
 
     /**
@@ -44,6 +49,14 @@ public abstract class AutoProgram {
      */
     public void cleanup() {
         programSteps.clear();
+    }
+
+    /**
+     * Determines if the program's steps have been defined.
+     * @return Returns true if there are any steps.
+     */
+    public boolean areStepsDefined() {
+        return !programSteps.isEmpty();
     }
 
     /**
@@ -64,7 +77,7 @@ public abstract class AutoProgram {
                 startStep(currentStep);
             }
         }
-        if (programSteps.size() > currentStep) {
+        if (programSteps.size() > currentStep && programStarted) {
             AutoStep step = programSteps.get(currentStep); // Prevent errors caused by mistyping.
             SmartDashboard.putString("Current auto step", step.toString());
             step.update();

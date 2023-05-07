@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 
     Core core;
-    private boolean AutoFirstRun = true;
     private SendableChooser<LogLevel> logChooser;
 
     /**
@@ -69,6 +68,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Log.danger("Engaging teleoperated mode.");
+        // tell AutoManager not to preload or run any more programs
+        Core.getAutoManager().endPeriod();
         Core.getSubsystemManager().resetState();
     }
 
@@ -93,14 +94,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledPeriodic() {
-        resetRobotState();
-    }
-    
-    /**
-     * Utility functions to reset if auto has run when disabled.
-     */
-    private void resetRobotState() {
-        AutoFirstRun = true;
     }
 
     /**
@@ -109,10 +102,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         update();
-
-        if (AutoFirstRun) {
-            AutoFirstRun = false;
-        }
     }
 
     /**
