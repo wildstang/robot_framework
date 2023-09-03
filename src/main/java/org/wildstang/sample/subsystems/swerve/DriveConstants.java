@@ -3,13 +3,13 @@ package org.wildstang.sample.subsystems.swerve;
 public final class DriveConstants {
 
     /** robot length from swerve pod to swerve pod, in inches */
-    public static final double ROBOT_LENGTH = 11.5;
+    public static final double ROBOT_LENGTH = 11;
     /** robot width from swerve pod to swerve pod, in inches */
-    public static final double ROBOT_WIDTH = 11.5;
+    public static final double ROBOT_WIDTH = 11;
     /**speed with which the robot rotates relative to drive speed */
-    public static final double ROTATION_SPEED = 0.65;
+    public static final double ROTATION_SPEED = 0.50;
     /**drive motor gear ratio */
-    public static final double DRIVE_RATIO = (45*22)/(15*14);
+    public static final double DRIVE_RATIO = (45.0*22.0)/(15.0*14.0);
     /**angle motor gear ratio */
     //public static final double ANGLE_RATIO = 12.8;
     /**diameter of drive wheel, in inches */
@@ -23,9 +23,11 @@ public final class DriveConstants {
     /**offset of module 4, the rear right module, in degrees */
     public static final double REAR_RIGHT_OFFSET = 90;
     /**deadband of the controller's joysticks */
-    public static final double DEADBAND = 0.15;
+    public static final double DEADBAND = 0.05;
     /**factor of thrust for the drive trigger */
     public static final double DRIVE_THRUST = 0.4;
+    /**end game drive brake */
+    public static final double DRIVE_BRAKE = 0.4;
     /**slew rate limiter rates of limit for the drive
     *  value is max change per second
     *  i.e. 2.0 means it can go from 0 to 1.0 in 0.5 seconds
@@ -40,7 +42,7 @@ public final class DriveConstants {
     /**PID values for drive D */
     public static final double DRIVE_D = 0.1;
     /**PID values for driveF coefficient of momentum */
-    public static final double DRIVE_F_V = 0.00558*60/48*60/63*0.88;//0.00581 on old treads
+    public static final double DRIVE_F_V = 0.00536;//0.00558*1.2325;//0.00581 on old treads
     /**PID values for drive F coefficient of kinetic friction */
     public static final double DRIVE_F_K = 0.016;
     /**PID values for drive F coefficient of inertia */

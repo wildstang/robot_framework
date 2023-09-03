@@ -23,6 +23,8 @@ public class AutoManager {
     private boolean programFinished;
     private SendableChooser<AutoProgram> chooser;
     private SendableChooser<Boolean> lockinChooser;
+    private boolean hasStarted;
+    private boolean lastLock;
 
     /**
      * Loads in AutoPrograms and adds selectors to the SmartDashboard.
@@ -48,6 +50,31 @@ public class AutoManager {
             programFinished = false;
             startSleeper();
         }
+        // if an auto program hasn't started yet and only once after the lock state changes
+        else if (!hasStarted) {
+            boolean locked = lockinChooser.getSelected();
+            if (locked != lastLock) {
+                Log.info("Lock state changed to: " + locked);
+                lastLock = locked;
+                // attempt to preload the selected program
+                preloadLockedProgram();
+            }
+        }
+
+        // display currently loading and running program
+        if (runningProgram != null && runningProgram.areStepsDefined()) {
+            SmartDashboard.putString("Preloaded Autonomous Program", runningProgram.toString());
+        }
+        else {
+            SmartDashboard.putString("Preloaded Autonomous Program", "");
+        }
+        if (runningProgram != null && hasStarted) {
+            SmartDashboard.putString("Running Autonomous Program", runningProgram.toString());
+        }
+        else {
+            SmartDashboard.putString("Running Autonomous Program", "");
+        }
+
         runningProgram.update();
         if (runningProgram.isFinished()) {
             programFinished = true;
@@ -55,9 +82,40 @@ public class AutoManager {
     }
 
     /**
+     * Preloads the currently selected program from SmartDashboard if locked in.
+     */
+    public void preloadLockedProgram() {
+        if (lockinChooser.getSelected()) {
+            preloadProgram(chooser.getSelected());
+        }
+    }
+
+    /**
+     * Defines steps for the given program.
+     * @param program New program to preload.
+     */
+    private void preloadProgram(AutoProgram program) {
+        if (runningProgram != null && runningProgram.areStepsDefined()) {
+            // if this is a new program, clear out old program's steps
+            if (runningProgram != program) {
+                runningProgram.cleanup();
+            }
+            else {
+                Log.warn("Steps already defined for " + program.toString());
+                return;
+            }
+        }
+
+        runningProgram = program;
+        program.defineSteps();
+        Log.info("Preloading auto program: " + program.toString());
+    }
+
+    /**
      * Starts the currently selected program from SmartDashboard if locked in.
      */
     public void startCurrentProgram() {
+        hasStarted = true;
         if (lockinChooser.getSelected()) {
             startProgram(chooser.getSelected());
         } else {
@@ -80,7 +138,6 @@ public class AutoManager {
         runningProgram = program;
         program.initialize();
         Log.info("Starting auto program: " + program.toString());
-        SmartDashboard.putString("Running Autonomous Program", program.toString());
     }
 
     /**
@@ -88,6 +145,8 @@ public class AutoManager {
      */
     public void init() {
         programFinished = false;
+        hasStarted = false;
+        lastLock = false;
         if (runningProgram != null) {
             runningProgram.cleanup();
         }
@@ -137,5 +196,21 @@ public class AutoManager {
     public void addProgram(AutoProgram program) {
         programs.add(program);
         chooser.addOption(program.toString(), program);
+    }
+
+    /**
+     * Ends the autonomous period, prevents it from continuing into tele.
+     */
+    public void endPeriod() {
+        // prevent any more programs from being preloaded
+        hasStarted = true;
+
+        // tell all programs to clear out their steps
+        for (AutoProgram program : programs) {
+            program.cleanup();
+        }
+
+        // trigger Sleeper program on next update
+        programFinished = true;
     }
 }

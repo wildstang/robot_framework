@@ -254,6 +254,30 @@ public class WsSparkMax extends WsMotorController {
         isUsingController = true;
         slotID = 0;
     }
+    /**
+     * Sets up closed loop control for the motor
+     * @param P the P value
+     * @param I the I value
+     * @param D the D value
+     * @param FF the feed forward constant
+     */
+    public void initClosedLoop(double P, double I, double D, double FF, AbsoluteEncoder absEncoder, boolean isWrapped){
+        controller = motor.getPIDController();
+        controller.setP(P, 0);
+        controller.setI(I, 0);
+        controller.setD(D, 0);
+        controller.setFF(FF, 0);
+        controller.setFeedbackDevice(absEncoder);
+        controller.setPositionPIDWrappingEnabled(isWrapped);
+        controller.setPositionPIDWrappingMinInput(0.0);
+        controller.setPositionPIDWrappingMaxInput(360.0);
+        isUsingController = true;
+        slotID = 0;
+    }
+
+    public SparkMaxPIDController getPIDController(){
+        return motor.getPIDController();
+    }
 
     /*
      * Adds a closed loop control slot for the sparkmax

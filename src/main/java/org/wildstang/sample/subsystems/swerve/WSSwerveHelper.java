@@ -78,8 +78,8 @@ public class WSSwerveHelper {
      * @param i_gyro the gyro value, field centric, in bearing degrees
      * @return SwerveSignal that is the command for the robot to move
      */
-    public SwerveSignal setAuto(double i_power, double i_heading, double i_rot, double i_gyro) {
-        return setDrive(i_power * -Math.sin(Math.toRadians(i_heading)), i_power * -Math.cos(Math.toRadians(i_heading)), i_rot, i_gyro);
+    public SwerveSignal setAuto(double i_power, double i_heading, double i_rot, double i_gyro, double xOffset, double yOffset) {
+        return setDrive(i_power * -Math.sin(Math.toRadians(i_heading))+ xOffset*.5, i_power * -Math.cos(Math.toRadians(i_heading))+ yOffset*.5, i_rot, i_gyro); //TODO: change xxoffset multiplier
     }
 
     /**automatically creates a rotational joystick value to rotate the robot towards a specific target
@@ -99,22 +99,19 @@ public class WSSwerveHelper {
         else {
             rotPID = (rotDelta + 360) / 180;
         } 
-        return rotPID;
+        return Math.signum(rotPID) * Math.min(Math.abs(rotPID*2.5), 1.0);
     }
 
     /**determines the translational magnitude of the robot in autonomous
      * 
-     * @param pathPos path data for position of the robot, inches
      * @param pathVel path data for velocity of the robot, inches
-     * @param distTravelled distance the robot has travelled, inches
      * @return double for magnitude of translational vector
      */
-    public double getAutoPower(double pathPos, double pathVel, double distTravelled) {
+    public double getAutoPower(double pathVel) {
         if (pathVel == 0) return 0;
         double guess = pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + 0.02 * (pathVel - prevVel) * DriveConstants.DRIVE_F_I;
         this.prevVel = pathVel;
-        double check = DriveConstants.DRIVE_P * (pathPos - distTravelled);
-        return -(guess + check);
+        return -(guess);
     }
 
     /**returns magnitude of vector components */
@@ -136,7 +133,7 @@ public class WSSwerveHelper {
     
     public double scaleDeadband(double input, double deadband){
         if (Math.abs(input) < Math.abs(deadband)) return 0.0;
-        return deadband*Math.signum(input) + ((input - deadband) / (1.0 - deadband));
+        return Math.signum(input)*((Math.abs(input) - deadband) / (1.0 - deadband));
     }
     
 }
