@@ -15,7 +15,6 @@ import org.wildstang.sample.subsystems.targeting.AimHelper;
 import org.wildstang.sample.subsystems.targeting.LimeConsts;
 import org.wildstang.hardware.roborio.outputs.WsSparkMax;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -66,8 +65,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
     private double pathYOffset = 0;
     private boolean autoOverride;
     private boolean isBlue;
-    private boolean isStation;
-    private boolean autoOdo = false;
+    private boolean autoTag = false;
     private boolean isEndGame = false;
     
     private final double mToIn = 39.37;
@@ -78,7 +76,6 @@ public class SwerveDrive extends SwerveDriveTemplate {
     private SwerveSignal swerveSignal;
     private WSSwerveHelper swerveHelper = new WSSwerveHelper();
     private SwerveDriveOdometry odometry;
-    private Pose2d robotPose;
     private Timer autoTimer = new Timer();
 
     private AimHelper limelight;
@@ -162,7 +159,6 @@ public class SwerveDrive extends SwerveDriveTemplate {
         
         //assign thrust
         thrustValue = 1 - DriveConstants.DRIVE_THRUST + DriveConstants.DRIVE_THRUST * Math.abs(rightTrigger.getValue());
-        //if (leftBumper.getValue()) thrustValue = 1 - DriveConstants.DRIVE_THRUST;
         if (isEndGame) thrustValue = (1 - DriveConstants.DRIVE_THRUST) - Math.abs(rightTrigger.getValue()) * DriveConstants.DRIVE_BRAKE;
         xSpeed *= thrustValue;
         ySpeed *= thrustValue;
@@ -173,19 +169,21 @@ public class SwerveDrive extends SwerveDriveTemplate {
             if (driveState == driveType.TELEOP){
                 driveState = driveType.LL;
                 autoOverride = false;
-                isStation = false;
             }
         } else {
             if (driveState == driveType.LL) {
                 driveState = driveType.TELEOP;
             }
         }
+        // turn on driver override for auto score
         if (source == rightStickButton && rightStickButton.getValue()){
             autoOverride = true;
         }
+        //used for determining the offsets in auto score/auto station
         aimOffset = swerveHelper.scaleDeadband(leftStickX.getValue(), DriveConstants.DEADBAND);
         vertOffset = swerveHelper.scaleDeadband(-leftStickY.getValue(), 3*DriveConstants.DEADBAND);
 
+        //auto drive to the station location
         if (leftBumper.getValue()){
             driveState = driveType.STATION;
         } else {
@@ -265,7 +263,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
 
     @Override
     public void update() {
-        robotPose = odometry.update(odoAngle(), odoPosition());
+        odometry.update(odoAngle(), odoPosition());
 
         if (driveState == driveType.CROSS) {
             //set to cross - done in inputupdate
@@ -295,8 +293,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
             //get controller generated rotation value
             rotSpeed = Math.max(-0.2, Math.min(0.2, swerveHelper.getRotControl(pathTarget, getGyroAngle())));
             //ensure rotation is never more than 0.2 to prevent normalization of translation from occuring
-            if (autoOdo){
-                //pathX += 
+            if (autoTag){
                 xSpeed = limelight.getScoreX(aimOffset);
                 ySpeed = limelight.getScoreY(vertOffset);
                 if (Math.abs(xSpeed) > 0.3) xSpeed = Math.signum(xSpeed) * 0.3;
@@ -348,14 +345,12 @@ public class SwerveDrive extends SwerveDriveTemplate {
                 rotSpeed = swerveHelper.getRotControl(rotTarget, getGyroAngle());
             }
             xSpeed = limelight.getStationX(aimOffset);
-            ySpeed = limelight.getStationY(vertOffset);
-            if (Math.abs(xSpeed) > 0.6) xSpeed = Math.signum(xSpeed) * 0.6;
-            if (Math.abs(ySpeed) > 0.6) ySpeed = Math.signum(ySpeed) * 0.6; 
+            ySpeed = 0.65*limelight.getStationY(vertOffset);
+            if (Math.abs(xSpeed) > 0.5) xSpeed = Math.signum(xSpeed) * 0.5;
+            if (Math.abs(ySpeed) > 0.5) ySpeed = Math.signum(ySpeed) * 0.5; 
             this.swerveSignal = swerveHelper.setDrive(xSpeed, ySpeed, rotSpeed, getGyroAngle());            
             drive();
         }
-        // SmartDashboard.putNumber("Align robotY", robotPose.getY());
-        // SmartDashboard.putNumber("Align robotX", robotPose.getX());
         SmartDashboard.putNumber("Gyro Reading", getGyroAngle());
         SmartDashboard.putNumber("X speed", xSpeed);
         SmartDashboard.putNumber("Y speed", ySpeed);
@@ -365,8 +360,6 @@ public class SwerveDrive extends SwerveDriveTemplate {
         SmartDashboard.putNumber("Auto velocity", pathVel);
         SmartDashboard.putNumber("Auto translate direction", pathHeading);
         SmartDashboard.putNumber("Auto rotation target", pathTarget);
-        // SmartDashboard.putNumber("Absolute X Position", limelight.getAbsolutePosition()[0]);
-        // SmartDashboard.putNumber("Absolute Y Distance", limelight.getAbsolutePosition()[1]);
         SmartDashboard.putNumber("Gyro Roll", gyro.getRoll());
         SmartDashboard.putNumber("Gyro Pitch", gyro.getPitch());
     }
@@ -385,13 +378,11 @@ public class SwerveDrive extends SwerveDriveTemplate {
         aimOffset = 0.0;
         vertOffset = 0.0;
         autoOverride = false;
-        isStation = false;
         isEndGame = false;
-        autoOdo = false;
+        autoTag = false;
 
         isFieldCentric = true;
         isSnake = false;
-        robotPose = new Pose2d();
     }
 
     @Override
@@ -488,7 +479,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
         autoTimer.start();
     }
     public Pose2d returnPose(double returnVelocity){
-        // if (autoOdo && limelight.TargetInView() && autoTimer.hasElapsed(0.1)){
+        // if (autoTag && limelight.TargetInView() && autoTimer.hasElapsed(0.1)){
         //     if (limelight.dataValid(isBlue) && swerveHelper.getAutoPower(returnVelocity)<0.33){
         //         odometry.resetPosition(odoAngle(), odoPosition(), new Pose2d(new Translation2d(limelight.getAbsolutePosition(isBlue)[0], 
         //             limelight.getAbsolutePosition(isBlue)[1]), odoAngle()));
@@ -501,8 +492,8 @@ public class SwerveDrive extends SwerveDriveTemplate {
     public double getRotTarget(){
         return rotTarget;
     }
-    public void setAutoOdo(boolean isOn, boolean isBlue){
-        autoOdo = isOn;
+    public void setAutoTag(boolean isOn, boolean isBlue){
+        autoTag = isOn;
         this.isBlue = isBlue;
     }
     private double getClosestRotation(){
