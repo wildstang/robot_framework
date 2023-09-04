@@ -10,6 +10,7 @@ UPSTREAM_BRANCH="main"
 
 fork=$1
 branch=$2
+push_changes=$3
 
 # check parameters
 if [ $# -lt 1 ]; then
@@ -23,17 +24,21 @@ fi
 if [ $fork == "update" ]; then
     git remote add upstream $UPSTREAM
     git pull upstream $branch
-    git push
+    if [ $push_changes == "push" ]; then
+        git push
+    fi
     exit 0
 fi
 
-# clone and enter repo
+# clone then enter the upstream repo
 git clone $UPSTREAM framework_fork
 cd framework_fork
 
-# add new remote and push
+# add a remote for the new repo then push to it
 git remote add fork "${GITHUB}/${fork}"
 git push fork $branch:$UPSTREAM_BRANCH
+
+# check for common errors
 error=$?
 if [ $error -eq 128 ]; then
     echo ""
@@ -53,13 +58,13 @@ fi
 git tag -a $fork -m "wildstang/${fork} forked from here"
 git push origin $fork
 
-# remove old repo and reclone
+# remove old repo, then clone the new repo
 cd ..
 rm -rf framework_fork
 git clone "${GITHUB}/${fork}"
 cd $fork
 
-# update year
+# update year across the repo, pull the year from the beginning of the new repo name
 if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     year=$(echo $fork | cut -c1-4)
 
@@ -77,7 +82,9 @@ if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     # automatically push year update
     git add --all
     git commit -m "[fork.sh] Updated project year to ${year}"
-    git push
+    if [ $push_changes == "push" ]; then
+        git push
+    fi
 
     # make new year20XX package
     mv src/main/java/org/wildstang/sample "src/main/java/org/wildstang/year${year}"
@@ -89,5 +96,9 @@ if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     # automatically push year directory
     git add --all
     git commit -m "[fork.sh] Created year${year} package"
-    git push
+    if [ $push_changes == "push" ]; then
+        git push
+    fi
+else
+    echo "Year not found in repo name"
 fi
