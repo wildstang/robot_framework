@@ -11,11 +11,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * Once the Main class starts this class, the VM is configured to call the
+ * functions corresponding to each mode, as described in the IterativeRobotBase
+ * documentation. In summary, this class is the root of everything that the
+ * robot does. Everytime the driver station or FMS tells the robot to enter a
+ * new mode, this class handles that instruction.
+ * 
+ * In general, this class should not be modified.
+ * 
+ * @see <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj/IterativeRobotBase.html">IterativeRobotBase</a>
  */
 public class Robot extends TimedRobot {
 
@@ -23,7 +27,7 @@ public class Robot extends TimedRobot {
     private SendableChooser<LogLevel> logChooser;
 
     /**
-     * Runs on initialization, creates and configure framework Core.
+     * Runs on initialization, creates and configures the framework Core.
      */
     @Override
     public void robotInit() {
@@ -45,7 +49,7 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * Runs when robot is disabled.
+     * Runs when robot is disabled, announces that the robot has been disabled.
      */
     @Override
     public void disabledInit() {
@@ -53,7 +57,8 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * Runs when autonomous is enabled.
+     * Runs when autonomous is enabled. Resets all the subsystems, then starts
+     * the currently selected (and locked in) auto program.
      */
     @Override
     public void autonomousInit() {
@@ -64,6 +69,8 @@ public class Robot extends TimedRobot {
 
     /**
      * Runs when teleoperated is enabled.
+     * Cleans up from autonomous then resets all the subsystems.
+     * Note: once teleopInit() is called auto cannot be run again.
      */
     @Override
     public void teleopInit() {
@@ -74,7 +81,8 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * Runs when test is enabled.
+     * Runs when test is enabled. Currently does nothing.
+     * @see <a href="https://github.com/wildstang/robot_framework/issues/10">robot_framework#10</a>
      */
     @Override
     public void testInit() {
@@ -83,6 +91,8 @@ public class Robot extends TimedRobot {
 
     /**
      * Runs repeatedly, regardless of mode and state.
+     * Tells the core to run each manager.
+     * @see <a href="https://github.com/wildstang/robot_framework/issues/26">robot_framework#26</a>
      */
     @Override
     public void robotPeriodic() {
@@ -90,7 +100,7 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * Runs repeatedly while robot is disabled.
+     * Runs repeatedly while robot is disabled. Currently does nothing.
      */
     @Override
     public void disabledPeriodic() {
@@ -98,6 +108,7 @@ public class Robot extends TimedRobot {
 
     /**
      * Runs repeatedly while autonomous is enabled.
+     * Tells the core to run each manager.
      */
     @Override
     public void autonomousPeriodic() {
@@ -106,6 +117,7 @@ public class Robot extends TimedRobot {
 
     /**
      * Runs repeatedly while teleoperated is enabled.
+     * Tells the core to run each manager.
      */
     @Override
     public void teleopPeriodic() {
@@ -113,7 +125,7 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * Run core update and display statistics on dashboard.
+     * Tell the core to run each manager; display statistics on the dashboard.
      */
     private void update() {
         // update log level from chooser
@@ -134,7 +146,8 @@ public class Robot extends TimedRobot {
     }
 
     /**
-     * Runs repeatedly while test is enabled.
+     * Runs repeatedly while test is enabled. Currently does nothing.
+     * @see <a href="https://github.com/wildstang/robot_framework/issues/10">robot_framework#10</a>
      */
     @Override
     public void testPeriodic() {
