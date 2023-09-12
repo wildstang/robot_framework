@@ -9,8 +9,8 @@ import org.wildstang.framework.subsystems.drive.PathFollowingDrive;
 import org.wildstang.hardware.roborio.inputs.WsAnalogInput;
 import org.wildstang.hardware.roborio.inputs.WsDigitalInput;
 import org.wildstang.hardware.roborio.outputs.WsSparkMax;
-import org.wildstang.sample.robot.WSInputs;
-import org.wildstang.sample.robot.WSOutputs;
+import org.wildstang.sample.robot.WsInputs;
+import org.wildstang.sample.robot.WsOutputs;
 
 import edu.wpi.first.wpilibj.I2C;
 
@@ -32,15 +32,15 @@ public class Drive extends PathFollowingDrive {
 
     @Override
     public void init() {
-        left = (WsSparkMax) Core.getOutputManager().getOutput(WSOutputs.LEFT_DRIVE);
-        right = (WsSparkMax) Core.getOutputManager().getOutput(WSOutputs.RIGHT_DRIVE);
+        // left = (WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.LEFT_DRIVE);
+        // right = (WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.RIGHT_DRIVE);
         motorSetUp(left);
         motorSetUp(right);
-        throttleJoystick = (WsAnalogInput) Core.getInputManager().getInput(WSInputs.DRIVER_LEFT_JOYSTICK_Y);
+        throttleJoystick = (WsAnalogInput) Core.getInputManager().getInput(WsInputs.DRIVER_LEFT_JOYSTICK_Y);
         throttleJoystick.addInputListener(this);
-        headingJoystick = (WsAnalogInput) Core.getInputManager().getInput(WSInputs.DRIVER_RIGHT_JOYSTICK_X);
+        headingJoystick = (WsAnalogInput) Core.getInputManager().getInput(WsInputs.DRIVER_RIGHT_JOYSTICK_X);
         headingJoystick.addInputListener(this);
-        baseLock = (WsDigitalInput) Core.getInputManager().getInput(WSInputs.DRIVER_RIGHT_SHOULDER);
+        baseLock = (WsDigitalInput) Core.getInputManager().getInput(WsInputs.DRIVER_RIGHT_SHOULDER);
         baseLock.addInputListener(this);
         resetState();
     }
