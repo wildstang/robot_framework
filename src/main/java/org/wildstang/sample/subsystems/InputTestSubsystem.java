@@ -6,7 +6,7 @@ import org.wildstang.framework.io.inputs.AnalogInput;
 import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.hardware.roborio.inputs.WsJoystickAxis;
-import org.wildstang.sample.robot.WSInputs;
+import org.wildstang.sample.robot.WsInputs;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,54 +18,54 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class InputTestSubsystem implements Subsystem {
 
-    WSInputs axes[] = {
-        WSInputs.DRIVER_LEFT_JOYSTICK_X,
-        WSInputs.DRIVER_LEFT_JOYSTICK_Y,
-        WSInputs.DRIVER_LEFT_TRIGGER,
-        WSInputs.DRIVER_RIGHT_JOYSTICK_X,
-        WSInputs.DRIVER_RIGHT_JOYSTICK_Y,
-        WSInputs.DRIVER_RIGHT_TRIGGER,
+    WsInputs axes[] = {
+        WsInputs.DRIVER_LEFT_JOYSTICK_X,
+        WsInputs.DRIVER_LEFT_JOYSTICK_Y,
+        WsInputs.DRIVER_LEFT_TRIGGER,
+        WsInputs.DRIVER_RIGHT_JOYSTICK_X,
+        WsInputs.DRIVER_RIGHT_JOYSTICK_Y,
+        WsInputs.DRIVER_RIGHT_TRIGGER,
 
-        WSInputs.MANIPULATOR_LEFT_JOYSTICK_X,
-        WSInputs.MANIPULATOR_LEFT_JOYSTICK_Y,
-        WSInputs.MANIPULATOR_LEFT_TRIGGER,
-        WSInputs.MANIPULATOR_RIGHT_JOYSTICK_X,
-        WSInputs.MANIPULATOR_RIGHT_JOYSTICK_Y,
-        WSInputs.MANIPULATOR_RIGHT_TRIGGER
+        WsInputs.MANIPULATOR_LEFT_JOYSTICK_X,
+        WsInputs.MANIPULATOR_LEFT_JOYSTICK_Y,
+        WsInputs.MANIPULATOR_LEFT_TRIGGER,
+        WsInputs.MANIPULATOR_RIGHT_JOYSTICK_X,
+        WsInputs.MANIPULATOR_RIGHT_JOYSTICK_Y,
+        WsInputs.MANIPULATOR_RIGHT_TRIGGER
     };
 
-    WSInputs buttons[] = {
-        WSInputs.DRIVER_DPAD_LEFT,
-        WSInputs.DRIVER_DPAD_DOWN,
-        WSInputs.DRIVER_DPAD_UP,
-        WSInputs.DRIVER_DPAD_RIGHT,
+    WsInputs buttons[] = {
+        WsInputs.DRIVER_DPAD_LEFT,
+        WsInputs.DRIVER_DPAD_DOWN,
+        WsInputs.DRIVER_DPAD_UP,
+        WsInputs.DRIVER_DPAD_RIGHT,
 
-        WSInputs.MANIPULATOR_DPAD_LEFT,
-        WSInputs.MANIPULATOR_DPAD_DOWN,
-        WSInputs.MANIPULATOR_DPAD_UP,
-        WSInputs.MANIPULATOR_DPAD_RIGHT,
+        WsInputs.MANIPULATOR_DPAD_LEFT,
+        WsInputs.MANIPULATOR_DPAD_DOWN,
+        WsInputs.MANIPULATOR_DPAD_UP,
+        WsInputs.MANIPULATOR_DPAD_RIGHT,
         
-        WSInputs.DRIVER_FACE_LEFT,
-        WSInputs.DRIVER_FACE_DOWN,
-        WSInputs.DRIVER_FACE_UP,
-        WSInputs.DRIVER_FACE_RIGHT,
-        WSInputs.DRIVER_LEFT_SHOULDER,
-        WSInputs.DRIVER_RIGHT_SHOULDER,
-        WSInputs.DRIVER_SELECT,
-        WSInputs.DRIVER_START,
-        WSInputs.DRIVER_LEFT_JOYSTICK_BUTTON,
-        WSInputs.DRIVER_RIGHT_JOYSTICK_BUTTON,
+        WsInputs.DRIVER_FACE_LEFT,
+        WsInputs.DRIVER_FACE_DOWN,
+        WsInputs.DRIVER_FACE_UP,
+        WsInputs.DRIVER_FACE_RIGHT,
+        WsInputs.DRIVER_LEFT_SHOULDER,
+        WsInputs.DRIVER_RIGHT_SHOULDER,
+        WsInputs.DRIVER_SELECT,
+        WsInputs.DRIVER_START,
+        WsInputs.DRIVER_LEFT_JOYSTICK_BUTTON,
+        WsInputs.DRIVER_RIGHT_JOYSTICK_BUTTON,
         
-        WSInputs.MANIPULATOR_FACE_LEFT,
-        WSInputs.MANIPULATOR_FACE_DOWN,
-        WSInputs.MANIPULATOR_FACE_UP,
-        WSInputs.MANIPULATOR_FACE_RIGHT,
-        WSInputs.MANIPULATOR_LEFT_SHOULDER,
-        WSInputs.MANIPULATOR_RIGHT_SHOULDER,
-        WSInputs.MANIPULATOR_SELECT,
-        WSInputs.MANIPULATOR_START,
-        WSInputs.MANIPULATOR_LEFT_JOYSTICK_BUTTON,
-        WSInputs.MANIPULATOR_RIGHT_JOYSTICK_BUTTON
+        WsInputs.MANIPULATOR_FACE_LEFT,
+        WsInputs.MANIPULATOR_FACE_DOWN,
+        WsInputs.MANIPULATOR_FACE_UP,
+        WsInputs.MANIPULATOR_FACE_RIGHT,
+        WsInputs.MANIPULATOR_LEFT_SHOULDER,
+        WsInputs.MANIPULATOR_RIGHT_SHOULDER,
+        WsInputs.MANIPULATOR_SELECT,
+        WsInputs.MANIPULATOR_START,
+        WsInputs.MANIPULATOR_LEFT_JOYSTICK_BUTTON,
+        WsInputs.MANIPULATOR_RIGHT_JOYSTICK_BUTTON
     };
 
     @Override
@@ -82,10 +82,10 @@ public class InputTestSubsystem implements Subsystem {
 
     @Override
     public void update() {
-        for (WSInputs axis : axes) {
+        for (WsInputs axis : axes) {
             putAxis((WsJoystickAxis) Core.getInputManager().getInput(axis));
         }
-        for (WSInputs button : buttons) {
+        for (WsInputs button : buttons) {
             putButton((DigitalInput) Core.getInputManager().getInput(button));
         }
     }

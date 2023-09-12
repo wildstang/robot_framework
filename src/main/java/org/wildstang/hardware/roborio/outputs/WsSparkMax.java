@@ -240,7 +240,6 @@ public class WsSparkMax extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param absEncoder absolute encoder used to provided PID feedback
      */
     public void initClosedLoop(double P, double I, double D, double FF, AbsoluteEncoder absEncoder){
         controller = motor.getPIDController();
@@ -261,8 +260,6 @@ public class WsSparkMax extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param absEncoder absolute encoder used to provided PID feedback
-     * @param isWrapped whether wrapping should be enabled
      */
     public void initClosedLoop(double P, double I, double D, double FF, AbsoluteEncoder absEncoder, boolean isWrapped){
         controller = motor.getPIDController();

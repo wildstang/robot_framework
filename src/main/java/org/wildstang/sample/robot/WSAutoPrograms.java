@@ -1,16 +1,19 @@
 package org.wildstang.sample.robot;
 
 import org.wildstang.framework.core.AutoPrograms;
-import org.wildstang.sample.auto.SampleAutoProgram;
+import org.wildstang.sample.auto.Programs.SampleAutoProgram;
+import org.wildstang.sample.auto.Programs.Testprogram;
 
 /**
  * All active AutoPrograms are enumerated here.
  * It is used in Robot.java to initialize all programs.
  */
-public enum WSAutoPrograms implements AutoPrograms {
+public enum WsAutoPrograms implements AutoPrograms {
 
     // enumerate programs
-    TEST_PROGRAM("Sample", SampleAutoProgram.class)
+    //SAMPLE_PROGRAM("Sample", SampleAutoProgram.class),
+    //TEST_PROGRAM("Test Program", Testprogram.class),
+
     ;
 
     /**
@@ -27,7 +30,7 @@ public enum WSAutoPrograms implements AutoPrograms {
      * @param name Name, must match that in class to prevent errors.
      * @param programClass Class containing AutoProgram
      */
-    WSAutoPrograms(String name, Class<?> programClass) {
+    WsAutoPrograms(String name, Class<?> programClass) {
         this.name = name;
         this.programClass = programClass;
     }

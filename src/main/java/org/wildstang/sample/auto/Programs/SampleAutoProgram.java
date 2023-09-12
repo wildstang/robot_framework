@@ -1,10 +1,9 @@
-package org.wildstang.sample.auto;
+package org.wildstang.sample.auto.Programs;
 
 import org.wildstang.framework.auto.AutoProgram;
 import org.wildstang.framework.auto.steps.PathFollowerStep;
 import org.wildstang.framework.core.Core;
-import org.wildstang.sample.robot.WSSubsystems;
-import org.wildstang.sample.subsystems.drive.Drive;
+import org.wildstang.sample.robot.WsSubsystems;
 import frc.paths.*;
 
 /**
@@ -15,8 +14,6 @@ public class SampleAutoProgram extends AutoProgram {
 
     @Override
     protected void defineSteps() {
-        addStep(new PathFollowerStep(new Test().getPath(),
-                (Drive) Core.getSubsystemManager().getSubsystem(WSSubsystems.DRIVE)));
     }
 
     @Override
