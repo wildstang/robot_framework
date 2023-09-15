@@ -72,7 +72,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
     private final Pigeon2 gyro = new Pigeon2(CANConstants.GYRO);
     public SwerveModule[] modules;
     private SwerveSignal swerveSignal;
-    private WSSwerveHelper swerveHelper = new WSSwerveHelper();
+    private WsSwerveHelper swerveHelper = new WsSwerveHelper();
     private SwerveDriveOdometry odometry;
     private Timer autoTimer = new Timer();
 

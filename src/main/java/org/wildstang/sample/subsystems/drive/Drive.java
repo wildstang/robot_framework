@@ -27,7 +27,7 @@ public class Drive extends PathFollowingDrive {
     private double throttle;
     private DriveSignal signal;
 
-    private WSDriveHelper helper = new WSDriveHelper();
+    private WsDriveHelper helper = new WsDriveHelper();
     private final AHRS gyro = new AHRS(I2C.Port.kOnboard);
 
     @Override

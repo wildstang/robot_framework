@@ -13,7 +13,7 @@ import org.wildstang.sample.subsystems.swerve.SwerveDrive;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 
-public class Testprogram extends AutoProgram{
+public class TestProgram extends AutoProgram{
     
     protected void defineSteps(){
         SwerveDrive swerve = (SwerveDrive) Core.getSubsystemManager().getSubsystem(WsSubsystems.SWERVE_DRIVE);
@@ -22,8 +22,7 @@ public class Testprogram extends AutoProgram{
         group1.addStep(new PathHeadingStep(180.0, swerve));
         addStep(group1);
         addStep(new StartOdometryStep(3.0, 5.0, 180.0, true));
-        addStep(new SwervePathFollowerStep(PathPlanner.loadPath("Test_100", new PathConstraints(4, 3)),
-             swerve, true));
+        addStep(new SwervePathFollowerStep(PathPlanner.loadPath("Test_100", new PathConstraints(4, 3)), swerve, true));
     }
 
     public String toString(){
