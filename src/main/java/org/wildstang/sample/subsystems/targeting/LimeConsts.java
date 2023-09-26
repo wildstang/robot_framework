@@ -23,8 +23,8 @@ public class LimeConsts {
 
     public double STATION_VERTICAL = 9.0 + 42.19;//inches
 
-    public double RED_STATION_X = 1.266;//meters
-    public double BLUE_STATION_X = 6.75;//meters
+    public double RED_STATION_X = 1.266*39.3701;//inches
+    public double BLUE_STATION_X = 6.75*39.3701;//inches
     public double STATION_HORIZONTAL = 24.0;//inches
     public double STATION_OFFSETS = 20;
     

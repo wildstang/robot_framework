@@ -1,6 +1,6 @@
 package org.wildstang.sample.subsystems.swerve;
 
-public class WSSwerveHelper {
+public class WsSwerveHelper {
 
     private double magnitude;
     private double direction;

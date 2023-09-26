@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
  * Below each Motor, PWM, Digital Output, Solenoid, and Relay is enumerated with their appropriated IDs.
  * The enumeration includes a name, output type, and output config object.
  */
-public enum WSOutputs implements Outputs {
+public enum WsOutputs implements Outputs {
 
     // ********************************
     // PWM Outputs
@@ -31,11 +31,7 @@ public enum WSOutputs implements Outputs {
     // ---------------------------------
     // Motors
     // ---------------------------------
-    LEFT_DRIVE("Left Drive Motor", new WsSparkMaxConfig(CANConstants.LEFT_DRIVE, true)),
-    RIGHT_DRIVE("Right Drive Motor", new WsSparkMaxConfig(CANConstants.RIGHT_DRIVE, true)),
-    LEFT_DRIVE_FOLLOWER("Left Drive Follower", new WsSparkMaxFollowerConfig("Left Drive Motor", CANConstants.LEFT_DRIVE_FOLLOWER, true)),
-    RIGHT_DRIVE_FOLLOWER("Right Drive Follower", new WsSparkMaxFollowerConfig("Right Drive Motor", CANConstants.RIGHT_DRIVE_FOLLOWER, true)),
-    TEST_MOTOR("Test Motor", new WsPhoenixConfig(CANConstants.EXAMPLE_MOTOR_CONTROLLER, WsMotorControllers.VICTOR_SPX)),
+    //rename this String, and it shouldn't be a follower, but a normal motor
 
     DRIVE1("Module 1 Drive Motor", new WsSparkMaxConfig(CANConstants.DRIVE1, true)),
     ANGLE1("Module 1 Angle Motor", new WsSparkMaxConfig(CANConstants.ANGLE1, true)),
@@ -46,21 +42,20 @@ public enum WSOutputs implements Outputs {
     DRIVE4("Module 4 Drive Motor", new WsSparkMaxConfig(CANConstants.DRIVE4, true)),
     ANGLE4("Module 4 Angle Motor", new WsSparkMaxConfig(CANConstants.ANGLE4, true)),
     
-
     // ---------------------------------
     // Servos
     // ---------------------------------
-    TEST_SERVO("Test Servo", new WsServoConfig(0, 0)),
+    //TEST_SERVO("Test Servo", new WsServoConfig(0, 0)),
 
     // ********************************
     // DIO Outputs
     // ********************************
-    DIO_O_0("Test Digital Output 0", new WsDigitalOutputConfig(0, true)), // Channel 0, Initially Low
+    //DIO_O_0("Test Digital Output 0", new WsDigitalOutputConfig(0, true)), // Channel 0, Initially Low
 
     // ********************************
     // Solenoids
     // ********************************
-    TEST_SOLENOID("Test Solenoid", new WsSolenoidConfig(PneumaticsModuleType.REVPH, 0, false)),
+    //TEST_SOLENOID("Test Solenoid", new WsSolenoidConfig(PneumaticsModuleType.REVPH, 0, false)),
     
     // ********************************
     // Relays
@@ -69,13 +64,12 @@ public enum WSOutputs implements Outputs {
     // ********************************
     // NetworkTables
     // ********************************
-    LL_MODE("camMode", new WsRemoteAnalogOutputConfig("limelight", 0)),
-    LL_LEDS("ledMode", new WsRemoteAnalogOutputConfig("limelight", 0)),
+    // LL_MODE("camMode", new WsRemoteAnalogOutputConfig("limelight", 0)),
+    // LL_LEDS("ledMode", new WsRemoteAnalogOutputConfig("limelight", 0)),
 
     // ********************************
     // Others ...
     // ********************************
-    LED("LEDs", new WsI2COutputConfig(I2C.Port.kMXP, 0x10));
 
     ; // end of enum
 
@@ -93,7 +87,7 @@ public enum WSOutputs implements Outputs {
      * @param p_name Name, must match that in class to prevent errors.
      * @param p_config Corresponding configuration for OutputType.
      */
-    WSOutputs(String p_name, OutputConfig p_config) {
+    WsOutputs(String p_name, OutputConfig p_config) {
         m_name = p_name;
         m_config = p_config;
     }

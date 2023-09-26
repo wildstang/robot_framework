@@ -34,10 +34,10 @@ public class Robot extends TimedRobot {
         Log.info("Initializing robot.");
 
         core = new Core(RoboRIOInputFactory.class, RoboRIOOutputFactory.class);
-        core.createInputs(WSInputs.values());
-        core.createOutputs(WSOutputs.values());
-        core.createSubsystems(WSSubsystems.values());
-        core.createAutoPrograms(WSAutoPrograms.values());
+        core.createInputs(WsInputs.values());
+        core.createOutputs(WsOutputs.values());
+        core.createSubsystems(WsSubsystems.values());
+        core.createAutoPrograms(WsAutoPrograms.values());
         
         // create smart dashboard option for LogLevel
         logChooser = new SendableChooser<>();

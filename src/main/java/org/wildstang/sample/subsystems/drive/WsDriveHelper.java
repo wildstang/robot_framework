@@ -2,7 +2,7 @@ package org.wildstang.sample.subsystems.drive;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class WSDriveHelper {
+public class WsDriveHelper {
 
     public static final double DEADBAND = 0.05;
     private DriveSignal driveSignal = new DriveSignal(0, 0);

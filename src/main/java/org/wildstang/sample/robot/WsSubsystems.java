@@ -2,21 +2,19 @@ package org.wildstang.sample.robot;
 
 import org.wildstang.framework.core.Subsystems;
 import org.wildstang.sample.subsystems.SampleSubsystem;
-import org.wildstang.sample.subsystems.drive.Drive;
 import org.wildstang.sample.subsystems.swerve.SwerveDrive;
-import org.wildstang.sample.subsystems.targeting.AimHelper;
+import org.wildstang.sample.subsystems.targeting.WsVision;
 
 /**
  * All subsystems are enumerated here.
  * It is used in Robot.java to initialize all subsystems.
  */
-public enum WSSubsystems implements Subsystems {
+public enum WsSubsystems implements Subsystems {
 
     // enumerate subsystems
-    DRIVE("Drive", Drive.class),
+    WS_VISION("Ws Vision", WsVision.class),
     SWERVE_DRIVE("Swerve Drive", SwerveDrive.class),
-    AIM_HELPER("Aim Helper", AimHelper.class),
-    SAMPLE("Sample", SampleSubsystem.class)
+    //SAMPLE("Sample", SampleSubsystem.class)
     ;
 
     /**
@@ -33,7 +31,7 @@ public enum WSSubsystems implements Subsystems {
      * @param name Name, must match that in class to prevent errors.
      * @param subsystemClass Class containing Subsystem
      */
-    WSSubsystems(String name, Class<?> subsystemClass) {
+    WsSubsystems(String name, Class<?> subsystemClass) {
         this.name = name;
         this.subsystemClass = subsystemClass;
     }

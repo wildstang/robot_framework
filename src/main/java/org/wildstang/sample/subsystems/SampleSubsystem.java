@@ -3,9 +3,9 @@ package org.wildstang.sample.subsystems;
 import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.hardware.roborio.inputs.WsJoystickAxis;
-import org.wildstang.hardware.roborio.outputs.WsPhoenix;
-import org.wildstang.sample.robot.WSInputs;
-import org.wildstang.sample.robot.WSOutputs;
+//import org.wildstang.hardware.roborio.outputs.WsPhoenix;
+import org.wildstang.sample.robot.WsInputs;
+import org.wildstang.sample.robot.WsOutputs;
 
 /**
  * Sample Subsystem that controls a motor with a joystick.
@@ -16,7 +16,7 @@ public class SampleSubsystem implements Subsystem {
     WsJoystickAxis joystick;
 
     // outputs
-    WsPhoenix motor;
+    //WsPhoenix motor;
 
     // states
     double speed;
@@ -24,9 +24,9 @@ public class SampleSubsystem implements Subsystem {
 
     @Override
     public void init() {
-        joystick = (WsJoystickAxis) WSInputs.DRIVER_LEFT_JOYSTICK_Y.get();
+        joystick = (WsJoystickAxis) WsInputs.DRIVER_LEFT_JOYSTICK_Y.get();
 
-        motor = (WsPhoenix) WSOutputs.TEST_MOTOR.get();
+        //motor = (WsPhoenix) WSOutputs.TEST_MOTOR.get();
 
         speed = 0;
     }
@@ -38,7 +38,7 @@ public class SampleSubsystem implements Subsystem {
 
     @Override
     public void update() {
-        motor.setValue(speed);
+        //motor.setValue(speed);
     }
 
     @Override
