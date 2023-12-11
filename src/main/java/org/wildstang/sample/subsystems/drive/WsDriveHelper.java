@@ -15,10 +15,10 @@ public class WsDriveHelper {
         double rightPwm = throttle - heading;
         double leftPwm = throttle + heading;
 
-        if (Math.abs(leftPwm) > 1.0){
+        if (Math.abs(leftPwm) > 1.0) {
             leftPwm /= Math.abs(leftPwm);
             rightPwm -= Math.abs(leftPwm) - 1.0;
-        } else if (Math.abs(rightPwm) > 1.0){
+        } else if (Math.abs(rightPwm) > 1.0) {
             rightPwm /= Math.abs(rightPwm);
             leftPwm -= Math.abs(rightPwm) - 1.0;
         }
@@ -40,24 +40,29 @@ public class WsDriveHelper {
         return (Math.abs(v) < limit) ? v : limit * (v < 0 ? -1 : 1);
     }
 
-    public DriveSignal autoDrive(double leftVelocityData, double rightVelocityData, double centerPositionData, double headingData, 
-        double centerPositionValue, double gyroValue){
-            double leftSignal = DrivePID.PATH_POS.getConstants().f * leftVelocityData;
-            double rightSignal = DrivePID.PATH_POS.getConstants().f * rightVelocityData;
-            leftSignal += DrivePID.PATH_POS.getConstants().p * (centerPositionData - centerPositionValue);
-            rightSignal += DrivePID.PATH_POS.getConstants().p * (centerPositionData - centerPositionValue);
-            leftSignal += DrivePID.PATH_HEAD.getConstants().p * angleDifference(headingData, gyroValue);
-            rightSignal += DrivePID.PATH_HEAD.getConstants().p * angleDifference(gyroValue, headingData);
-            return new DriveSignal(leftSignal, rightSignal);
+    public DriveSignal autoDrive(double leftVelocityData, double rightVelocityData, double centerPositionData,
+            double headingData, double centerPositionValue, double gyroValue) {
+        double leftSignal = DrivePID.PATH_POS.getConstants().f * leftVelocityData;
+        double rightSignal = DrivePID.PATH_POS.getConstants().f * rightVelocityData;
+        leftSignal += DrivePID.PATH_POS.getConstants().p * (centerPositionData - centerPositionValue);
+        rightSignal += DrivePID.PATH_POS.getConstants().p * (centerPositionData - centerPositionValue);
+        leftSignal += DrivePID.PATH_HEAD.getConstants().p * angleDifference(headingData, gyroValue);
+        rightSignal += DrivePID.PATH_HEAD.getConstants().p * angleDifference(gyroValue, headingData);
+        return new DriveSignal(leftSignal, rightSignal);
     }
 
     /*
-    ** Calculates the difference in angle between first param and second param, all in degrees
-    */
-    public double angleDifference(double headingInitial, double headingActual){
+     * Calculates the difference in angle between first param and second param, all
+     * in degrees
+     */
+    public double angleDifference(double headingInitial, double headingActual) {
         double delta = headingInitial - headingActual;
-        if (delta < -180) return delta+360;
-        if (delta > 180) return delta-360;
+        if (delta < -180) {
+            delta += 360;
+        } else if (delta > 180) {
+            delta -= 360;
+        }
+
         return delta;
     }
 }

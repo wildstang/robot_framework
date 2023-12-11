@@ -13,59 +13,63 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Subsystem used to test all controller buttons and axes.
  * Each Input has a SmartDashboard widget for its state.
- * A pre-arranged Shuffleboard config can be found at /shuffleboards/input-test.json
+ * A pre-arranged Shuffleboard config can be found at
+ * /shuffleboards/input-test.json
+ * 
  * @author Liam
  */
 public class InputTestSubsystem implements Subsystem {
 
-    WsInputs axes[] = {
-        WsInputs.DRIVER_LEFT_JOYSTICK_X,
-        WsInputs.DRIVER_LEFT_JOYSTICK_Y,
-        WsInputs.DRIVER_LEFT_TRIGGER,
-        WsInputs.DRIVER_RIGHT_JOYSTICK_X,
-        WsInputs.DRIVER_RIGHT_JOYSTICK_Y,
-        WsInputs.DRIVER_RIGHT_TRIGGER,
+    public static final String NAME = "Input Test";
 
-        WsInputs.MANIPULATOR_LEFT_JOYSTICK_X,
-        WsInputs.MANIPULATOR_LEFT_JOYSTICK_Y,
-        WsInputs.MANIPULATOR_LEFT_TRIGGER,
-        WsInputs.MANIPULATOR_RIGHT_JOYSTICK_X,
-        WsInputs.MANIPULATOR_RIGHT_JOYSTICK_Y,
-        WsInputs.MANIPULATOR_RIGHT_TRIGGER
+    WsInputs axes[] = {
+            WsInputs.DRIVER_LEFT_JOYSTICK_X,
+            WsInputs.DRIVER_LEFT_JOYSTICK_Y,
+            WsInputs.DRIVER_LEFT_TRIGGER,
+            WsInputs.DRIVER_RIGHT_JOYSTICK_X,
+            WsInputs.DRIVER_RIGHT_JOYSTICK_Y,
+            WsInputs.DRIVER_RIGHT_TRIGGER,
+
+            WsInputs.OPERATOR_LEFT_JOYSTICK_X,
+            WsInputs.OPERATOR_LEFT_JOYSTICK_Y,
+            WsInputs.OPERATOR_LEFT_TRIGGER,
+            WsInputs.OPERATOR_RIGHT_JOYSTICK_X,
+            WsInputs.OPERATOR_RIGHT_JOYSTICK_Y,
+            WsInputs.OPERATOR_RIGHT_TRIGGER
     };
 
     WsInputs buttons[] = {
-        WsInputs.DRIVER_DPAD_LEFT,
-        WsInputs.DRIVER_DPAD_DOWN,
-        WsInputs.DRIVER_DPAD_UP,
-        WsInputs.DRIVER_DPAD_RIGHT,
+            WsInputs.DRIVER_DPAD_LEFT,
+            WsInputs.DRIVER_DPAD_DOWN,
+            WsInputs.DRIVER_DPAD_UP,
+            WsInputs.DRIVER_DPAD_RIGHT,
 
-        WsInputs.MANIPULATOR_DPAD_LEFT,
-        WsInputs.MANIPULATOR_DPAD_DOWN,
-        WsInputs.MANIPULATOR_DPAD_UP,
-        WsInputs.MANIPULATOR_DPAD_RIGHT,
-        
-        WsInputs.DRIVER_FACE_LEFT,
-        WsInputs.DRIVER_FACE_DOWN,
-        WsInputs.DRIVER_FACE_UP,
-        WsInputs.DRIVER_FACE_RIGHT,
-        WsInputs.DRIVER_LEFT_SHOULDER,
-        WsInputs.DRIVER_RIGHT_SHOULDER,
-        WsInputs.DRIVER_SELECT,
-        WsInputs.DRIVER_START,
-        WsInputs.DRIVER_LEFT_JOYSTICK_BUTTON,
-        WsInputs.DRIVER_RIGHT_JOYSTICK_BUTTON,
-        
-        WsInputs.MANIPULATOR_FACE_LEFT,
-        WsInputs.MANIPULATOR_FACE_DOWN,
-        WsInputs.MANIPULATOR_FACE_UP,
-        WsInputs.MANIPULATOR_FACE_RIGHT,
-        WsInputs.MANIPULATOR_LEFT_SHOULDER,
-        WsInputs.MANIPULATOR_RIGHT_SHOULDER,
-        WsInputs.MANIPULATOR_SELECT,
-        WsInputs.MANIPULATOR_START,
-        WsInputs.MANIPULATOR_LEFT_JOYSTICK_BUTTON,
-        WsInputs.MANIPULATOR_RIGHT_JOYSTICK_BUTTON
+            WsInputs.OPERATOR_DPAD_LEFT,
+            WsInputs.OPERATOR_DPAD_DOWN,
+            WsInputs.OPERATOR_DPAD_UP,
+            WsInputs.OPERATOR_DPAD_RIGHT,
+
+            WsInputs.DRIVER_FACE_LEFT,
+            WsInputs.DRIVER_FACE_DOWN,
+            WsInputs.DRIVER_FACE_UP,
+            WsInputs.DRIVER_FACE_RIGHT,
+            WsInputs.DRIVER_LEFT_SHOULDER,
+            WsInputs.DRIVER_RIGHT_SHOULDER,
+            WsInputs.DRIVER_SELECT,
+            WsInputs.DRIVER_START,
+            WsInputs.DRIVER_LEFT_JOYSTICK_BUTTON,
+            WsInputs.DRIVER_RIGHT_JOYSTICK_BUTTON,
+
+            WsInputs.OPERATOR_FACE_LEFT,
+            WsInputs.OPERATOR_FACE_DOWN,
+            WsInputs.OPERATOR_FACE_UP,
+            WsInputs.OPERATOR_FACE_RIGHT,
+            WsInputs.OPERATOR_LEFT_SHOULDER,
+            WsInputs.OPERATOR_RIGHT_SHOULDER,
+            WsInputs.OPERATOR_SELECT,
+            WsInputs.OPERATOR_START,
+            WsInputs.OPERATOR_LEFT_JOYSTICK_BUTTON,
+            WsInputs.OPERATOR_RIGHT_JOYSTICK_BUTTON
     };
 
     @Override
@@ -91,16 +95,19 @@ public class InputTestSubsystem implements Subsystem {
     }
 
     @Override
-    public void inputUpdate(Input source) {}
+    public void inputUpdate(Input source) {
+    }
 
     @Override
-    public void selfTest() {}
+    public void selfTest() {
+    }
 
     @Override
-    public void resetState() {}
+    public void resetState() {
+    }
 
     @Override
     public String getName() {
-        return "Input Test";
+        return NAME;
     }
 }

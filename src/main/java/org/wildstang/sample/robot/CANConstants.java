@@ -2,22 +2,18 @@ package org.wildstang.sample.robot;
 
 /**
  * CAN Constants are stored here.
- * We primarily use CAN to communicate with Talon motor controllers.
- * These constants must correlate with the IDs set in Phoenix Tuner.
+ * We primarily use CAN to communicate with SparkMax motor controllers.
+ * These constants must correlate with the IDs set in REV Hadware Client.
  * Official documentation can be found here:
+ * https://docs.revrobotics.com/sparkmax/operating-modes/control-interfaces#can-interface
  * https://phoenix-documentation.readthedocs.io/en/latest/ch08_BringUpCAN.html
  */
 public final class CANConstants {
 
-    // Replace these examples.
-    // While not independently dangerous if implemented these could have unintended effects.
-    //public static final int[] EXAMPLE_PAIRED_CONTROLLERS    = {1,2};
-    //public static final int   EXAMPLE_MOTOR_CONTROLLER      = 3;
-
-    //Gyro and CAN sensor values
+    // Gyro and CAN sensor constants
     public static final int GYRO = 31;
 
-    //swerve constants
+    // Swerve constants
     public static final int DRIVE1 = 11;
     public static final int ANGLE1 = 12;
     public static final int DRIVE2 = 13;

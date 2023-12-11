@@ -7,8 +7,8 @@ import org.wildstang.framework.pid.PIDConstants;
  * Note: only four slots are available on the Talon.
  */
 public enum DrivePID {
-    
-    PATH_POS(0, new PIDConstants(0.0652,1.00,0.0,0.0)),
+
+    PATH_POS(0, new PIDConstants(0.0652, 1.00, 0.0, 0.0)),
     PATH_HEAD(1, new PIDConstants(0.0, 1.00, 0.0, 10)),
     BASE_LOCK(2, new PIDConstants(0.0, .8, 0.001, 10));
 

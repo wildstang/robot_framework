@@ -1,7 +1,9 @@
 package org.wildstang.sample.robot;
 
+import org.wildstang.framework.auto.AutoProgram;
+import org.wildstang.framework.core.Core;
 import org.wildstang.framework.core.Subsystems;
-import org.wildstang.sample.subsystems.SampleSubsystem;
+import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.sample.subsystems.swerve.SwerveDrive;
 import org.wildstang.sample.subsystems.targeting.WsVision;
 
@@ -12,9 +14,8 @@ import org.wildstang.sample.subsystems.targeting.WsVision;
 public enum WsSubsystems implements Subsystems {
 
     // enumerate subsystems
-    WS_VISION("Ws Vision", WsVision.class),
-    SWERVE_DRIVE("Swerve Drive", SwerveDrive.class),
-    //SAMPLE("Sample", SampleSubsystem.class)
+    WS_VISION(WsVision.NAME, WsVision.class),
+    SWERVE_DRIVE(SwerveDrive.NAME, SwerveDrive.class)
     ;
 
     /**
@@ -22,22 +23,24 @@ public enum WsSubsystems implements Subsystems {
      * We would like to have a super class for this structure, however,
      * Java does not support enums extending classes.
      */
-    
+
     private String name;
-    private Class<?> subsystemClass;
+    private Class<? extends Subsystem> subsystemClass;
 
     /**
      * Initialize name and Subsystem map.
+     * 
      * @param name Name, must match that in class to prevent errors.
      * @param subsystemClass Class containing Subsystem
      */
-    WsSubsystems(String name, Class<?> subsystemClass) {
+    WsSubsystems(String name, Class<? extends Subsystem> subsystemClass) {
         this.name = name;
         this.subsystemClass = subsystemClass;
     }
 
     /**
      * Returns the name mapped to the subsystem.
+     * 
      * @return Name mapped to the subsystem.
      */
     @Override
@@ -47,10 +50,20 @@ public enum WsSubsystems implements Subsystems {
 
     /**
      * Returns subsystem's class.
+     * 
      * @return Subsystem's class.
      */
     @Override
-    public Class<?> getSubsystemClass() {
+    public Class<? extends Subsystem> getSubsystemClass() {
         return subsystemClass;
+    }
+
+    /**
+     * Returns the actual Subsystem object from the SubsystemManager
+     * 
+     * @return The corresponding subsystem.
+     */
+    public Subsystem get() {
+        return Core.getSubsystemManager().getSubsystem(this);
     }
 }

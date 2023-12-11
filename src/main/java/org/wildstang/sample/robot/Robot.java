@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
         core.createOutputs(WsOutputs.values());
         core.createSubsystems(WsSubsystems.values());
         core.createAutoPrograms(WsAutoPrograms.values());
-        
+
         // create smart dashboard option for LogLevel
         logChooser = new SendableChooser<>();
         logChooser.addOption(LogLevel.INFO.toString(), LogLevel.INFO);
@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
 
     /**
      * Runs when test is enabled. Currently does nothing.
+     * 
      * @see <a href="https://github.com/wildstang/robot_framework/issues/10">robot_framework#10</a>
      */
     @Override
@@ -92,6 +93,7 @@ public class Robot extends TimedRobot {
     /**
      * Runs repeatedly, regardless of mode and state.
      * Tells the core to run each manager.
+     * 
      * @see <a href="https://github.com/wildstang/robot_framework/issues/26">robot_framework#26</a>
      */
     @Override
@@ -141,12 +143,13 @@ public class Robot extends TimedRobot {
             SmartDashboard.putString("Exception thrown", e.toString());
             throw e;
         } finally {
-            SmartDashboard.putBoolean("ExceptionThrown",true);
+            SmartDashboard.putBoolean("ExceptionThrown", true);
         }
     }
 
     /**
      * Runs repeatedly while test is enabled. Currently does nothing.
+     * 
      * @see <a href="https://github.com/wildstang/robot_framework/issues/10">robot_framework#10</a>
      */
     @Override

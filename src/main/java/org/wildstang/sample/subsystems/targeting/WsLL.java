@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class WsLL {
 
     private final double mToIn = 39.3701;
-    
+
     public NetworkTable limelight;
 
     public LimelightHelpers.Results result;
@@ -25,9 +25,10 @@ public class WsLL {
     public int numTargets;
 
     /*
-     * Argument is String ID of the limelight networktable entry, aka what it's called
+     * Argument is String ID of the limelight networktable entry, aka what it's
+     * called
      */
-    public WsLL(String CameraID){
+    public WsLL(String CameraID) {
         limelight = NetworkTableInstance.getDefault().getTable(CameraID);
         red3D = limelight.getEntry("botpose_wpired").getDoubleArray(new double[7]);
         blue3D = limelight.getEntry("botpose_wpiblue").getDoubleArray(new double[7]);
@@ -47,10 +48,10 @@ public class WsLL {
     /*
      * updates all values to the latest value
      */
-    public void update(){
+    public void update() {
         result = LimelightHelpers.getLatestResults(CameraID).targetingResults;
         tv = limelight.getEntry("tv").getDouble(0);
-        if (tv > 0){
+        if (tv > 0) {
             blue3D = limelight.getEntry("botpose_wpiblue").getDoubleArray(new double[7]);
             red3D = limelight.getEntry("botpose_wpired").getDoubleArray(new double[7]);
             setToIn();
@@ -59,35 +60,38 @@ public class WsLL {
         }
         updateDashboard();
     }
+
     /*
      * returns true if a target is seen, false otherwise
      */
-    public boolean TargetInView(){
-        return tv>0;
+    public boolean TargetInView() {
+        return tv > 0;
     }
 
     /*
      * returns true if seeing a blue apriltag, false if a red one
      */
-    public boolean isSeeingBlue(){
+    public boolean isSeeingBlue() {
         return tid > 4.5;
     }
 
-    public void updateDashboard(){
+    public void updateDashboard() {
         SmartDashboard.putBoolean(CameraID + " tv", TargetInView());
         SmartDashboard.putNumber(CameraID + " tid", tid);
         SmartDashboard.putNumber(CameraID + " numTargets", numTargets);
     }
+
     /*
      * returns total latency, capture latency + pipeline latency
      */
-    public double getTotalLatency(){
+    public double getTotalLatency() {
         return tc + tl;
     }
+
     /*
      * Sets the pipeline (0-9) with argument
      */
-    public void setPipeline(int pipeline){
+    public void setPipeline(int pipeline) {
         limelight.getEntry("pipeline").setNumber(pipeline);
     }
 
@@ -95,19 +99,19 @@ public class WsLL {
      * Sets what the LED lights do
      * 0 is pipeline default, 1 is off, 2 is blink, 3 is on
      */
-    public void setLED(int ledState){
+    public void setLED(int ledState) {
         limelight.getEntry("ledMode").setNumber(ledState);
     }
 
     /*
      * Sets camera mode, 0 for vision processing and 1 for just camera
      */
-    public void setCam(int cameraMode){
+    public void setCam(int cameraMode) {
         limelight.getEntry("camMode").setNumber(cameraMode);
     }
 
-    private void setToIn(){
-        for (int i = 0; i < 7; i++){
+    private void setToIn() {
+        for (int i = 0; i < 7; i++) {
             this.red3D[i] *= mToIn;
             this.blue3D[i] *= mToIn;
         }
