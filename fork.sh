@@ -87,11 +87,11 @@ if [[ $fork =~ ^20[0-9]{2}_ ]]; then
     fi
 
     # make new year20XX package
-    mv src/main/java/org/wildstang/sample "src/main/java/org/wildstang/year${year}"
+    mv src/main/java/org/wildstang/template "src/main/java/org/wildstang/year${year}"
     # rename package in all files
-    grep -rlF "wildstang.sample" "src/main/java/org/wildstang/year${year}" | xargs sed -i "s/wildstang.sample/wildstang.year${year}/g"
+    grep -rlF "wildstang.template" "src/main/java/org/wildstang/year${year}" | xargs sed -i "s/wildstang.template/wildstang.year${year}/g"
     # update package name for gradle ROBOT_MAIN_CLASS
-    sed -i "s/sample/year${year}/" build.gradle
+    sed -i "s/template/year${year}/" build.gradle
 
     # automatically push year directory
     git add --all

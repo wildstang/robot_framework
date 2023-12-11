@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-def ROBOT_MAIN_CLASS = "org.wildstang.sample.robot.Main"
+def ROBOT_MAIN_CLASS = "org.wildstang.template.robot.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.
@@ -37,12 +37,12 @@ deploy {
     }
 }
 
-// build docs in /docs folder, don't build for sample
+// build docs in /docs folder, don't build for template
 javadoc {
     destinationDir = file("docs")
     include 'org/wildstang/framework/**'
     include 'org/wildstang/hardware/**'
-    include 'org/wildstang/sample/robot/**'
+    include 'org/wildstang/template/robot/**'
 }
 
 def deployArtifact = deploy.targets.roborio.artifacts.frcJava
