@@ -109,7 +109,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.wildstang.sample.robot</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.wildstang.template.robot</a></div>
 <h2 title="Class CANConstants" class="title">Class CANConstants</h2>
 </div>
 <div class="contentContainer">
@@ -117,7 +117,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>org.wildstang.sample.robot.CANConstants</li>
+<li>org.wildstang.template.robot.CANConstants</li>
 </ul>
 </li>
 </ul>
@@ -128,9 +128,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public final class <span class="typeNameLabel">CANConstants</span>
 extends java.lang.Object</pre>
 <div class="block">CAN Constants are stored here.
- We primarily use CAN to communicate with Talon motor controllers.
- These constants must correlate with the IDs set in Phoenix Tuner.
+ We primarily use CAN to communicate with SparkMax motor controllers.
+ These constants must correlate with the IDs set in REV Hadware Client.
  Official documentation can be found here:
+ https://docs.revrobotics.com/sparkmax/operating-modes/control-interfaces#can-interface
  https://phoenix-documentation.readthedocs.io/en/latest/ch08_BringUpCAN.html</div>
 </li>
 </ul>
@@ -194,57 +195,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENC1">ENC1</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENC2">ENC2</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENC3">ENC3</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENC4">ENC4</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXAMPLE_MOTOR_CONTROLLER">EXAMPLE_MOTOR_CONTROLLER</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EXAMPLE_PAIRED_CONTROLLERS">EXAMPLE_PAIRED_CONTROLLERS</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#GYRO">GYRO</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LEFT_DRIVE">LEFT_DRIVE</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LEFT_DRIVE_FOLLOWER">LEFT_DRIVE_FOLLOWER</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#RIGHT_DRIVE">RIGHT_DRIVE</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#RIGHT_DRIVE_FOLLOWER">RIGHT_DRIVE_FOLLOWER</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -302,28 +253,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="EXAMPLE_PAIRED_CONTROLLERS">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>EXAMPLE_PAIRED_CONTROLLERS</h4>
-<pre>public static final&nbsp;int[] EXAMPLE_PAIRED_CONTROLLERS</pre>
-</li>
-</ul>
-<a id="EXAMPLE_MOTOR_CONTROLLER">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>EXAMPLE_MOTOR_CONTROLLER</h4>
-<pre>public static final&nbsp;int EXAMPLE_MOTOR_CONTROLLER</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.EXAMPLE_MOTOR_CONTROLLER">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
 <a id="GYRO">
 <!--   -->
 </a>
@@ -333,111 +262,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int GYRO</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.GYRO">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="LEFT_DRIVE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>LEFT_DRIVE</h4>
-<pre>public static final&nbsp;int LEFT_DRIVE</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.LEFT_DRIVE">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="RIGHT_DRIVE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>RIGHT_DRIVE</h4>
-<pre>public static final&nbsp;int RIGHT_DRIVE</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.RIGHT_DRIVE">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="LEFT_DRIVE_FOLLOWER">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>LEFT_DRIVE_FOLLOWER</h4>
-<pre>public static final&nbsp;int LEFT_DRIVE_FOLLOWER</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.LEFT_DRIVE_FOLLOWER">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="RIGHT_DRIVE_FOLLOWER">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>RIGHT_DRIVE_FOLLOWER</h4>
-<pre>public static final&nbsp;int RIGHT_DRIVE_FOLLOWER</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.RIGHT_DRIVE_FOLLOWER">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="ENC1">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ENC1</h4>
-<pre>public static final&nbsp;int ENC1</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ENC1">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="ENC2">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ENC2</h4>
-<pre>public static final&nbsp;int ENC2</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ENC2">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="ENC3">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ENC3</h4>
-<pre>public static final&nbsp;int ENC3</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ENC3">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="ENC4">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ENC4</h4>
-<pre>public static final&nbsp;int ENC4</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ENC4">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.GYRO">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -450,7 +275,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int DRIVE1</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.DRIVE1">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.DRIVE1">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -463,7 +288,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int ANGLE1</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ANGLE1">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.ANGLE1">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -476,7 +301,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int DRIVE2</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.DRIVE2">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.DRIVE2">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -489,7 +314,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int ANGLE2</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ANGLE2">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.ANGLE2">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -502,7 +327,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int DRIVE3</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.DRIVE3">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.DRIVE3">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -515,7 +340,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int ANGLE3</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ANGLE3">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.ANGLE3">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -528,7 +353,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int DRIVE4</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.DRIVE4">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.DRIVE4">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -541,7 +366,7 @@ extends java.lang.Object</pre>
 <pre>public static final&nbsp;int ANGLE4</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.wildstang.sample.robot.CANConstants.ANGLE4">Constant Field Values</a></dd>
+<dd><a href="../../../../constant-values.html#org.wildstang.template.robot.CANConstants.ANGLE4">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>

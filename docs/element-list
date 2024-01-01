@@ -23,4 +23,4 @@ org.wildstang.hardware.roborio.inputs
 org.wildstang.hardware.roborio.inputs.config
 org.wildstang.hardware.roborio.outputs
 org.wildstang.hardware.roborio.outputs.config
-org.wildstang.sample.robot
+org.wildstang.template.robot
