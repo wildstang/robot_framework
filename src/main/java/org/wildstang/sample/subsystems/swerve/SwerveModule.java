@@ -1,7 +1,7 @@
 package org.wildstang.sample.subsystems.swerve;
 
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import org.wildstang.hardware.roborio.outputs.WsSparkMax;
 

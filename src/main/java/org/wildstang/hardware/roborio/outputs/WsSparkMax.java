@@ -1,11 +1,11 @@
 package org.wildstang.hardware.roborio.outputs;
 
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.ControlType;
 
 import org.wildstang.framework.logger.Log;
 import org.wildstang.hardware.roborio.outputs.config.WsMotorControllers;
@@ -18,7 +18,7 @@ public class WsSparkMax extends WsMotorController {
 
     CANSparkMax motor;
     CANSparkMax follower;
-    SparkMaxPIDController controller;
+    SparkPIDController controller;
     boolean isUsingController;
     boolean isChanged;
     ControlType controlType;
@@ -278,7 +278,7 @@ public class WsSparkMax extends WsMotorController {
         slotID = 0;
     }
 
-    public SparkMaxPIDController getPIDController(){
+    public SparkPIDController getPIDController(){
         return motor.getPIDController();
     }
 
