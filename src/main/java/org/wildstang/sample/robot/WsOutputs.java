@@ -11,8 +11,8 @@ import org.wildstang.hardware.roborio.outputs.config.WsRemoteAnalogOutputConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsI2COutputConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsMotorControllers;
 import org.wildstang.hardware.roborio.outputs.config.WsDigitalOutputConfig;
-import org.wildstang.hardware.roborio.outputs.config.WsSparkMaxConfig;
-import org.wildstang.hardware.roborio.outputs.config.WsSparkMaxFollowerConfig;
+import org.wildstang.hardware.roborio.outputs.config.WsSparkConfig;
+import org.wildstang.hardware.roborio.outputs.config.WsSparkFollowerConfig;
 import org.wildstang.hardware.roborio.outputs.config.WsSolenoidConfig;
 
 import edu.wpi.first.wpilibj.I2C;
@@ -33,14 +33,14 @@ public enum WsOutputs implements Outputs {
     // ---------------------------------
     //rename this String, and it shouldn't be a follower, but a normal motor
 
-    DRIVE1("Module 1 Drive Motor", new WsSparkMaxConfig(CANConstants.DRIVE1, true)),
-    ANGLE1("Module 1 Angle Motor", new WsSparkMaxConfig(CANConstants.ANGLE1, true)),
-    DRIVE2("Module 2 Drive Motor", new WsSparkMaxConfig(CANConstants.DRIVE2, true)),
-    ANGLE2("Module 2 Angle Motor", new WsSparkMaxConfig(CANConstants.ANGLE2, true)),
-    DRIVE3("Module 3 Drive Motor", new WsSparkMaxConfig(CANConstants.DRIVE3, true)),
-    ANGLE3("Module 3 Angle Motor", new WsSparkMaxConfig(CANConstants.ANGLE3, true)),
-    DRIVE4("Module 4 Drive Motor", new WsSparkMaxConfig(CANConstants.DRIVE4, true)),
-    ANGLE4("Module 4 Angle Motor", new WsSparkMaxConfig(CANConstants.ANGLE4, true)),
+    DRIVE1("Module 1 Drive Motor", new WsSparkConfig(CANConstants.DRIVE1, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    ANGLE1("Module 1 Angle Motor", new WsSparkConfig(CANConstants.ANGLE1, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    DRIVE2("Module 2 Drive Motor", new WsSparkConfig(CANConstants.DRIVE2, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    ANGLE2("Module 2 Angle Motor", new WsSparkConfig(CANConstants.ANGLE2, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    DRIVE3("Module 3 Drive Motor", new WsSparkConfig(CANConstants.DRIVE3, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    ANGLE3("Module 3 Angle Motor", new WsSparkConfig(CANConstants.ANGLE3, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    DRIVE4("Module 4 Drive Motor", new WsSparkConfig(CANConstants.DRIVE4, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
+    ANGLE4("Module 4 Angle Motor", new WsSparkConfig(CANConstants.ANGLE4, WsMotorControllers.SPARK_MAX_BRUSHLESS)),
     
     // ---------------------------------
     // Servos

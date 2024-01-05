@@ -3,13 +3,12 @@ package org.wildstang.hardware.roborio.outputs.config;
 import org.wildstang.framework.hardware.OutputConfig;
 
 /**
- * Contains configurations for Spark Max motor controller followers.
+ * Contains configurations for Spark Max/Flex motor controller followers.
  */
-public class WsSparkMaxFollowerConfig implements OutputConfig {
+public class WsSparkFollowerConfig implements OutputConfig {
 
     private String following;
     private int m_channel = 0;
-    private boolean brushless;
     private boolean oppose;
     private WsMotorControllers controller;
 
@@ -17,25 +16,24 @@ public class WsSparkMaxFollowerConfig implements OutputConfig {
      * Construct the Phoenix config.
      * @param following Name of motor controller being followed.
      * @param channel Hardware port number.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      */
-    public WsSparkMaxFollowerConfig(String following, int channel, boolean brushless) {
-        this(following, channel, brushless, false);
+    public WsSparkFollowerConfig(String following, int channel, WsMotorControllers controller) {
+        this(following, channel, controller, false);
     }
 
     /**
      * Construct the Phoenix config.
      * @param following Name of motor controller being followed.
      * @param channel Hardware port number.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      * @param oppose True if the follow should oppose the direction of this motor.
      */
-    public WsSparkMaxFollowerConfig(String following, int channel, boolean brushless, boolean oppose) {
+    public WsSparkFollowerConfig(String following, int channel, WsMotorControllers controller, boolean oppose) {
         this.following = following;
         m_channel = channel;
-        this.brushless = brushless;
+        this.controller = controller;
         this.oppose = oppose;
-        this.controller = brushless ? WsMotorControllers.SPARK_MAX_BRUSHLESS : WsMotorControllers.SPARK_MAX_BRUSHED;
     }
 
     /**
@@ -52,14 +50,6 @@ public class WsSparkMaxFollowerConfig implements OutputConfig {
      */
     public int getChannel() {
         return m_channel;
-    }
-
-    /**
-     * Returns true if the motor is brushless.
-     * @return True if the motor is brushless, false if brushed.
-     */
-    public boolean isBrushless() {
-        return brushless;
     }
 
     /**
@@ -87,8 +77,8 @@ public class WsSparkMaxFollowerConfig implements OutputConfig {
         StringBuffer buf = new StringBuffer();
         buf.append("{\"channel\": ");
         buf.append(m_channel);
-        buf.append(", \"brushless\": ");
-        buf.append(brushless);
+        buf.append(", \"type\": ");
+        buf.append(controller.name());
         buf.append(", \"oppose\": ");
         buf.append(oppose);
         buf.append("}");

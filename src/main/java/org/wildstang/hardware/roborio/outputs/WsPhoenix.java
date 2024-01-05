@@ -49,7 +49,7 @@ public class WsPhoenix extends WsMotorController {
                 motor = new TalonFX(channel);
                 break;
             default:
-                Log.error("Invalid motor control for WsPhoenix!");
+                Log.error("Invalid motor controller for WsPhoenix!");
                 return;
         }
         motor.setInverted(invert);
@@ -73,7 +73,7 @@ public class WsPhoenix extends WsMotorController {
                 follower = new TalonFX(canConstant);
                 break;
             default:
-                Log.error("Invalid follower motor control for WsPhoenix!");
+                Log.error("Invalid follower motor controller for WsPhoenix!");
                 return;
         }
         follower.follow(motor);
