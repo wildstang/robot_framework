@@ -11,7 +11,6 @@ public class WsSwerveHelper {
     private double[] yCoords = new double[]{0.0, 0.0, 0.0, 0.0};
     private double rotDelta;
     private double rotPID;
-    private double prevVel = 0;
 
     /** sets the robot in the immobile "cross" defensive position
      * 
@@ -111,10 +110,9 @@ public class WsSwerveHelper {
      * @param pathVel path data for velocity of the robot, inches
      * @return double for magnitude of translational vector
      */
-    public double getAutoPower(double pathVel) {
+    public double getAutoPower(double pathVel, double pathAccel) {
         if (pathVel == 0) return 0;
-        double guess = pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + 0.02 * (pathVel - prevVel) * DriveConstants.DRIVE_F_I;
-        this.prevVel = pathVel;
+        double guess = pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + pathAccel * DriveConstants.DRIVE_F_I;
         return -(guess);
     }
 

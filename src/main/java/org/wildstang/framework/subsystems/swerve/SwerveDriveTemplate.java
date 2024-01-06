@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 
 public abstract class SwerveDriveTemplate implements Subsystem{
     
-    public abstract void setAutoValues(double velocity, double heading, double xOffset, double yOffset);
+    public abstract void setAutoValues(double velocity, double heading, double accel, double xOffset, double yOffset);
 
     public abstract void resetDriveEncoders();
 

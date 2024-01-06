@@ -45,7 +45,7 @@ public class SwervePathFollowerStep extends AutoStep {
     @Override
     public void update() {
         if (timer.get() >= pathData.getTotalTimeSeconds()) {
-            m_drive.setAutoValues(0, -pathData.getEndState().poseMeters.getRotation().getDegrees(),0,0);
+            m_drive.setAutoValues(0, -pathData.getEndState().poseMeters.getRotation().getDegrees(),0,0,0);
             SmartDashboard.putNumber("auto final time", timer.get());
             setFinished();
         } else {
@@ -58,7 +58,7 @@ public class SwervePathFollowerStep extends AutoStep {
                 xOffset = localRobotPose.getY() - (8.016 - localAutoPose.getY());
             }
             //update values the robot is tracking to
-            m_drive.setAutoValues( getVelocity(),getHeading(), 2.0*xOffset,2.0*yOffset );
+            m_drive.setAutoValues( getVelocity(),getHeading(), getAccel(), 2.0*xOffset,2.0*yOffset );
             
             }
     }
@@ -74,5 +74,8 @@ public class SwervePathFollowerStep extends AutoStep {
     public double getHeading(){
         if (isBlue) return (-pathData.sample(timer.get()).poseMeters.getRotation().getDegrees() + 360)%360;
         else return (pathData.sample(timer.get()).poseMeters.getRotation().getDegrees()+360)%360;
+    }
+    public double getAccel(){
+        return pathData.sample(timer.get()).accelerationMetersPerSecondSq * mToIn * mToIn;
     }
 }

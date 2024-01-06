@@ -57,6 +57,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
     private double rotTarget;
     private double pathVel;
     private double pathHeading;
+    private double pathAccel;
     private double pathTarget;
     private double aimOffset;
     private double vertOffset;
@@ -259,16 +260,19 @@ public class SwerveDrive extends SwerveDriveTemplate {
                 if (Math.abs(xSpeed) > 0.3) xSpeed = Math.signum(xSpeed) * 0.3;
                 if (Math.abs(ySpeed) > 0.3) ySpeed = Math.signum(ySpeed) * 0.3; 
                 if (Math.abs(pathVel * DriveConstants.DRIVE_F_V) > Math.abs(ySpeed*0.5)){
-                    ySpeed = 0.0;
+                    ySpeed = 0.0;//no adjustment when coming towards tag
                 } else {
-                    pathVel = 0.0;
+                    pathVel = 0.0;//adjustment when close enough to tag
                 }
-                pathXOffset = 0;
+                pathXOffset = 0;//disables odometry tracking
                 pathYOffset = 0;
+            } else {
+                xSpeed = 0;//no LL adjustments if tag is off
+                ySpeed = 0;
             }
             
             //update where the robot is, to determine error in path
-            this.swerveSignal = swerveHelper.setAuto(swerveHelper.getAutoPower(pathVel), pathHeading, rotSpeed,getGyroAngle(),pathXOffset+xSpeed, pathYOffset+ySpeed);
+            this.swerveSignal = swerveHelper.setAuto(swerveHelper.getAutoPower(pathVel, pathAccel), pathHeading, rotSpeed,getGyroAngle(),pathXOffset+xSpeed, pathYOffset+ySpeed);
             drive();        
         } 
         SmartDashboard.putNumber("Gyro Reading", getGyroAngle());
@@ -292,6 +296,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
         rotTarget = 0.0;
         pathVel = 0.0;
         pathHeading = 0.0;
+        pathAccel = 0.0;
         pathTarget = 0.0;
         aimOffset = 0.0;
         vertOffset = 0.0;
@@ -325,6 +330,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
         ySpeed = 0;
         pathHeading = 0;
         pathVel = 0;
+        pathAccel = 0;
         rotLocked = false;
     }
 
@@ -353,9 +359,10 @@ public class SwerveDrive extends SwerveDriveTemplate {
     }
 
     /**sets autonomous values from the path data file */
-    public void setAutoValues(double velocity, double heading, double xOffset, double yOffset) {
+    public void setAutoValues(double velocity, double heading, double accel, double xOffset, double yOffset) {
         pathVel = velocity;
         pathHeading = heading;
+        pathAccel = accel;
         pathXOffset = xOffset;
         pathYOffset = yOffset;
     }
