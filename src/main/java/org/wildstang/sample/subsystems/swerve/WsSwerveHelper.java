@@ -53,6 +53,10 @@ public class WsSwerveHelper {
         double xTrans = i_tx * Math.cos(Math.toRadians(i_gyro)) - i_ty * Math.sin(Math.toRadians(i_gyro));
         double yTrans = i_tx * Math.sin(Math.toRadians(i_gyro)) + i_ty * Math.cos(Math.toRadians(i_gyro));
 
+        //account for slight second order skew due to rotation and translation at the same time
+        xTrans += Math.cos(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR;
+        yTrans += -Math.sin(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR;
+
         //cartesian vector addition of translation and rotation vectors
         //note rotation vector angle advances in the cos -> sin -> -cos -> -sin fashion
         xCoords = new double[]{xTrans + rotMag * Math.cos(baseV), xTrans + rotMag*Math.sin(baseV), xTrans - rotMag * Math.sin(baseV), xTrans - rotMag*Math.cos(baseV)}; 
