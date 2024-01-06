@@ -9,11 +9,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.choreo.lib.*;
+
 public class SwervePathFollowerStep extends AutoStep {
 
     private static final double mToIn = 39.3701;
     private SwerveDriveTemplate m_drive;
     private PathPlannerTrajectory pathData;
+    private ChoreoTrajectory pathtraj;
     private boolean isBlue;
 
     private double xOffset, yOffset;
@@ -27,9 +30,10 @@ public class SwervePathFollowerStep extends AutoStep {
      * @param drive the swerveDrive subsystem
      * @param isBlue whether the robot is on the blue alliance
      */
-    public SwervePathFollowerStep(PathPlannerTrajectory pathData, SwerveDriveTemplate drive, boolean isBlue) {
+    public SwervePathFollowerStep(PathPlannerTrajectory pathData, ChoreoTrajectory traj, SwerveDriveTemplate drive, boolean isBlue) {
         this.pathData = pathData;
         m_drive = drive;
+        pathtraj = traj;
         
         this.isBlue = isBlue;
         timer = new Timer();
@@ -69,11 +73,13 @@ public class SwervePathFollowerStep extends AutoStep {
     }
 
     public double getVelocity(){
-        return pathData.sample(timer.get()).velocityMetersPerSecond * mToIn;
+        //return pathData.sample(timer.get()).velocityMetersPerSecond * mToIn;
+        return Math.hypot(pathtraj.sample(timer.get()).velocityX, pathtraj.sample(timer.get()).velocityY);
     }
     public double getHeading(){
-        if (isBlue) return (-pathData.sample(timer.get()).poseMeters.getRotation().getDegrees() + 360)%360;
-        else return (pathData.sample(timer.get()).poseMeters.getRotation().getDegrees()+360)%360;
+        //if (isBlue) return (-pathData.sample(timer.get()).poseMeters.getRotation().getDegrees() + 360)%360;
+        //else return (pathData.sample(timer.get()).poseMeters.getRotation().getDegrees()+360)%360;
+        return pathtraj.sample(timer.get()).heading*180/Math.PI;
     }
     public double getAccel(){
         return pathData.sample(timer.get()).accelerationMetersPerSecondSq * mToIn * mToIn;
