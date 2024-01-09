@@ -3,7 +3,7 @@ package org.wildstang.framework.auto.steps;
 import org.wildstang.framework.auto.AutoStep;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -45,12 +45,13 @@ public class SwervePathFollowerStep extends AutoStep {
     @Override
     public void update() {
         if (timer.get() >= pathData.getTotalTimeSeconds()) {
-            m_drive.setAutoValues(0, -pathData.getEndState().poseMeters.getRotation().getDegrees(),0,0);
+            ;
+            m_drive.setAutoValues(0, -pathData.getEndState().heading.getDegrees(),0,0);
             SmartDashboard.putNumber("auto final time", timer.get());
             setFinished();
         } else {
             localRobotPose = m_drive.returnPose(getVelocity());
-            localAutoPose = pathData.sample(timer.get()).poseMeters;
+            localAutoPose = pathData.sample(timer.get()).getTargetHolonomicPose();//.poseMeters;
             yOffset = -(localRobotPose.getX() - localAutoPose.getX());
             if (isBlue){
                 xOffset = localRobotPose.getY() - localAutoPose.getY();
@@ -69,10 +70,10 @@ public class SwervePathFollowerStep extends AutoStep {
     }
 
     public double getVelocity(){
-        return pathData.sample(timer.get()).velocityMetersPerSecond * mToIn;
+        return pathData.sample(timer.get()).velocityMps * mToIn;
     }
     public double getHeading(){
-        if (isBlue) return (-pathData.sample(timer.get()).poseMeters.getRotation().getDegrees() + 360)%360;
-        else return (pathData.sample(timer.get()).poseMeters.getRotation().getDegrees()+360)%360;
+        if (isBlue) return (-pathData.sample(timer.get()).getTargetHolonomicPose().getRotation().getDegrees() + 360)%360;
+        else return (pathData.sample(timer.get()).getTargetHolonomicPose().getRotation().getDegrees()+360)%360;
     }
 }
