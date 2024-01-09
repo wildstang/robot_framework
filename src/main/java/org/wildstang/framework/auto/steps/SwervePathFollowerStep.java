@@ -30,10 +30,10 @@ public class SwervePathFollowerStep extends AutoStep {
      * @param drive the swerveDrive subsystem
      * @param isBlue whether the robot is on the blue alliance
      */
-    public SwervePathFollowerStep(PathPlannerTrajectory pathData, ChoreoTrajectory traj, SwerveDriveTemplate drive, boolean isBlue) {
+    public SwervePathFollowerStep(PathPlannerTrajectory pathData, SwerveDriveTemplate drive, boolean isBlue) {
         this.pathData = pathData;
         m_drive = drive;
-        pathtraj = traj;
+        pathtraj = new ChoreoTrajectory();
         
         this.isBlue = isBlue;
         timer = new Timer();
