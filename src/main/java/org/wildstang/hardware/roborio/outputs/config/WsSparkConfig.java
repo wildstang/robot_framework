@@ -3,44 +3,44 @@ package org.wildstang.hardware.roborio.outputs.config;
 import org.wildstang.framework.hardware.OutputConfig;
 
 /**
- * Contains configurations for Spark Max motor controllers.
+ * Contains configurations for Spark Max/Flex motor controllers.
  */
-public class WsSparkMaxConfig implements OutputConfig {
+public class WsSparkConfig implements OutputConfig {
 
     private int m_channel = 0;
     private double m_default;
-    private boolean brushless;
+    private WsMotorControllers controller;
     private boolean invert;
 
     /**
      * Construct the Phoenix config.
      * @param channel Controller CAN constant.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      */
-    public WsSparkMaxConfig(int channel, boolean brushless) {
-        this(channel, brushless, false, 0);
+    public WsSparkConfig(int channel, WsMotorControllers controller) {
+        this(channel, controller, false, 0);
     }
 
     /**
      * Construct the Phoenix config.
      * @param channel Controller CAN constant.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      * @param invert True if motor output should be inverted.
      */
-    public WsSparkMaxConfig(int channel, boolean brushless, boolean invert) {
-        this(channel, brushless, invert, 0);
+    public WsSparkConfig(int channel, WsMotorControllers controller, boolean invert) {
+        this(channel, controller, invert, 0);
     }
 
     /**
      * Construct the Phoenix config.
      * @param channel Controller CAN constant.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      * @param invert True if motor output should be inverted.
      * @param p_default Default output value.
      */
-    public WsSparkMaxConfig(int channel, boolean brushless, boolean invert, double p_default) {
+    public WsSparkConfig(int channel, WsMotorControllers controller, boolean invert, double p_default) {
         m_channel = channel;
-        this.brushless = brushless;
+        this.controller = controller;
         this.invert = invert;
         m_default = p_default;
     }
@@ -54,19 +54,19 @@ public class WsSparkMaxConfig implements OutputConfig {
     }
 
     /**
+     * Returns the motor controller type.
+     * @return The hardware motor controller type.
+     */
+    public WsMotorControllers getType() {
+        return controller;
+    }
+
+    /**
      * Returns the default output value.
      * @return The default value.
      */
     public double getDefault() {
         return m_default;
-    }
-
-    /**
-     * Returns true if the motor is brushless.
-     * @return True if the motor is brushless, false if brushed.
-     */
-    public boolean isBrushless() {
-        return brushless;
     }
 
     /**
@@ -86,8 +86,8 @@ public class WsSparkMaxConfig implements OutputConfig {
         StringBuffer buf = new StringBuffer();
         buf.append("{\"channel\": ");
         buf.append(m_channel);
-        buf.append(", \"brushless\": ");
-        buf.append(brushless);
+        buf.append(", \"type\": ");
+        buf.append(controller.name());
         buf.append("}");
         return buf.toString();
     }
