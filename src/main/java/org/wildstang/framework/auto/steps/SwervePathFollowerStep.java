@@ -3,7 +3,7 @@ package org.wildstang.framework.auto.steps;
 import org.wildstang.framework.auto.AutoStep;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -49,12 +49,12 @@ public class SwervePathFollowerStep extends AutoStep {
     @Override
     public void update() {
         if (timer.get() >= pathData.getTotalTimeSeconds()) {
-            m_drive.setAutoValues(0, -pathData.getEndState().poseMeters.getRotation().getDegrees(),0,0,0);
+            m_drive.setAutoValues(0.0, -pathData.getEndState().heading.getDegrees(),0.0,0.0,0.0);
             SmartDashboard.putNumber("auto final time", timer.get());
             setFinished();
         } else {
             localRobotPose = m_drive.returnPose(getVelocity());
-            localAutoPose = pathData.sample(timer.get()).poseMeters;
+            localAutoPose = pathData.sample(timer.get()).getTargetHolonomicPose();//.poseMeters;
             yOffset = -(localRobotPose.getX() - localAutoPose.getX());
             if (isBlue){
                 xOffset = localRobotPose.getY() - localAutoPose.getY();
@@ -73,7 +73,7 @@ public class SwervePathFollowerStep extends AutoStep {
     }
 
     public double getVelocity(){
-        //return pathData.sample(timer.get()).velocityMetersPerSecond * mToIn;
+        //return pathData.sample(timer.get()).velocityMps * mToIn;
         return Math.hypot(pathtraj.sample(timer.get()).velocityX, pathtraj.sample(timer.get()).velocityY);
     }
     public double getHeading(){
@@ -82,6 +82,6 @@ public class SwervePathFollowerStep extends AutoStep {
         return pathtraj.sample(timer.get()).heading*180/Math.PI;
     }
     public double getAccel(){
-        return pathData.sample(timer.get()).accelerationMetersPerSecondSq * mToIn * mToIn;
+        return pathData.sample(timer.get()).accelerationMpsSq * mToIn * mToIn;
     }
 }

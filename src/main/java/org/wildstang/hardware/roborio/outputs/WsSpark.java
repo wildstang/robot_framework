@@ -1,24 +1,26 @@
 package org.wildstang.hardware.roborio.outputs;
 
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.ControlType;
 
 import org.wildstang.framework.logger.Log;
 import org.wildstang.hardware.roborio.outputs.config.WsMotorControllers;
 
 /**
- * Controls a Spark Max motor controller.
+ * Controls a Spark Max/Flex motor controller.
  * @author Liam
  */
-public class WsSparkMax extends WsMotorController {
+public class WsSpark extends WsMotorController {
 
-    CANSparkMax motor;
-    CANSparkMax follower;
-    SparkMaxPIDController controller;
+    CANSparkBase motor;
+    CANSparkBase follower;
+    SparkPIDController controller;
     boolean isUsingController;
     boolean isChanged;
     ControlType controlType;
@@ -28,25 +30,38 @@ public class WsSparkMax extends WsMotorController {
      * Constructs the motor controller from config.
      * @param name Descriptive name of the controller.
      * @param channel Motor controller CAN constant.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      * @param p_default Default output value.
      */
-    public WsSparkMax(String name, int channel, boolean brushless, double p_default) {
-        this(name, channel, brushless, p_default, false);
+    public WsSpark(String name, int channel, WsMotorControllers controller, double p_default) {
+        this(name, channel, controller, p_default, false);
     }
 
     /**
      * Constructs the motor controller from config.
      * @param name Descriptive name of the controller.
      * @param channel Motor controller CAN constant.
-     * @param brushless True if the motor is brushless, false if brushed.
+     * @param controller Enumeration representing type of controller.
      * @param p_default Default output value.
      * @param invert Invert the motor's direction.
      */
-    public WsSparkMax(String name, int channel, boolean brushless, double p_default, boolean invert) {
+    public WsSpark(String name, int channel, WsMotorControllers controller, double p_default, boolean invert) {
         super(name, p_default);
 
-        motor = new CANSparkMax(channel, brushless ? MotorType.kBrushless : MotorType.kBrushed);
+        boolean brushless = controller == WsMotorControllers.SPARK_MAX_BRUSHLESS || controller == WsMotorControllers.SPARK_FLEX_BRUSHLESS;
+        switch (controller) {
+            case SPARK_MAX_BRUSHED:
+            case SPARK_MAX_BRUSHLESS:
+                motor = new CANSparkMax(channel, brushless ? MotorType.kBrushless : MotorType.kBrushed);
+                break;
+            case SPARK_FLEX_BRUSHED:
+            case SPARK_FLEX_BRUSHLESS:
+                motor = new CANSparkFlex(channel, brushless ? MotorType.kBrushless : MotorType.kBrushed);
+                break;
+            default:
+                Log.error("Invalid motor controller for WsSpark!");
+                return;
+        }
         motor.setInverted(invert);
         isUsingController = false;
         isChanged = true;
@@ -56,41 +71,32 @@ public class WsSparkMax extends WsMotorController {
     /**
      * Add a follower motor to the current motor.
      * @param canConstant CAN constant of the new follower motor.
-     * @param brushless True if the motor is brushless, false if brushed.
-     * @param oppose True if the follow should oppose the direction of this motor.
-     */
-    public void addFollower(int canConstant, boolean brushless, boolean oppose) {
-        addFollower(canConstant, brushless ? WsMotorControllers.SPARK_MAX_BRUSHLESS : WsMotorControllers.SPARK_MAX_BRUSHED, oppose);
-    }
-
-    /**
-     * Add a follower motor to the current motor.
-     * @param canConstant CAN constant of the new follower motor.
      * @param controller Enumeration representing type of controller.
      * @param oppose True if the follow should oppose the direction of this motor.
      */
     public void addFollower(int canConstant, WsMotorControllers controller, boolean oppose) {
-        boolean brushless;
+        boolean brushless = controller == WsMotorControllers.SPARK_MAX_BRUSHLESS || controller == WsMotorControllers.SPARK_FLEX_BRUSHLESS;
         switch (controller) {
             case SPARK_MAX_BRUSHED:
-                brushless = false;
-                break;
             case SPARK_MAX_BRUSHLESS:
-                brushless = true;
+                motor = new CANSparkMax(canConstant, brushless ? MotorType.kBrushless : MotorType.kBrushed);
+                break;
+            case SPARK_FLEX_BRUSHED:
+            case SPARK_FLEX_BRUSHLESS:
+                motor = new CANSparkFlex(canConstant, brushless ? MotorType.kBrushless : MotorType.kBrushed);
                 break;
             default:
-                Log.error("Invalid follower motor control for WsSparkMax!");
+                Log.error("Invalid follower motor controller for WsSpark!");
                 return;
         }
-        follower = new CANSparkMax(canConstant, brushless ? MotorType.kBrushless : MotorType.kBrushed);
         follower.follow(motor, oppose);
     }
 
     /**
      * Returns the raw motor controller Object.
-     * @return CANSparkMax Object.
+     * @return CANSparkBase Object.
      */
-    public CANSparkMax getController() {
+    public CANSparkBase getController() {
         return motor;
     }
 
@@ -98,7 +104,7 @@ public class WsSparkMax extends WsMotorController {
      * Returns the raw follower motor controller Object.
      * @return Follower motor controller object, null if no follower.
      */
-    public CANSparkMax getFollower() {
+    public CANSparkBase getFollower() {
         return follower;
     }
 
@@ -278,7 +284,7 @@ public class WsSparkMax extends WsMotorController {
         slotID = 0;
     }
 
-    public SparkMaxPIDController getPIDController(){
+    public SparkPIDController getPIDController(){
         return motor.getPIDController();
     }
 
@@ -346,7 +352,7 @@ public class WsSparkMax extends WsMotorController {
     public void notifyConfigChange() { }
 
     /**
-     * Does nothing, SparkMax has no current limit disable function.
+     * Does nothing, Spark has no current limit disable function.
      */
     @Override
     public void disableCurrentLimit() {}

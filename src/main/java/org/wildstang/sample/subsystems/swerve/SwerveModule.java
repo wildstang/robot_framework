@@ -1,9 +1,9 @@
 package org.wildstang.sample.subsystems.swerve;
 
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 
-import org.wildstang.hardware.roborio.outputs.WsSparkMax;
+import org.wildstang.hardware.roborio.outputs.WsSpark;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -18,8 +18,8 @@ public class SwerveModule {
     private double drivePower;
     private double chassisOffset;
 
-    private WsSparkMax driveMotor;
-    private WsSparkMax angleMotor;
+    private WsSpark driveMotor;
+    private WsSpark angleMotor;
     private AbsoluteEncoder absEncoder;
 
     /** Class: SwerveModule
@@ -29,7 +29,7 @@ public class SwerveModule {
      * @param canCoder canCoder offboard encoder
      * @param offset double value of cancoder when module is facing forward
      */
-    public SwerveModule(WsSparkMax driveMotor, WsSparkMax angleMotor, double offset) {
+    public SwerveModule(WsSpark driveMotor, WsSpark angleMotor, double offset) {
         this.driveMotor = driveMotor;
         this.angleMotor = angleMotor;
         this.absEncoder = angleMotor.getController().getAbsoluteEncoder(Type.kDutyCycle);
@@ -155,7 +155,7 @@ public class SwerveModule {
         return Math.abs(angle - getAngle()) < 90 || Math.abs(angle - getAngle()) > 270;
     } 
 
-    public WsSparkMax getDriveMotor() {
+    public WsSpark getDriveMotor() {
         return driveMotor;
     }
     public SwerveModulePosition odoPosition(){

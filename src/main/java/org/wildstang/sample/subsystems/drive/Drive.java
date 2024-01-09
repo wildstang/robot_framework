@@ -8,7 +8,7 @@ import org.wildstang.framework.pid.PIDConstants;
 import org.wildstang.framework.subsystems.drive.PathFollowingDrive;
 import org.wildstang.hardware.roborio.inputs.WsAnalogInput;
 import org.wildstang.hardware.roborio.inputs.WsDigitalInput;
-import org.wildstang.hardware.roborio.outputs.WsSparkMax;
+import org.wildstang.hardware.roborio.outputs.WsSpark;
 import org.wildstang.sample.robot.WsInputs;
 import org.wildstang.sample.robot.WsOutputs;
 
@@ -18,7 +18,7 @@ public class Drive extends PathFollowingDrive {
 
     public enum DriveState{ TELEOP, AUTO, BASELOCK;}
 
-    private WsSparkMax left, right;
+    private WsSpark left, right;
     private WsAnalogInput throttleJoystick, headingJoystick;
     private WsDigitalInput baseLock;
     private DriveState state;
@@ -135,7 +135,7 @@ public class Drive extends PathFollowingDrive {
         right.setSpeed(commandSignal.rightMotor);
     }
 
-    private void motorSetUp(WsSparkMax setupMotor){
+    private void motorSetUp(WsSpark setupMotor){
         PIDConstants constants = DrivePID.BASE_LOCK.getConstants();
         setupMotor.initClosedLoop(constants.p, constants.i, constants.d, constants.f);
         setupMotor.setCurrentLimit(80, 20, 10000);
