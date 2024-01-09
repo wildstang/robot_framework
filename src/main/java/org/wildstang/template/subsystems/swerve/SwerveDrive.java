@@ -7,7 +7,7 @@ import org.wildstang.framework.io.inputs.Input;
 import org.wildstang.framework.io.inputs.AnalogInput;
 import org.wildstang.framework.io.inputs.DigitalInput;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
-import org.wildstang.hardware.roborio.outputs.WsSparkMax;
+import org.wildstang.hardware.roborio.outputs.WsSpark;
 import org.wildstang.template.robot.CANConstants;
 import org.wildstang.template.robot.WsInputs;
 import org.wildstang.template.robot.WsOutputs;
@@ -218,17 +218,17 @@ public class SwerveDrive extends SwerveDriveTemplate {
     public void initOutputs() {
         // create four swerve modules
         modules = new SwerveModule[] {
-                new SwerveModule((WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.DRIVE1),
-                        (WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.ANGLE1),
+                new SwerveModule((WsSpark) Core.getOutputManager().getOutput(WsOutputs.DRIVE1),
+                        (WsSpark) Core.getOutputManager().getOutput(WsOutputs.ANGLE1),
                         DriveConstants.FRONT_LEFT_OFFSET),
-                new SwerveModule((WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.DRIVE2),
-                        (WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.ANGLE2),
+                new SwerveModule((WsSpark) Core.getOutputManager().getOutput(WsOutputs.DRIVE2),
+                        (WsSpark) Core.getOutputManager().getOutput(WsOutputs.ANGLE2),
                         DriveConstants.FRONT_RIGHT_OFFSET),
-                new SwerveModule((WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.DRIVE3),
-                        (WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.ANGLE3),
+                new SwerveModule((WsSpark) Core.getOutputManager().getOutput(WsOutputs.DRIVE3),
+                        (WsSpark) Core.getOutputManager().getOutput(WsOutputs.ANGLE3),
                         DriveConstants.REAR_LEFT_OFFSET),
-                new SwerveModule((WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.DRIVE4),
-                        (WsSparkMax) Core.getOutputManager().getOutput(WsOutputs.ANGLE4),
+                new SwerveModule((WsSpark) Core.getOutputManager().getOutput(WsOutputs.DRIVE4),
+                        (WsSpark) Core.getOutputManager().getOutput(WsOutputs.ANGLE4),
                         DriveConstants.REAR_RIGHT_OFFSET)
         };
         // create default swerveSignal

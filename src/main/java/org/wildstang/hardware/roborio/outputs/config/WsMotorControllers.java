@@ -6,5 +6,7 @@ public enum WsMotorControllers {
     TALON_FX,
     SPARK_MAX_BRUSHLESS,
     SPARK_MAX_BRUSHED,
+    SPARK_FLEX_BRUSHLESS,
+    SPARK_FLEX_BRUSHED,
     UNKNOWN
 }
