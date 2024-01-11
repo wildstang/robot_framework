@@ -11,12 +11,7 @@ import org.wildstang.sample.robot.WsSubsystems;
 import org.wildstang.sample.subsystems.swerve.SwerveDrive;
 
 import com.choreo.lib.Choreo;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class TestProgram extends AutoProgram{
     
@@ -26,7 +21,6 @@ public class TestProgram extends AutoProgram{
         AutoParallelStepGroup group1 = new AutoParallelStepGroup();
         group1.addStep(new PathHeadingStep(180.0, swerve));
         addStep(group1);
-        PathPlannerPath.fromPathFile("autoname");
         addStep(new StartOdometryStep(3.0, 5.0, 180.0, true));
         addStep(new SwervePathFollowerStep(Choreo.getTrajectory("ChoreoTest"), swerve, true));
     }
