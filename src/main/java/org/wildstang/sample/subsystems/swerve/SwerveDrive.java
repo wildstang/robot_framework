@@ -398,7 +398,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
         this.odometry.resetPosition(odoAngle(), odoPosition(), starting);
         autoTimer.start();
     }
-    public Pose2d returnPose(double returnVelocity){
+    public Pose2d returnPose(){
         return odometry.getPoseMeters();
     }
     public double getRotTarget(){

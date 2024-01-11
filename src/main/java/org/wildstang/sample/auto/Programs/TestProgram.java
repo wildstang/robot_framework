@@ -10,6 +10,7 @@ import org.wildstang.sample.auto.Steps.StartOdometryStep;
 import org.wildstang.sample.robot.WsSubsystems;
 import org.wildstang.sample.subsystems.swerve.SwerveDrive;
 
+import com.choreo.lib.Choreo;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -27,7 +28,7 @@ public class TestProgram extends AutoProgram{
         addStep(group1);
         PathPlannerPath.fromPathFile("autoname");
         addStep(new StartOdometryStep(3.0, 5.0, 180.0, true));
-        addStep(new SwervePathFollowerStep(PathPlannerPath.fromPathFile("Test_100").getTrajectory(new ChassisSpeeds(), new Rotation2d(0.0)), swerve, true));
+        addStep(new SwervePathFollowerStep(Choreo.getTrajectory("ChoreoTest"), swerve, true));
     }
 
     public String toString(){
