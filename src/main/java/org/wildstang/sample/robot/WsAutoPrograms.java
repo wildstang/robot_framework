@@ -1,8 +1,6 @@
 package org.wildstang.sample.robot;
 
 import org.wildstang.framework.core.AutoPrograms;
-import org.wildstang.sample.auto.Programs.SampleAutoProgram;
-import org.wildstang.sample.auto.Programs.TestProgram;
 
 /**
  * All active AutoPrograms are enumerated here.
