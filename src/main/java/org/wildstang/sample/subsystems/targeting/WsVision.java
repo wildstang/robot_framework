@@ -161,15 +161,15 @@ public class WsVision implements Subsystem {
     public void init() {
         LC = new LimeConsts();
 
-        rightBumper = (DigitalInput) Core.getInputManager().getInput(WsInputs.MANIPULATOR_RIGHT_SHOULDER);
+        rightBumper = (DigitalInput) Core.getInputManager().getInput(WsInputs.OPERATOR_RIGHT_SHOULDER);
         rightBumper.addInputListener(this);
-        leftBumper = (DigitalInput) WsInputs.MANIPULATOR_LEFT_SHOULDER.get();
+        leftBumper = (DigitalInput) WsInputs.OPERATOR_LEFT_SHOULDER.get();
         leftBumper.addInputListener(this);
-        high = (DigitalInput) WsInputs.MANIPULATOR_FACE_UP.get();
+        high = (DigitalInput) WsInputs.OPERATOR_FACE_UP.get();
         high.addInputListener(this);
-        mid = (DigitalInput) WsInputs.MANIPULATOR_FACE_RIGHT.get();
+        mid = (DigitalInput) WsInputs.OPERATOR_FACE_RIGHT.get();
         mid.addInputListener(this);
-        low = (DigitalInput) WsInputs.MANIPULATOR_FACE_DOWN.get();
+        low = (DigitalInput) WsInputs.OPERATOR_FACE_DOWN.get();
         low.addInputListener(this);
 
         resetState();
