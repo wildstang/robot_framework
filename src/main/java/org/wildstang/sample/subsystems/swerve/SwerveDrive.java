@@ -77,7 +77,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
     private SwerveDriveOdometry odometry;
     private Timer autoTimer = new Timer();
 
-    private WsVision limelight;
+    //private WsVision limelight;
     private LimeConsts LC;
 
     public enum driveType {TELEOP, AUTO, CROSS};
@@ -213,7 +213,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
         };
         //create default swerveSignal
         swerveSignal = new SwerveSignal(new double[]{0.0, 0.0, 0.0, 0.0}, new double[]{0.0, 0.0, 0.0, 0.0});
-        limelight = (WsVision) Core.getSubsystemManager().getSubsystem(WsSubsystems.WS_VISION);
+        //limelight = (WsVision) Core.getSubsystemManager().getSubsystem(WsSubsystems.WS_VISION);
         odometry = new SwerveDriveOdometry(new SwerveDriveKinematics(new Translation2d(0.2794, 0.2794), new Translation2d(0.2794, -0.2794),
             new Translation2d(-0.2794, 0.2794), new Translation2d(-0.2794, -0.2794)), odoAngle(), odoPosition(), new Pose2d());
     }
@@ -255,8 +255,8 @@ public class SwerveDrive extends SwerveDriveTemplate {
             rotSpeed = Math.max(-0.2, Math.min(0.2, swerveHelper.getRotControl(pathTarget, getGyroAngle())));
             //ensure rotation is never more than 0.2 to prevent normalization of translation from occuring
             if (autoTag){
-                xSpeed = limelight.getScoreX(aimOffset);
-                ySpeed = limelight.getScoreY(vertOffset);
+                //xSpeed = limelight.getScoreX(aimOffset);
+                //ySpeed = limelight.getScoreY(vertOffset);
                 if (Math.abs(xSpeed) > 0.3) xSpeed = Math.signum(xSpeed) * 0.3;
                 if (Math.abs(ySpeed) > 0.3) ySpeed = Math.signum(ySpeed) * 0.3; 
                 if (Math.abs(pathVel * DriveConstants.DRIVE_F_V) > Math.abs(ySpeed*0.5)){
