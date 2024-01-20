@@ -12,8 +12,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 public class TagOnStep extends AutoStep{
 
-    // private SwerveDrive swerve;
-    //private WsVision limelight;
+    private SwerveDrive swerve;
+    private WsVision limelight;
     private boolean color, on;//true for blue, false for red
 
     public TagOnStep(boolean isOn, boolean isBlue){
@@ -21,13 +21,13 @@ public class TagOnStep extends AutoStep{
         on = isOn;
     }
     public void update(){
-        // swerve.setAutoTag(on, color);
-        //limelight.setGamePiece(false);
+        swerve.setAutoTag(on, color);
+        limelight.setGamePiece(false);
         this.setFinished();
     }
     public void initialize(){
-        // swerve = (SwerveDrive) Core.getSubsystemManager().getSubsystem(WsSubsystems.SWERVE_DRIVE);
-        //limelight = (WsVision) Core.getSubsystemManager().getSubsystem(WsSubsystems.WS_VISION);
+        swerve = (SwerveDrive) Core.getSubsystemManager().getSubsystem(WsSubsystems.SWERVE_DRIVE);
+        limelight = (WsVision) Core.getSubsystemManager().getSubsystem(WsSubsystems.WS_VISION);
     }
     public String toString(){
         return "Tag Align On";
