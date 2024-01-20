@@ -11,7 +11,6 @@ public class WsSwerveHelper {
     private double[] yCoords = new double[]{0.0, 0.0, 0.0, 0.0};
     private double rotDelta;
     private double rotPID;
-    private double prevVel = 0;
 
     /** sets the robot in the immobile "cross" defensive position
      * 
@@ -52,6 +51,10 @@ public class WsSwerveHelper {
         //find the translational vectors rotated to account for the gyro
         double xTrans = i_tx * Math.cos(Math.toRadians(i_gyro)) - i_ty * Math.sin(Math.toRadians(i_gyro));
         double yTrans = i_tx * Math.sin(Math.toRadians(i_gyro)) + i_ty * Math.cos(Math.toRadians(i_gyro));
+
+        //account for slight second order skew due to rotation and translation at the same time
+        xTrans += Math.cos(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR;
+        yTrans += -Math.sin(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR;
 
         //cartesian vector addition of translation and rotation vectors
         //note rotation vector angle advances in the cos -> sin -> -cos -> -sin fashion
@@ -107,10 +110,9 @@ public class WsSwerveHelper {
      * @param pathVel path data for velocity of the robot, inches
      * @return double for magnitude of translational vector
      */
-    public double getAutoPower(double pathVel) {
+    public double getAutoPower(double pathVel, double pathAccel) {
         if (pathVel == 0) return 0;
-        double guess = pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + 0.02 * (pathVel - prevVel) * DriveConstants.DRIVE_F_I;
-        this.prevVel = pathVel;
+        double guess = pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + pathAccel * DriveConstants.DRIVE_F_I;
         return -(guess);
     }
 

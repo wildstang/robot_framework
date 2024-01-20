@@ -33,6 +33,8 @@ public final class DriveConstants {
     *  i.e. 2.0 means it can go from 0 to 1.0 in 0.5 seconds
     */
     public static final double SLEW_RATE_LIMIT = 3.0;
+    /**second order correction for rotation plus driving */
+    public static final double ROT_CORRECTION_FACTOR = 0.2;
     /**encoder ticks per revolution, 1.0 for neos */
     public static final double TICKS_PER_REV = 1.0;
     /**PID values for drive P */
