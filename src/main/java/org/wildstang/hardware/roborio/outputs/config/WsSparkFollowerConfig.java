@@ -1,5 +1,6 @@
 package org.wildstang.hardware.roborio.outputs.config;
 
+import org.wildstang.framework.core.Outputs;
 import org.wildstang.framework.hardware.OutputConfig;
 
 /**
@@ -7,7 +8,7 @@ import org.wildstang.framework.hardware.OutputConfig;
  */
 public class WsSparkFollowerConfig implements OutputConfig {
 
-    private String following;
+    private Outputs following;
     private int m_channel = 0;
     private boolean oppose;
     private WsMotorControllers controller;
@@ -18,7 +19,7 @@ public class WsSparkFollowerConfig implements OutputConfig {
      * @param channel Hardware port number.
      * @param controller Enumeration representing type of controller.
      */
-    public WsSparkFollowerConfig(String following, int channel, WsMotorControllers controller) {
+    public WsSparkFollowerConfig(Outputs following, int channel, WsMotorControllers controller) {
         this(following, channel, controller, false);
     }
 
@@ -29,7 +30,7 @@ public class WsSparkFollowerConfig implements OutputConfig {
      * @param controller Enumeration representing type of controller.
      * @param oppose True if the follow should oppose the direction of this motor.
      */
-    public WsSparkFollowerConfig(String following, int channel, WsMotorControllers controller, boolean oppose) {
+    public WsSparkFollowerConfig(Outputs following, int channel, WsMotorControllers controller, boolean oppose) {
         this.following = following;
         m_channel = channel;
         this.controller = controller;
@@ -40,7 +41,7 @@ public class WsSparkFollowerConfig implements OutputConfig {
      * Returns the name of the followed motor controller.
      * @return The name of followed motor controller.
      */
-    public String getFollowing() {
+    public Outputs getFollowing() {
         return following;
     }
 
