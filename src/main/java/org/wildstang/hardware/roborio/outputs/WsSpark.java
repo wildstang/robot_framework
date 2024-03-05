@@ -75,7 +75,8 @@ public class WsSpark extends WsMotorController {
      */
     public void warnFollower() {
         if (motor.isFollower()) {
-            Log.error("WsSpark is set as a follower!");
+            // NOTE: this may also display if the motor cannot be found.
+            Log.error("WsSpark (" + this.getName() + ") is set as a follower!");
         }
     }
 
