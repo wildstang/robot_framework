@@ -1,5 +1,7 @@
 package org.wildstang.framework.core;
 
+import java.util.Optional;
+
 import org.wildstang.framework.CoreUtils;
 import org.wildstang.framework.auto.AutoManager;
 import org.wildstang.framework.auto.AutoProgram;
@@ -14,6 +16,9 @@ import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.framework.subsystems.SubsystemManager;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 /**
  * Core of robot framework.
  */
@@ -26,6 +31,7 @@ public class Core {
     private static InputFactory s_inputFactory;
     private static OutputFactory s_outputFactory;
     private static AutoManager s_autoManager;
+    private static Alliance alliance;
 
     private Class<?> m_inputFactoryClass;
     private Class<?> m_outputFactoryClass;
@@ -220,4 +226,36 @@ public class Core {
         s_outputManager.update();
     }
 
+    /**
+     * Returns the stored FMS alliance. If nothing is stored, fetch and store the alliance.
+     * @return Stored Alliance value or null if not present.
+     * @see <a href="https://docs.wpilib.org/en/stable/docs/software/basic-programming/alliancecolor.html">WPILib Get Alliance Color</a>
+     */
+    public static Alliance getAlliance() {
+        if (Core.alliance == null) {
+            Optional<Alliance> alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                Core.alliance = alliance.get();
+            }
+        }
+        return Core.alliance;
+    }
+
+    /**
+     * Return whether the stored alliance is blue.
+     * Note, if the alliance could not be determined false will always be returned.
+     * @return True if the FMS alliance is blue.
+     */
+    public static boolean isBlueAlliance() {
+        return getAlliance() == Alliance.Blue;
+    }
+
+    /**
+     * Return whether the stored alliance is red.
+     * Note, if the alliance could not be determined false will always be returned.
+     * @return True if the FMS alliance is red.
+     */
+    public static boolean isRedAlliance() {
+        return getAlliance() == Alliance.Red;
+    }
 }
