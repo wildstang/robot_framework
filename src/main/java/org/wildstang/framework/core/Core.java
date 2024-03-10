@@ -236,6 +236,10 @@ public class Core {
             Optional<Alliance> alliance = DriverStation.getAlliance();
             if (alliance.isPresent()) {
                 Core.alliance = alliance.get();
+                Log.info("Alliance updated to " + Core.alliance.toString());
+            }
+            else {
+                Log.warn("No Alliance could be retrieved from DriverStation");
             }
         }
         return Core.alliance;
