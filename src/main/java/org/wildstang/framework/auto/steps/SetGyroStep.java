@@ -8,7 +8,8 @@ public class SetGyroStep extends AutoStep {
     private SwerveDriveTemplate m_drive;
     private double heading;
 
-    /** sets the gyro value to be the given argument value
+    /** DEPRECATED use AutoSetupStep instead
+     *  sets the gyro value to be the given argument value
      * @param heading value you want the gyro to currently read
      * @param drive the swerveDrive subsystem
      */
@@ -20,7 +21,7 @@ public class SetGyroStep extends AutoStep {
     @Override
     public void initialize() {
         m_drive.setToAuto();
-        m_drive.setAutoValues(0.0, 0.0, 0,0, 0);
+        m_drive.setAutoValues(0.0, 0.0, 0,0);
         m_drive.setGyro(heading);
         m_drive.setAutoHeading(heading);
     }

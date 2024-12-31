@@ -53,8 +53,8 @@ public class WsSwerveHelper {
         double yTrans = i_tx * Math.sin(Math.toRadians(i_gyro)) + i_ty * Math.cos(Math.toRadians(i_gyro));
 
         //account for slight second order skew due to rotation and translation at the same time
-        xTrans += Math.cos(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR;
-        yTrans += -Math.sin(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR;
+        xTrans += Math.cos(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR * Math.hypot(i_tx, i_ty);
+        yTrans += -Math.sin(Math.atan2(xTrans,yTrans)) * i_rot * DriveConstants.ROT_CORRECTION_FACTOR * Math.hypot(i_tx, i_ty);
 
         //cartesian vector addition of translation and rotation vectors
         //note rotation vector angle advances in the cos -> sin -> -cos -> -sin fashion
@@ -81,8 +81,37 @@ public class WsSwerveHelper {
      * @param i_gyro the gyro value, field centric, in bearing degrees
      * @return SwerveSignal that is the command for the robot to move
      */
-    public SwerveSignal setAuto(double i_power, double i_heading, double i_rot, double i_gyro, double xOffset, double yOffset) {
-        return setDrive(i_power * -Math.sin(Math.toRadians(i_heading))+ xOffset*.5, i_power * -Math.cos(Math.toRadians(i_heading))+ yOffset*.5, i_rot, i_gyro); //TODO: change xxoffset multiplier
+    public SwerveSignal setAuto(double i_X, double i_Y, double i_rot, double i_gyro, double xOffset, double yOffset) {
+        //return setDrive(i_power * -Math.sin(Math.toRadians(i_heading))+ xOffset*.5, i_power * -Math.cos(Math.toRadians(i_heading))+ yOffset*.5, i_rot, i_gyro); //TODO: change xxoffset multiplier
+        return setDrive(i_X - xOffset*Math.cos(Math.toRadians(i_gyro)) - yOffset*Math.sin(Math.toRadians(i_gyro)), 
+            i_Y + xOffset*Math.sin(Math.toRadians(i_gyro)) - yOffset*Math.cos(Math.toRadians(i_gyro)), i_rot, i_gyro); 
+    }
+
+    /*
+     * Sets the robot to automatially drive at a detected game piece
+     * Adjusts driver's joysticks to point at gamepiece, and rotates the robot to face the gamepiece
+     * 
+     * @param xPower X value of joystick
+     * @param yPower Y value of joystick
+     * @param tx limelight camera's tx value looking at gamepiece 
+     * @return the swerveSignal to control the swerveDrive
+     */
+    public SwerveSignal setObject(double xPower, double yPower, double tx){
+        return setDrive(0, -Math.hypot(yPower, xPower) , getRotControl(tx, 0.0), 360.0-1.0*tx);
+    }
+    /*
+     * Determines if the limelight should take over for object detection in auto
+     * If the robot is moving too slowly to pick up a detected gamepiece, gives power
+     * to move enough to pick up the gamepiece
+     * @param ty ty value of limelight in object detection mode
+     * @param xPower X value of the normal auto path
+     * @param yPower Y value of the normal auto path
+     * @return the new power value to use if the robot is moving too slowly, otherwise 0 if the robot is fine
+     */
+    public double adjustObjectAuto( double ty, double xPower, double yPower){
+        double yObject = ty*0.03;
+        if (Math.hypot(xPower, yPower) > yObject) return yObject;
+        else return 0;
     }
 
     /**automatically creates a rotational joystick value to rotate the robot towards a specific target
@@ -102,7 +131,17 @@ public class WsSwerveHelper {
         else {
             rotPID = (rotDelta + 360) / 180;
         } 
-        return Math.signum(rotPID) * Math.min(Math.abs(rotPID*2.5), 1.0);
+        return Math.signum(rotPID) * Math.min(Math.abs(rotPID*DriveConstants.PID_ROTATION), 1.0/DriveConstants.ROTATION_SPEED);
+    }
+    /*
+     * getRotControl, but capped to -0.2 to 0.2
+     * 
+     * @param i_target target direction for the robot to face, field centric, bearing degrees
+     * @param i_gyro the gyro value, field centric, in bearing degrees
+     * @return double that indicates what the rotational joystick value should be
+     */
+    public double getAutoRotation(double i_target, double i_gyro){
+        return Math.max(-0.2, Math.min(0.2, getRotControl(i_target, i_gyro)));
     }
 
     /**determines the translational magnitude of the robot in autonomous
@@ -112,8 +151,8 @@ public class WsSwerveHelper {
      */
     public double getAutoPower(double pathVel, double pathAccel) {
         if (pathVel == 0) return 0;
-        double guess = pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + pathAccel * DriveConstants.DRIVE_F_I;
-        return -(guess);
+        // I don't know why this was negative
+        return (pathVel * DriveConstants.DRIVE_F_V + DriveConstants.DRIVE_F_K + pathAccel * DriveConstants.DRIVE_F_I);
     }
 
     /**returns magnitude of vector components */

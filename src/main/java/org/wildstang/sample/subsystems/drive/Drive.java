@@ -146,4 +146,10 @@ public class Drive extends PathFollowingDrive {
         gyro.reset();
         gyro.setAngleAdjustment(degrees);
     }
+
+    @Override
+    public void initSubsystems() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initSubsystems'");
+    }
 }

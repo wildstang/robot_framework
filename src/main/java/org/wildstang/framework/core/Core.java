@@ -14,6 +14,9 @@ import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.framework.subsystems.SubsystemManager;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 /**
  * Core of robot framework.
  */
@@ -29,6 +32,9 @@ public class Core {
 
     private Class<?> m_inputFactoryClass;
     private Class<?> m_outputFactoryClass;
+    private static Alliance s_alliance;
+
+    private static boolean inAuto = false;
 
     /**
      * Constructor collects I/O factory and initialized framework components.
@@ -126,6 +132,14 @@ public class Core {
 
             s_subsystemManager.addSubsystem(sub);
         }
+        for (Subsystems subsystem : p_subsystems) {
+            Log.info("Creating subsystem: " + subsystem.getName());
+
+            // Instantiate the class
+            Subsystem sub = (Subsystem) s_subsystemManager.getSubsystem(subsystem);
+            // Call the init method
+            sub.initSubsystems();
+        }
     }
 
     /**
@@ -142,6 +156,24 @@ public class Core {
 
             s_autoManager.addProgram(prog);
         }
+    }
+
+    public static Alliance getAlliance() {
+        return s_alliance;
+    }
+
+    public static void setAlliance(Alliance alliance) {
+        s_alliance = alliance;
+    }
+
+    public static Boolean isBlue() {
+        return s_alliance == Alliance.Blue;
+    }
+    public static boolean getIsInAuto(){
+        return inAuto;
+    }
+    public static void setToTeleop(){
+        inAuto = false;
     }
 
     /**

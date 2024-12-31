@@ -7,6 +7,7 @@ import org.wildstang.hardware.roborio.outputs.WsSpark;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -31,6 +32,7 @@ public class SwerveModule {
      */
     public SwerveModule(WsSpark driveMotor, WsSpark angleMotor, double offset) {
         this.driveMotor = driveMotor;
+        // this.driveMotor.getController().getAbsoluteEncoder(Type.kDutyCycle).setVelocityConversionFactor(); 
         this.angleMotor = angleMotor;
         this.absEncoder = angleMotor.getController().getAbsoluteEncoder(Type.kDutyCycle);
         this.absEncoder.setInverted(true);
@@ -71,7 +73,7 @@ public class SwerveModule {
 
     /** resets drive encoder */
     public void resetDriveEncoders() {
-        driveMotor.resetEncoder();
+        //driveMotor.resetEncoder();
     }
 
     /**sets drive to brake mode if true, coast if false 
@@ -159,6 +161,15 @@ public class SwerveModule {
         return driveMotor;
     }
     public SwerveModulePosition odoPosition(){
-        return new SwerveModulePosition(getPosition()*0.0254*0.98, new Rotation2d(Math.toRadians(360-getAngle())));
+        return new SwerveModulePosition(getPosition()*0.0254, new Rotation2d(Math.toRadians(360-getAngle())));
+    }
+    public SwerveModuleState moduleState(){
+        return new SwerveModuleState(driveMotor.getVelocity(), Rotation2d.fromDegrees(360-getAngle()));
+    }
+    public void setDriveCurrent(int newCurrentLimit){
+        driveMotor.setCurrentLimit(newCurrentLimit, newCurrentLimit, 0);
+    }
+    public void tempDriveCurrent(int limit){
+        driveMotor.tempCurrentLimit(limit);
     }
 }
