@@ -24,7 +24,6 @@ public class AutoSetupStep extends AutoStep{
         heading = pathHeading;
         Core.setAlliance(alliance);
         LedController led = (LedController) Core.getSubsystemManager().getSubsystem(WsSubsystems.LED);
-        led.setAuto();
     }
 
     public void update(){
