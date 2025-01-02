@@ -155,6 +155,14 @@ public class WsSpark extends WsMotorController {
     }
 
     /**
+     * Sets the current limit, but does not burn flash. Never use in init
+     * @param limit the amount of amps drawn before limiting
+     */
+    public void tempCurrentLimit(int limit){
+        motor.setSmartCurrentLimit(limit, limit, 0);
+    }
+
+    /**
      * Enables voltage compensation.
      */
     public void enableVoltageCompensation(){
