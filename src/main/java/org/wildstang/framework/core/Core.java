@@ -14,6 +14,8 @@ import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.framework.subsystems.SubsystemManager;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 /**
  * Core of robot framework.
  */
@@ -29,6 +31,7 @@ public class Core {
 
     private Class<?> m_inputFactoryClass;
     private Class<?> m_outputFactoryClass;
+    private static Alliance s_alliance;
 
     /**
      * Constructor collects I/O factory and initialized framework components.
@@ -148,6 +151,31 @@ public class Core {
 
             s_autoManager.addProgram(prog);
         }
+    }
+
+    /**
+     * Getter for the alliance assigned to the robot.
+     * @return The alliance type or null if unassigned.
+     */
+    public static Alliance getAlliance() {
+        return s_alliance;
+    }
+
+    /**
+     * Statically sets the alliance for the robot, used in AutoSetupStep.
+     * @param alliance Alliance that the current/last auto program is designed for.
+     */
+    public static void setAlliance(Alliance alliance) {
+        // TODO: do we want to prevent this from being reassigned?
+        s_alliance = alliance;
+    }
+
+    /**
+     * Determines if the assigned alliance is the blue alliance.
+     * @return Boolean representation of the alliance.
+     */
+    public static boolean isBlue() {
+        return s_alliance == Alliance.Blue;
     }
 
     /**
