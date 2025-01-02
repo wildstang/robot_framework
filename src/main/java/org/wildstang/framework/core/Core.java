@@ -34,7 +34,7 @@ public class Core {
     private Class<?> m_outputFactoryClass;
     private static Alliance s_alliance;
 
-    private static boolean inAuto = false;
+    private static boolean isDisabled = true;
 
     /**
      * Constructor collects I/O factory and initialized framework components.
@@ -169,11 +169,14 @@ public class Core {
     public static Boolean isBlue() {
         return s_alliance == Alliance.Blue;
     }
-    public static boolean getIsInAuto(){
-        return inAuto;
+    public static boolean getIsDisabledMode(){
+        return isDisabled;
     }
-    public static void setToTeleop(){
-        inAuto = false;
+    public static void setIsDisabledMode(boolean state){
+        isDisabled = state;
+    }
+    public static boolean isAutoLocked(){
+        return s_autoManager.isAutoLocked();
     }
 
     /**

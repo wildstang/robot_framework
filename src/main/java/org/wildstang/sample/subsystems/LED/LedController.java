@@ -13,7 +13,6 @@ import org.wildstang.sample.subsystems.targeting.WsVision;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class LedController implements Subsystem {
 
@@ -35,19 +34,19 @@ public class LedController implements Subsystem {
     private int[] orange = {255,100,0};
     private int[] cyan = {0,155,155};
     private int[] purple = {128,0,128};
-    
-    private boolean isAutoLocked = false;
 
 
     @Override
     public void update(){
-        if (Core.getIsInAuto()){
-            if (isAutoLocked){
+        if (Core.getIsDisabledMode()){
+            if (Core.isAutoLocked()){
                 if (Core.isBlue()) cycleBlue();
                 else cycleRed();
             } else rainbow();
         } else {
-            if (isAutoLocked){
+
+            
+            if (Core.isAutoLocked()){
                 if (Core.isBlue()) cycleBlue();
                 else cycleRed();
             } else rainbow();
@@ -58,7 +57,7 @@ public class LedController implements Subsystem {
 
     @Override
     public void inputUpdate(Input source) {
-        isAutoLocked = false;
+        
     }
 
     @Override
@@ -91,10 +90,6 @@ public class LedController implements Subsystem {
     @Override
     public String getName() {
         return "Led Controller";
-    }
-
-    public void setAuto(){
-        isAutoLocked = true;
     }
 
     public void setRGB(int red, int green, int blue){

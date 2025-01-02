@@ -213,4 +213,8 @@ public class AutoManager {
         // trigger Sleeper program on next update
         programFinished = true;
     }
+
+    public boolean isAutoLocked(){
+        return lockinChooser.getSelected();
+    }
 }

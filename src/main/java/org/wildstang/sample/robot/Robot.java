@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         Log.info("Engaging disabled mode.");
+        Core.setIsDisabledMode(true);
     }
 
     /**
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
         Log.danger("Engaging autonomous mode.");
         Core.getSubsystemManager().resetState();
         Core.getAutoManager().startCurrentProgram();
+        Core.setIsDisabledMode(false);
         
     }
 
@@ -86,7 +88,7 @@ public class Robot extends TimedRobot {
         // tell AutoManager not to preload or run any more programs
         Core.getAutoManager().endPeriod();
         Core.getSubsystemManager().resetState();
-        Core.setToTeleop();
+        Core.setIsDisabledMode(false);
     
     }
 
