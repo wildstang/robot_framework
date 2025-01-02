@@ -46,9 +46,11 @@ public class Drive extends PathFollowingDrive {
     }
 
     @Override
-    public void selfTest() {
-        // TODO Auto-generated method stub
+    public void initSubsystems() {
+    }
 
+    @Override
+    public void selfTest() {
     }
 
     @Override

@@ -72,6 +72,10 @@ public class InputTestSubsystem implements Subsystem {
     public void init() {
     }
 
+    @Override
+    public void initSubsystems() {
+    }
+
     public void putAxis(AnalogInput axis) {
         SmartDashboard.putNumber(axis.getName(), axis.getValue());
     }

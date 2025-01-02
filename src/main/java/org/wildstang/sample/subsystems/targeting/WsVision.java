@@ -176,6 +176,10 @@ public class WsVision implements Subsystem {
     }
 
     @Override
+    public void initSubsystems() {
+    }
+
+    @Override
     public void selfTest() {
     }
 
