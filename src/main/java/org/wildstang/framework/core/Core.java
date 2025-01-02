@@ -114,7 +114,7 @@ public class Core {
      * @param p_subsystems All enumerations of Subsystems to be created.
      */
     public void createSubsystems(Subsystems[] p_subsystems) {
-        // Iterate over all input enum values and create a subsystem for each
+        // Iterate over all subsystem enum values and create a subsystem for each
         for (Subsystems subsystem : p_subsystems) {
             Log.info("Creating subsystem: " + subsystem.getName());
 
@@ -125,6 +125,12 @@ public class Core {
             sub.init();
 
             s_subsystemManager.addSubsystem(sub);
+        }
+
+        // Re-iterate over all subsystems to allow them to initialize their subsystem references
+        for (Subsystems subsystem : p_subsystems) {
+            Log.info("Initializing subsystems for " + subsystem.getName());
+            s_subsystemManager.getSubsystem(subsystem).initSubsystems();
         }
     }
 

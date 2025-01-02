@@ -34,6 +34,12 @@ public interface Subsystem extends InputListener {
     public void resetState();
 
     /**
+     * Initialize references to other subsystems here
+     * Called after all subsystems are initialized
+     */
+    public void initSubsystems();
+
+    /**
      * Returns the name of the subsystem.
      *
      * @return the name of the subsystem
