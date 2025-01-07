@@ -1,6 +1,6 @@
 package org.wildstang.sample.subsystems.swerve;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix6.hardware.Pigeon2;
 
 import java.util.Arrays;
 
@@ -324,11 +324,11 @@ public class SwerveDrive extends SwerveDriveTemplate {
         SmartDashboard.putNumber("Rotation target", rotTarget);
         SmartDashboard.putNumber("Odo X", odometry.getPoseMeters().getX());
         SmartDashboard.putNumber("Odo Y", odometry.getPoseMeters().getY());
-        SmartDashboard.putNumber("Yaw", gyro.getYaw());
-        SmartDashboard.putNumber("Roll", gyro.getRoll());
-        SmartDashboard.putNumber("Pitch", gyro.getPitch());
+        SmartDashboard.putNumber("Yaw", gyro.getYaw().getValueAsDouble());
+        SmartDashboard.putNumber("Roll", gyro.getRoll().getValueAsDouble());
+        SmartDashboard.putNumber("Pitch", gyro.getPitch().getValueAsDouble());
         short[] shortAcceleration = {0,0,0};
-        gyro.getBiasedAccelerometer(shortAcceleration);
+        //gyro.getBiasedAccelerometer(shortAcceleration); I'm not sure what replaces this
         double[] acceleration = new double[3];
         for (int i=0;i<3;i++) {
             acceleration[i] = shortAcceleration[i];
@@ -425,7 +425,7 @@ public class SwerveDrive extends SwerveDriveTemplate {
     }
 
     public double getGyroAngle() {
-        return (360 - gyro.getYaw()+360)%360;
+        return (360 - gyro.getYaw().getValueAsDouble()+360)%360;
     }  
 
     public double getFieldYaw(){

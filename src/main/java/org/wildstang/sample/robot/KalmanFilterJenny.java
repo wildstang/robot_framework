@@ -58,7 +58,7 @@ public class KalmanFilterJenny {
 
     private SwerveDrive swerve = (SwerveDrive) Core.getSubsystemManager().getSubsystem("SwerveDrive");
     private SwerveDriveOdometry odometry;
-    private com.ctre.phoenix.sensors.Pigeon2 gyro;
+    public final Pigeon2 gyro;
     private ChassisSpeeds robotSpeeds;
 
     private final int ACCL_X = 0;
@@ -81,7 +81,7 @@ public class KalmanFilterJenny {
 
         //getting x,y acceleration values from gyro
         short[] shortAcceleration = {0,0,0};
-        gyro.getBiasedAccelerometer(shortAcceleration);
+        //gyro.getBiasedAccelerometer(shortAcceleration);
         double[] acceleration = new double[2];
         for (int i=0;i<2;i++) {
             acceleration[i] = shortAcceleration[i];
@@ -109,7 +109,7 @@ public class KalmanFilterJenny {
     private void updateMeasurementMatrix(){
     
         short[] shortAcceleration = {0,0,0};
-        gyro.getBiasedAccelerometer(shortAcceleration);
+        //gyro.getBiasedAccelerometer(shortAcceleration);
         double[] acceleration = new double[2];
         for (int i=0;i<2;i++) {
             acceleration[i] = shortAcceleration[i];
@@ -119,7 +119,7 @@ public class KalmanFilterJenny {
         z.set(1, 0, odometry.getPoseMeters().getY()); // y measurement
         z.set(2, 0, acceleration[ACCL_X]); // ax measurement
         z.set(3, 0, acceleration[ACCL_Y]); // ay measurement
-        z.set(4, 0, gyro.getYaw()); // theta measurement
+        z.set(4, 0, gyro.getYaw().getValueAsDouble()); // theta measurement
     }
 
 

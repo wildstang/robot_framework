@@ -14,14 +14,16 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.choreo.lib.*;
+import choreo.*;
+import choreo.trajectory.Trajectory;
+
 import com.google.gson.Gson;
 
 public class SwervePathFollowerStep extends AutoStep {
 
     private static final double mToIn = 39.3701;
     private SwerveDriveTemplate m_drive;
-    private ChoreoTrajectory pathtraj;
+    private Trajectory pathTraj;
 
     // x and y field relative
     private Pose2d fieldAutoPose, fieldRobotPose;

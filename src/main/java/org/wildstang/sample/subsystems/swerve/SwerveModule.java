@@ -1,7 +1,6 @@
 package org.wildstang.sample.subsystems.swerve;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 
 import org.wildstang.hardware.roborio.outputs.WsSpark;
 
@@ -21,7 +20,7 @@ public class SwerveModule {
 
     private WsSpark driveMotor;
     private WsSpark angleMotor;
-    private AbsoluteEncoder absEncoder;
+    private SparkAbsoluteEncoder absEncoder;
 
     /** Class: SwerveModule
      *  controls a single swerve pod, featuring two motors and one offboard sensor
@@ -34,10 +33,8 @@ public class SwerveModule {
         this.driveMotor = driveMotor;
         // this.driveMotor.getController().getAbsoluteEncoder(Type.kDutyCycle).setVelocityConversionFactor(); 
         this.angleMotor = angleMotor;
-        this.absEncoder = angleMotor.getController().getAbsoluteEncoder(Type.kDutyCycle);
-        this.absEncoder.setInverted(true);
-        this.absEncoder.setPositionConversionFactor(360.0);
-        this.absEncoder.setVelocityConversionFactor(360.0/60.0);
+        
+        this.absEncoder = angleMotor.getController().getAbsoluteEncoder();
         this.driveMotor.setBrake();
         this.angleMotor.setBrake();
 
@@ -45,7 +42,7 @@ public class SwerveModule {
         
         //set up angle and drive with pid and kpid respectively
         driveMotor.initClosedLoop(DriveConstants.DRIVE_P, DriveConstants.DRIVE_I, DriveConstants.DRIVE_D, 0);
-        angleMotor.initClosedLoop(DriveConstants.ANGLE_P, DriveConstants.ANGLE_I, DriveConstants.ANGLE_D, 0, this.absEncoder);
+        angleMotor.initClosedLoop(DriveConstants.ANGLE_P, DriveConstants.ANGLE_I, DriveConstants.ANGLE_D, 0, this.absEncoder, true);
 
         driveMotor.setCurrentLimit(DriveConstants.DRIVE_CURRENT_LIMIT, DriveConstants.DRIVE_CURRENT_LIMIT, 0);
         angleMotor.setCurrentLimit(DriveConstants.ANGLE_CURRENT_LIMIT, DriveConstants.ANGLE_CURRENT_LIMIT, 0);

@@ -12,7 +12,6 @@ import org.wildstang.sample.auto.Steps.ObjectOnStep;
 import org.wildstang.sample.robot.WsSubsystems;
 import org.wildstang.sample.subsystems.swerve.SwerveDrive;
 
-import com.choreo.lib.*;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
