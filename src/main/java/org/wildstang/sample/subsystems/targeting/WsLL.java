@@ -36,6 +36,7 @@ public class WsLL {
         //red3D = limelight.getEntry("botpose_orb_wpired").getDoubleArray(new double[11]);
         blue3D = limelight.getEntry("botpose_wpiblue").getDoubleArray(new double[11]);
         //blue3D = limelight.getEntry("botpose_orb_wpiblue").getDoublearray(new double[11]);
+        target3D = Core.isBlue() ? blue3D : red3D;
         setToIn();
         tid = (int) limelight.getEntry("tid").getInteger(0);
         tv = limelight.getEntry("tv").getDouble(0);

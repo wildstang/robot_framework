@@ -30,7 +30,7 @@ public class WsSpark extends WsMotorController {
     SparkBase follower;
     SparkBaseConfig config;
     SparkBaseConfig followerConfig;
-    AbsoluteEncoderConfig absEncoderConfig;
+    AbsoluteEncoderConfig absEncoderConfig = new AbsoluteEncoderConfig();
     boolean isUsingController;
     boolean isChanged;
     com.revrobotics.spark.SparkBase.ControlType controlType;
