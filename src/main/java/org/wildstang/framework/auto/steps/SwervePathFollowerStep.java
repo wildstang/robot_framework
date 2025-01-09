@@ -3,6 +3,7 @@ package org.wildstang.framework.auto.steps;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Optional;
 
 import org.wildstang.framework.auto.AutoStep;
 import org.wildstang.framework.core.Core;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import choreo.*;
+import choreo.trajectory.SwerveSample;
 import choreo.trajectory.Trajectory;
 
 import com.google.gson.Gson;
@@ -23,7 +25,8 @@ public class SwervePathFollowerStep extends AutoStep {
 
     private static final double mToIn = 39.3701;
     private SwerveDriveTemplate m_drive;
-    private Trajectory pathTraj;
+    private Trajectory<SwerveSample> pathtraj;
+    private SwerveSample sample;
 
     // x and y field relative
     private Pose2d fieldAutoPose, fieldRobotPose;
@@ -52,12 +55,12 @@ public class SwervePathFollowerStep extends AutoStep {
 
     @Override
     public void update() {
-        if (timer.get() >= pathtraj.getTotalTime()) {
+        if (timer.get() >= pathtraj.getFinalSample(false).get().t) {
             m_drive.setAutoValues(0.0,0.0,0.0,0.0);
             SmartDashboard.putNumber("auto final time", timer.get());
             setFinished();
         } else {
-            ChoreoTrajectoryState sample = pathtraj.sample(timer.get());
+            sample = pathtraj.sampleAt(timer.get(), false).get();
             
             
             fieldRobotPose = m_drive.returnPose();
@@ -69,7 +72,7 @@ public class SwervePathFollowerStep extends AutoStep {
             SmartDashboard.putNumber("yOffset", yOffset);
 
             m_drive.setAutoHeading(getHeading());
-            m_drive.setAutoValues((Core.isBlue() ? -1 : 1) * sample.velocityY * mToIn, sample.velocityX * mToIn, xOffset, yOffset);
+            m_drive.setAutoValues((Core.isBlue() ? -1 : 1) * sample.vy * mToIn, sample.vx * mToIn, xOffset, yOffset);
             SmartDashboard.putNumber("PF local X", fieldRobotPose.getX());
             SmartDashboard.putNumber("PF path X", fieldAutoPose.getX());
             }
@@ -81,11 +84,12 @@ public class SwervePathFollowerStep extends AutoStep {
     }
 
     public double getHeading(){
-        if (Core.isBlue()) return ((-pathtraj.sample(timer.get()).heading*180/Math.PI)+360)%360;
-        else return ((pathtraj.sample(timer.get()).heading*180/Math.PI)+360)%360;
+        if (Core.isBlue()) return ((-pathtraj.sampleAt(timer.get(),false).get().heading*180/Math.PI)+360)%360;
+        else return ((pathtraj.sampleAt(timer.get(),false).get().heading*180/Math.PI)+360)%360;
     }
 
-    public ChoreoTrajectory getTraj(String fileName){
+    @SuppressWarnings("unchecked")
+    public Trajectory<SwerveSample> getTraj(String fileName){
         Gson gson = new Gson();
         var tempfile = Filesystem.getDeployDirectory();
         var traj_dir = new File(tempfile, "choreo");
@@ -93,9 +97,9 @@ public class SwervePathFollowerStep extends AutoStep {
         var traj_file = new File(traj_dir, fileName + ".traj");
         try {
             var reader = new BufferedReader(new FileReader(traj_file));
-            return  gson.fromJson(reader, ChoreoTrajectory.class);
+            return  gson.fromJson(reader, Trajectory.class);
         } catch (Exception ex) {
             DriverStation.reportError("Choreo Trajectory get Error", ex.getStackTrace());
-        }return new ChoreoTrajectory();
+        }return new Trajectory<SwerveSample>(null, null, null, null);
     }
 }
