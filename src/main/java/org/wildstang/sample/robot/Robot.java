@@ -6,6 +6,8 @@ import org.wildstang.framework.logger.Log.LogLevel;
 import org.wildstang.hardware.roborio.RoboRIOInputFactory;
 import org.wildstang.hardware.roborio.RoboRIOOutputFactory;
 
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,6 +48,11 @@ public class Robot extends TimedRobot {
         logChooser.addOption(LogLevel.ERROR.toString(), LogLevel.ERROR);
         logChooser.addOption(LogLevel.NONE.toString(), LogLevel.NONE);
         SmartDashboard.putData("Log Level", logChooser);
+
+        DataLogManager.start();
+        // Record both DS control and joystick data
+        DriverStation.startDataLog(DataLogManager.getLog());
+
     }
 
     /**
@@ -54,6 +61,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         Log.info("Engaging disabled mode.");
+        Core.setIsDisabledMode(true);
     }
 
     /**
@@ -65,6 +73,8 @@ public class Robot extends TimedRobot {
         Log.danger("Engaging autonomous mode.");
         Core.getSubsystemManager().resetState();
         Core.getAutoManager().startCurrentProgram();
+        Core.setIsDisabledMode(false);
+        
     }
 
     /**
@@ -78,6 +88,8 @@ public class Robot extends TimedRobot {
         // tell AutoManager not to preload or run any more programs
         Core.getAutoManager().endPeriod();
         Core.getSubsystemManager().resetState();
+        Core.setIsDisabledMode(false);
+    
     }
 
     /**
@@ -122,6 +134,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         update();
+        
     }
 
     /**

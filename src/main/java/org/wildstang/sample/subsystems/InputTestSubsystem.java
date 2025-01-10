@@ -103,4 +103,9 @@ public class InputTestSubsystem implements Subsystem {
     public String getName() {
         return "Input Test";
     }
+
+    @Override
+    public void initSubsystems() {
+        // TODO Auto-generated method stub
+    }
 }

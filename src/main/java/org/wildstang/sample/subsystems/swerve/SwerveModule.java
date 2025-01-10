@@ -1,12 +1,12 @@
 package org.wildstang.sample.subsystems.swerve;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 
 import org.wildstang.hardware.roborio.outputs.WsSpark;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -20,7 +20,7 @@ public class SwerveModule {
 
     private WsSpark driveMotor;
     private WsSpark angleMotor;
-    private AbsoluteEncoder absEncoder;
+    private SparkAbsoluteEncoder absEncoder;
 
     /** Class: SwerveModule
      *  controls a single swerve pod, featuring two motors and one offboard sensor
@@ -31,11 +31,10 @@ public class SwerveModule {
      */
     public SwerveModule(WsSpark driveMotor, WsSpark angleMotor, double offset) {
         this.driveMotor = driveMotor;
+        // this.driveMotor.getController().getAbsoluteEncoder(Type.kDutyCycle).setVelocityConversionFactor(); 
         this.angleMotor = angleMotor;
-        this.absEncoder = angleMotor.getController().getAbsoluteEncoder(Type.kDutyCycle);
-        this.absEncoder.setInverted(true);
-        this.absEncoder.setPositionConversionFactor(360.0);
-        this.absEncoder.setVelocityConversionFactor(360.0/60.0);
+        
+        this.absEncoder = angleMotor.getController().getAbsoluteEncoder();
         this.driveMotor.setBrake();
         this.angleMotor.setBrake();
 
@@ -43,7 +42,7 @@ public class SwerveModule {
         
         //set up angle and drive with pid and kpid respectively
         driveMotor.initClosedLoop(DriveConstants.DRIVE_P, DriveConstants.DRIVE_I, DriveConstants.DRIVE_D, 0);
-        angleMotor.initClosedLoop(DriveConstants.ANGLE_P, DriveConstants.ANGLE_I, DriveConstants.ANGLE_D, 0, this.absEncoder);
+        angleMotor.initClosedLoop(DriveConstants.ANGLE_P, DriveConstants.ANGLE_I, DriveConstants.ANGLE_D, 0, this.absEncoder, true);
 
         driveMotor.setCurrentLimit(DriveConstants.DRIVE_CURRENT_LIMIT, DriveConstants.DRIVE_CURRENT_LIMIT, 0);
         angleMotor.setCurrentLimit(DriveConstants.ANGLE_CURRENT_LIMIT, DriveConstants.ANGLE_CURRENT_LIMIT, 0);
@@ -71,7 +70,7 @@ public class SwerveModule {
 
     /** resets drive encoder */
     public void resetDriveEncoders() {
-        driveMotor.resetEncoder();
+        //driveMotor.resetEncoder();
     }
 
     /**sets drive to brake mode if true, coast if false 
@@ -159,6 +158,15 @@ public class SwerveModule {
         return driveMotor;
     }
     public SwerveModulePosition odoPosition(){
-        return new SwerveModulePosition(getPosition()*0.0254*0.98, new Rotation2d(Math.toRadians(360-getAngle())));
+        return new SwerveModulePosition(getPosition()*0.0254, new Rotation2d(Math.toRadians(360-getAngle())));
+    }
+    public SwerveModuleState moduleState(){
+        return new SwerveModuleState(driveMotor.getVelocity(), Rotation2d.fromDegrees(360-getAngle()));
+    }
+    public void setDriveCurrent(int newCurrentLimit){
+        driveMotor.setCurrentLimit(newCurrentLimit, newCurrentLimit, 0);
+    }
+    public void tempDriveCurrent(int limit){
+        driveMotor.tempCurrentLimit(limit);
     }
 }
