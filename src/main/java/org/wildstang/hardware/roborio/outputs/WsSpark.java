@@ -284,11 +284,12 @@ public class WsSpark extends WsMotorController {
      * @param FF the feed forward constant
      * @param absEncoder absolute encoder used to provided PID feedback
      */
-    public void initClosedLoop(double P, double I, double D, double FF, SparkAbsoluteEncoder absEncoder, boolean isEncoderFlipped){
+    public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped){
         config.closedLoop.pidf(P, I, D, FF, ClosedLoopSlot.kSlot0);
         absEncoderConfig.positionConversionFactor(360.0);
         absEncoderConfig.velocityConversionFactor(360.0/60.0);
         absEncoderConfig.inverted(isEncoderFlipped);
+        config.apply(absEncoderConfig);
         config.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
         config.closedLoop.positionWrappingEnabled(true);
         config.closedLoop.positionWrappingMaxInput(360.0);
@@ -304,11 +305,12 @@ public class WsSpark extends WsMotorController {
      * @param absEncoder absolute encoder used to provided PID feedback
      * @param isWrapped whether wrapping should be enabled
      */
-    public void initClosedLoop(double P, double I, double D, double FF, SparkAbsoluteEncoder absEncoder, boolean isEncoderFlipped, boolean isWrapped){
+    public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped, boolean isWrapped){
         config.closedLoop.pidf(P, I, D, FF, ClosedLoopSlot.kSlot0);
         absEncoderConfig.positionConversionFactor(360.0);
         absEncoderConfig.velocityConversionFactor(360.0/60.0);
         absEncoderConfig.inverted(isEncoderFlipped);
+        config.apply(absEncoderConfig);
         config.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
         config.closedLoop.positionWrappingEnabled(isWrapped);
         config.closedLoop.positionWrappingMaxInput(360.0);
