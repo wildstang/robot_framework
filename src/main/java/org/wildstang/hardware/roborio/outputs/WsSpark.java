@@ -375,6 +375,19 @@ public class WsSpark extends WsMotorController {
     }
 
     /**
+     * Gets output current, in Amps. If there is a follower configured,
+     * gets the average current from the leader and the follower.
+     */
+
+    public double getOutputCurrent() {
+        if (follower == null) {
+            return (motor.getOutputCurrent() + follower.getOutputCurrent()) / 2.0;
+        } else {
+            return motor.getOutputCurrent();
+        }
+    }
+
+    /**
      * Does nothing, config values only affects start state.
      */
     public void notifyConfigChange() { }
