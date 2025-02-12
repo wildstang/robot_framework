@@ -158,6 +158,19 @@ public class WsSpark extends WsMotorController {
         configure();
     }
 
+    /**
+     * Set unit and direction conversions for external absolute encoder
+     * @param posConversionFactor Position conversion factor
+     * @param velConversionFactor Velocity conversion factor
+     * @param isEncoderFlipped Whether to flip the phase of the encoder to match the motor movement.
+     */
+    public void setAbsEncConversion(double posConversionFactor, double velConversionFactor, boolean isEncoderFlipped){
+        absEncoderConfig.positionConversionFactor(posConversionFactor);
+        absEncoderConfig.velocityConversionFactor(velConversionFactor);
+        absEncoderConfig.inverted(isEncoderFlipped);
+        config.apply(absEncoderConfig);
+    }
+
     /*
      * Burn to flash the current config files
      */
@@ -282,7 +295,7 @@ public class WsSpark extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param absEncoder absolute encoder used to provided PID feedback
+     * @param isEncoderFlipped Whether to flip the phase of the external absolute encoder to match the motor
      */
     public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped){
         config.closedLoop.pidf(P, I, D, FF, ClosedLoopSlot.kSlot0);
@@ -302,7 +315,7 @@ public class WsSpark extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param absEncoder absolute encoder used to provided PID feedback
+     * @param isEncoderFlipped Whether to flip the phase of the external absolute encoder to match the motor
      * @param isWrapped whether wrapping should be enabled
      */
     public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped, boolean isWrapped){
