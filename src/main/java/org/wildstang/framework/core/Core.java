@@ -35,6 +35,9 @@ public class Core {
 
     private Class<?> m_inputFactoryClass;
     private Class<?> m_outputFactoryClass;
+    private static Alliance s_alliance;
+
+    private static boolean isDisabled = true;
 
     /**
      * Constructor collects I/O factory and initialized framework components.
@@ -132,6 +135,14 @@ public class Core {
 
             s_subsystemManager.addSubsystem(sub);
         }
+        for (Subsystems subsystem : p_subsystems) {
+            Log.info("Creating subsystem: " + subsystem.getName());
+
+            // Instantiate the class
+            Subsystem sub = (Subsystem) s_subsystemManager.getSubsystem(subsystem);
+            // Call the init method
+            sub.initSubsystems();
+        }
     }
 
     /**
@@ -148,6 +159,27 @@ public class Core {
 
             s_autoManager.addProgram(prog);
         }
+    }
+
+    public static Alliance getAlliance() {
+        return s_alliance;
+    }
+
+    public static void setAlliance(Alliance alliance) {
+        s_alliance = alliance;
+    }
+
+    public static Boolean isBlue() {
+        return s_alliance == Alliance.Blue;
+    }
+    public static boolean getIsDisabledMode(){
+        return isDisabled;
+    }
+    public static void setIsDisabledMode(boolean state){
+        isDisabled = state;
+    }
+    public static boolean isAutoLocked(){
+        return s_autoManager.isAutoLocked();
     }
 
     /**
@@ -237,9 +269,11 @@ public class Core {
             if (alliance.isPresent()) {
                 Core.alliance = alliance.get();
                 Log.info("Alliance updated to " + Core.alliance.toString());
+                SmartDashboard.putBoolean("FMS Alliance Received", true);
             }
             else {
                 Log.warn("No Alliance could be retrieved from DriverStation");
+                SmartDashboard.putBoolean("FMS Alliance Received", false);
             }
         }
         return Core.alliance;

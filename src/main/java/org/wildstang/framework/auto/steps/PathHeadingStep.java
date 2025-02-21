@@ -1,6 +1,7 @@
 package org.wildstang.framework.auto.steps;
 
 import org.wildstang.framework.auto.AutoStep;
+import org.wildstang.framework.core.Core;
 import org.wildstang.framework.subsystems.swerve.SwerveDriveTemplate;
 
 public class PathHeadingStep extends AutoStep {
@@ -21,7 +22,7 @@ public class PathHeadingStep extends AutoStep {
     @Override
     public void initialize() {
         //give robot heading controller a new value
-        m_drive.setAutoHeading(heading);
+        m_drive.setAutoHeading(Core.isBlue() ? heading : 360-heading);
     }
 
     @Override

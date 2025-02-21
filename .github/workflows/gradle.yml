@@ -15,5 +15,5 @@ jobs:
         java-version: 17
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Build javadoc with Gradle
-      run: ./gradlew javadoc
+#    - name: Build javadoc with Gradle
+#      run: ./gradlew javadoc

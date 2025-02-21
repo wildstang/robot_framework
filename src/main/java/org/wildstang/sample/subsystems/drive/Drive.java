@@ -1,6 +1,6 @@
 package org.wildstang.sample.subsystems.drive;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix6.hardware.Pigeon2;
 
 import org.wildstang.framework.core.Core;
 import org.wildstang.framework.io.inputs.Input;
@@ -9,6 +9,7 @@ import org.wildstang.framework.subsystems.drive.PathFollowingDrive;
 import org.wildstang.hardware.roborio.inputs.WsAnalogInput;
 import org.wildstang.hardware.roborio.inputs.WsDigitalInput;
 import org.wildstang.hardware.roborio.outputs.WsSpark;
+import org.wildstang.sample.robot.CANConstants;
 import org.wildstang.sample.robot.WsInputs;
 import org.wildstang.sample.robot.WsOutputs;
 
@@ -28,7 +29,7 @@ public class Drive extends PathFollowingDrive {
     private DriveSignal signal;
 
     private WsDriveHelper helper = new WsDriveHelper();
-    private final AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    public final Pigeon2 gyro = new Pigeon2(CANConstants.GYRO);
 
     @Override
     public void init() {
@@ -144,6 +145,12 @@ public class Drive extends PathFollowingDrive {
 
     public void setGyro(double degrees){
         gyro.reset();
-        gyro.setAngleAdjustment(degrees);
+        gyro.setYaw((360-degrees)%360);
+    }
+
+    @Override
+    public void initSubsystems() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initSubsystems'");
     }
 }
