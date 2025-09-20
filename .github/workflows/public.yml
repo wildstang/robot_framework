@@ -1,0 +1,33 @@
+name: Public Sync
+
+on:
+  push:
+    branches:
+      - public
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: git clone -b public https://wildstang:${{ secrets.PAT }}@github.com/wildstang/${{ github.event.repository.name }}.git
+
+      - name: Determine project year and team number
+        run: |
+          cd ${{ github.event.repository.name }}
+          echo $(python3 -c "import json;print(json.load(open('.wpilib/wpilib_preferences.json'))['projectYear']);") > year
+          echo $(python3 -c "import json;print(json.load(open('.wpilib/wpilib_preferences.json'))['teamNumber']);") > team
+
+      - name: Add new remote
+        run: |
+          cd ${{ github.event.repository.name }}
+          git remote add public_repo https://wildstang:${{ secrets.PAT }}@github.com/wildstang/$(cat year)_$(cat team)_robot_software.git
+          git remote update
+
+      - name: Push to destination repository
+        run: |
+          cd ${{ github.event.repository.name }}
+          git config --global user.email "liam.fruzyna@wildstang.org"
+          git config --global user.name "Automated Push"
+          git push -u public_repo public:main
