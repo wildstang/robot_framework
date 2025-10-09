@@ -1,0 +1,37 @@
+name: WPILib Update
+
+on:
+  schedule:
+    - cron: "11 1 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        run: git clone https://wildstang:${{ secrets.UPDATE_PAT }}@github.com/wildstang/${{ github.event.repository.name }}.git
+
+      - name: Setup Git
+        run: |
+          cd ${{ github.event.repository.name }}
+          git config --global user.email "liam.fruzyna@wildstang.org"
+          git config --global user.name "Automated Push"
+
+      - name: Update the WPILib version
+        run: |
+          cd ${{ github.event.repository.name }}
+          python3 .github/workflows/update-wpilib.py
+
+      - name: Commit update
+        continue-on-error: true
+        run: |
+          cd ${{ github.event.repository.name }}
+          git add build.gradle
+          git commit -m "Updated WPILib version"
+
+      - name: Push update
+        if: ${{ success() }}
+        run: |
+          cd ${{ github.event.repository.name }}
+          git push
