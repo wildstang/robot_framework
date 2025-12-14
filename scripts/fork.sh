@@ -20,16 +20,6 @@ elif [ $# -lt 2 ]; then
     branch=$UPSTREAM_BRANCH
 fi
 
-# update to upstream
-if [ $fork == "update" ]; then
-    git remote add upstream $UPSTREAM
-    git pull upstream $branch
-    if [ $push_changes == "push" ]; then
-        git push
-    fi
-    exit 0
-fi
-
 # clone then enter the upstream repo
 git clone $UPSTREAM framework_fork
 cd framework_fork
