@@ -3,15 +3,10 @@
 {
 	"name": "WS WPILib Java",
 	"build": {
-		"dockerfile": "Dockerfile"
-	},
-
-	"features": {
-		"ghcr.io/devcontainers/features/java:1": {
-			"version": "none",
-			"installMaven": "true",
-			"installGradle": "true"
-		}
+		"dockerfile": "Dockerfile",
+		"options": [
+			"--platform=linux/amd64"
+		]
 	},
 
 	// Configure tool-specific properties.

@@ -1,9 +1,11 @@
 # WildStang Robot Framework
 
 The WildStang Robotics Program's robot framework has evolved from over 10 years of Java software development.
-It provides hardware enumerations, autonomous handling, and common utilities.
+It is the foundation of each robot, providing hardware enumerations, autonomous handling, and common utilities.
 
-## Software Packages
+## Helpful Link
+
+### Software Packages
 
 - GitHub Desktop
   - [Download](https://desktop.github.com/download)
@@ -24,7 +26,7 @@ It provides hardware enumerations, autonomous handling, and common utilities.
   - [Instructions](https://v6.docs.ctr-electronics.com/en/stable/docs/installation/installation-frc.html)
   - [Download](https://github.com/CrossTheRoadElec/Phoenix-Releases/releases/latest)
 
-## External Documentation Links
+### External Documentation
 
 - [Season Materials](https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system)
 - [WPILib Docs Site](https://docs.wpilib.org/en/stable/index.html)
@@ -42,6 +44,14 @@ To open the command palette use:
 - Ctrl + Shift + P
 - Cmd + Shift + P
 - Select the WPILib Command Palette 'W' button in the top right
+
+### Dev Container
+
+If running on a system with Podman or Docker installed, the included [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) can be used instead of installing dependencies.
+This container is based off Microsoft's Java image and will automatically install the latest WPILib extension.
+VS Code should automatically detect the Dev Container and ask if you would like to use it.
+If you don't get this pop-up open the Command Pallet and select `Dev Containers: Reopen in Container`.
+If you don't see this option you may need to install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
 ## Robot Framework Initialization
 
