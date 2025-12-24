@@ -103,8 +103,15 @@ scripts/push-upstream.sh [repo] [branch]
 
 ### Robot CI
 
-Automatically builds the project everytime a commit is pushed.
+Automatically builds the project every time a commit is pushed.
 No setup is required.
+
+### Docs Branch Build
+
+Automatically builds javadocs every time a commit is pushed to main.
+Then force-pushes the docs to the docs branch.
+This repo requires a personal access token to be added as a repository secret `UPDATE_PAT`.
+Repository secrets are found in `Settings > Secrets and variables > Actions`.
 
 ### Public Sync
 
