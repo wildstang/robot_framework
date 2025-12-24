@@ -282,7 +282,7 @@ public class WsSpark extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param absEncoder absolute encoder used to provided PID feedback
+     * @param isEncoderFlipped whether to invert the encoder values
      */
     public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped){
         config.closedLoop.pidf(P, I, D, FF, ClosedLoopSlot.kSlot0);
@@ -302,7 +302,7 @@ public class WsSpark extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param absEncoder absolute encoder used to provided PID feedback
+     * @param isEncoderFlipped whether to invert the encoder values
      * @param isWrapped whether wrapping should be enabled
      */
     public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped, boolean isWrapped){
