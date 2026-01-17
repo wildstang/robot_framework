@@ -4,8 +4,8 @@
 # this script forks the framework at a given branch into a given existing (but empty) WildStang repo
 # it then adds a tag to this repo
 
-UPSTREAM="git@github.com:wildstang/robot_framework.git"
-GITHUB="git@github.com:wildstang"
+UPSTREAM="git@github.com/wildstang/robot_framework.git"
+GITHUB="git@github.com/wildstang"
 UPSTREAM_BRANCH="main"
 
 fork=$1

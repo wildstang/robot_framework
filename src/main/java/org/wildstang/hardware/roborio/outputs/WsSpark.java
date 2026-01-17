@@ -12,8 +12,11 @@ import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.wpilibj.RobotBase;
+
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -31,9 +34,12 @@ public class WsSpark extends WsMotorController {
     SparkBaseConfig config;
     SparkBaseConfig followerConfig;
     AbsoluteEncoderConfig absEncoderConfig = new AbsoluteEncoderConfig();
+    ClosedLoopSlot positionSlotID = ClosedLoopSlot.kSlot0;
+    double arbitraryFF = 0;
     boolean isUsingController;
     boolean isChanged;
     com.revrobotics.spark.SparkBase.ControlType controlType;
+    private double tempLimit;
     
     /**
      * Constructs the motor controller from config.
@@ -150,6 +156,7 @@ public class WsSpark extends WsMotorController {
      * @param limitRPM Sets the line between stallLimitAmps and freeLimitAmps.
      */
     public void setCurrentLimit(int stallLimitAmps, int freeLimitAmps, int limitRPM) {
+        tempLimit = stallLimitAmps;
         config.smartCurrentLimit(stallLimitAmps, freeLimitAmps, limitRPM);
         if (follower != null){
             followerConfig.smartCurrentLimit(stallLimitAmps, freeLimitAmps, limitRPM);
@@ -162,9 +169,10 @@ public class WsSpark extends WsMotorController {
      * Burn to flash the current config files
      */
     public void configure(){
-        motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        if (!RobotBase.isReal()) return;
+        motor.configureAsync(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         if (follower != null){
-            follower.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+            follower.configureAsync(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         }
     }
 
@@ -173,9 +181,14 @@ public class WsSpark extends WsMotorController {
      * @param limit the amount of amps drawn before limiting
      */
     public void tempCurrentLimit(int limit){
-        config.smartCurrentLimit(limit,limit,0);
-        if (follower != null){
-            followerConfig.smartCurrentLimit(limit, limit, 0);
+        if (!RobotBase.isReal()) return;
+        if (limit != tempLimit){
+            tempLimit = limit;
+            config.smartCurrentLimit(limit,limit,0);
+            if (follower != null){
+                followerConfig.smartCurrentLimit(limit, limit, 0);
+            }
+            motor.configureAsync(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
         }
     }
 
@@ -238,7 +251,8 @@ public class WsSpark extends WsMotorController {
                 motor.set(getValue());
             } else {
                 if (controlType == ControlType.kPosition){
-                    motor.getClosedLoopController().setReference(super.getValue(), ControlType.kPosition);
+                    motor.getClosedLoopController().setReference(super.getValue(), ControlType.kPosition, positionSlotID,
+                            arbitraryFF, SparkClosedLoopController.ArbFFUnits.kPercentOut);
                 } else if (controlType == ControlType.kVelocity){
                     motor.getClosedLoopController().setReference(super.getValue(), ControlType.kVelocity);
                 } else if (controlType == ControlType.kDutyCycle){
@@ -271,7 +285,7 @@ public class WsSpark extends WsMotorController {
      * @param FF the feed forward constant
      */
     public void initClosedLoop(double P, double I, double D, double FF){
-        config.closedLoop.pidf(P, I, D, FF);
+        config.closedLoop.pidf(P, I, D, FF, ClosedLoopSlot.kSlot0);
         config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
         isUsingController = true;
     }
@@ -282,7 +296,7 @@ public class WsSpark extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param isEncoderFlipped whether to invert the encoder values
+     * @param isEncoderFlipped whether to invert the encoder
      */
     public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped){
         config.closedLoop.pidf(P, I, D, FF, ClosedLoopSlot.kSlot0);
@@ -302,7 +316,7 @@ public class WsSpark extends WsMotorController {
      * @param I the I value
      * @param D the D value
      * @param FF the feed forward constant
-     * @param isEncoderFlipped whether to invert the encoder values
+     * @param isEncoderFlipped whether to invert the encoder
      * @param isWrapped whether wrapping should be enabled
      */
     public void initClosedLoop(double P, double I, double D, double FF, boolean isEncoderFlipped, boolean isWrapped){
@@ -341,6 +355,8 @@ public class WsSpark extends WsMotorController {
         } else{
             isChanged = true;
         }
+        positionSlotID = ClosedLoopSlot.kSlot0;
+        arbitraryFF = 0;
         super.setValue(target);
         controlType = ControlType.kPosition;
     }
@@ -356,7 +372,28 @@ public class WsSpark extends WsMotorController {
         } else{
             isChanged = true;
         }
+        positionSlotID = slotID==0 ? ClosedLoopSlot.kSlot0 : slotID==1 ? ClosedLoopSlot.kSlot1 
+            : slotID==2 ? ClosedLoopSlot.kSlot2 : ClosedLoopSlot.kSlot3;
+        arbitraryFF = 0;
         super.setValue(target);
+        controlType = ControlType.kPosition;
+    }
+
+    /**
+     * Sets the motor to track the given position with a specific PIDFF constants
+     * @param target the encoder target to track to
+     * @param slotID the ID slot of the sparkmax to use
+     */
+    public void setPosition(double target, int slotID, double feedForward){
+        if (super.getValue() == target && controlType == ControlType.kPosition){
+            isChanged = false;
+        } else{
+            isChanged = true;
+        }
+        super.setValue(target);
+        positionSlotID = slotID==0 ? ClosedLoopSlot.kSlot0 : slotID==1 ? ClosedLoopSlot.kSlot1 
+            : slotID==2 ? ClosedLoopSlot.kSlot2 : ClosedLoopSlot.kSlot3;
+        arbitraryFF = feedForward;
         controlType = ControlType.kPosition;
     }
 
@@ -379,9 +416,4 @@ public class WsSpark extends WsMotorController {
      */
     public void notifyConfigChange() { }
 
-    /**
-     * Does nothing, Spark has no current limit disable function.
-     */
-    @Override
-    public void disableCurrentLimit() {}
 }

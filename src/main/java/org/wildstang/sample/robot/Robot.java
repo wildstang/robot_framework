@@ -1,14 +1,22 @@
 package org.wildstang.sample.robot;
 
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.rlog.RLOGServer;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import org.littletonrobotics.urcl.URCL;
 import org.wildstang.framework.core.Core;
 import org.wildstang.framework.logger.Log;
 import org.wildstang.framework.logger.Log.LogLevel;
 import org.wildstang.hardware.roborio.RoboRIOInputFactory;
 import org.wildstang.hardware.roborio.RoboRIOOutputFactory;
 
+import au.grapplerobotics.CanBridge;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,11 +31,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * 
  * @see <a href="https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj/IterativeRobotBase.html">IterativeRobotBase</a>
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
 
     Core core;
     private SendableChooser<LogLevel> logChooser;
 
+    public Robot(){
+        // Set up data receivers & replay source
+        switch (Core.currentMode) {
+            case REAL:
+            // Running on a real robot, log to NT, which will be logged to robot by DataLogManager
+            Logger.addDataReceiver(new NT4Publisher());
+            break;
+    
+            case SIM:
+            // Running a physics simulator, log to NT
+            Logger.addDataReceiver(new NT4Publisher());
+            break;
+    
+            case REPLAY:
+            // Replaying a log, set up replay source
+            setUseTiming(false); // Run as fast as possible
+            String logPath = LogFileUtil.findReplayLog();
+            Logger.setReplaySource(new WPILOGReader(logPath));
+            Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+            break;
+        }
+        Logger.registerURCL(URCL.startExternal(CANConstants.aliasMap));
+
+        CanBridge.runTCP();
+    }
     /**
      * Runs on initialization, creates and configures the framework Core.
      */
@@ -50,9 +83,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Log Level", logChooser);
 
         DataLogManager.start();
-        // Record both DS control and joystick data
-        DriverStation.startDataLog(DataLogManager.getLog());
-
+        //DriverStation.startDataLog(DataLogManager.getLog());
+        Logger.start();
     }
 
     /**
@@ -108,7 +140,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
-        core.executeUpdate();
+        update();
     }
 
     /**
@@ -124,7 +156,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        update();
+        //update();
     }
 
     /**
@@ -133,7 +165,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        update();
+        //update();
         
     }
 
@@ -154,7 +186,6 @@ public class Robot extends TimedRobot {
             SmartDashboard.putString("Exception thrown", e.toString());
             throw e;
         } finally {
-            SmartDashboard.putBoolean("ExceptionThrown",true);
         }
     }
 

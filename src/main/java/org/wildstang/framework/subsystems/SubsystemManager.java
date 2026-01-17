@@ -7,6 +7,9 @@ import org.wildstang.framework.CoreUtils;
 import org.wildstang.framework.core.Subsystems;
 import org.wildstang.framework.logger.Log;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * This class in the manager for all outputs.
  *
@@ -37,8 +40,10 @@ public class SubsystemManager {
     public void update() {
         // Iterate over all outputs and update each one
         for (Subsystem sub : m_subsystems) {
+            double startTime = Timer.getFPGATimestamp();
             // Update the output - send value to output
             sub.update();
+            SmartDashboard.putNumber(sub.getName() + " time", Timer.getFPGATimestamp() - startTime);
         }
     }
 

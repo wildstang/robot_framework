@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - public
+  workflow_dispatch:
 
 jobs:
   sync:

@@ -1,78 +1,128 @@
 package org.wildstang.sample.subsystems.swerve;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.utility.PhoenixPIDController;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+
 public class SwerveSignal {
+    private double verticalSpeed = 0;
+    private double horizontalSpeed = 0;
+    private double rotationSpeed = 0;
+    private double rotationTarget = 0;
+    private Pose2d drivingPose = new Pose2d();
+    public enum controlState {MANUAL, ROTLOCKED, DRIVETOPOINT, X_DRIVETOPOINT, Y_DRIVETOPOINT}
+    private controlState state = controlState.MANUAL;
+    private SwerveRequest.FieldCentric driveCommand = new SwerveRequest.FieldCentric()
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+        .withSteerRequestType(SteerRequestType.MotionMagicExpo);
+    private SwerveRequest.FieldCentricFacingAngle driveLockedCommand = new SwerveRequest.FieldCentricFacingAngle()
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+        .withSteerRequestType(SteerRequestType.MotionMagicExpo);
+    private TranslationRequest translationRequest = new TranslationRequest();
+    private XTranslationRequest xTranslationRequest = new XTranslationRequest();
+    private YTranslationRequest yTranslationRequest = new YTranslationRequest();    
 
-    private double[] speed;
-    private double[] angle;
-    private double maxSpeed;
-
-    /**contains motor speeds, robot relative angles in bearing-degrees 
-     * @param i_speed double[] for the speed of each module, in [0,1] signal
-     * @param i_angle double[] for the angle of the module, in robot centric bearing degrees
-    */
-    public SwerveSignal(double[] i_speed, double[] i_angle) {
-        this.speed = i_speed;
-        this.angle = i_angle;
+    public SwerveSignal(){
+        this(0,0,0);
     }
-
-    /**ensures all speed values are below 1, and scales down if needed */
-    public void normalize() {
-        maxSpeed = 1;
-        for (int i = 0; i < speed.length; i++){
-            if (Math.abs(speed[i]) > maxSpeed){
-                maxSpeed = Math.abs(speed[i]);
-            }
+    public SwerveRequest drive(){
+        if (state == controlState.ROTLOCKED){
+            return driveLockedCommand.withVelocityX(getVertical() * DriveConstants.maxSpeed.in(MetersPerSecond))
+                .withVelocityY(getHorizontal() * DriveConstants.maxSpeed.in(MetersPerSecond))
+                .withTargetDirection(new Rotation2d(Math.toRadians(getRotTarget())));
+            //.withTargetRateFeedforward(double) to potentially include rotation rate
+        } else if (state == controlState.DRIVETOPOINT){
+            translationRequest.setTarget(getDriveToPoint());
+            return translationRequest;
+        } else if (state == controlState.X_DRIVETOPOINT){
+            xTranslationRequest.setTarget(getDriveToPoint(), getHorizontal());
+            return xTranslationRequest;
+        } else if (state == controlState.Y_DRIVETOPOINT){
+            yTranslationRequest.setTarget(getDriveToPoint(), getVertical());
+            return yTranslationRequest;
+        } else {//} else if (state == controlState.MANUAL){
+            return driveCommand.withVelocityX(getVertical() * DriveConstants.maxSpeed.in(MetersPerSecond))
+                .withVelocityY(getHorizontal() * DriveConstants.maxSpeed.in(MetersPerSecond))
+                .withRotationalRate(getRotation() * RotationsPerSecond.of(0.75).in(RadiansPerSecond));
         }
-        if (maxSpeed > 1.0){
-            for (int i = 0; i < speed.length; i++){
-                speed[i] /= maxSpeed;
-            }
-        }
     }
-
-    public boolean isNotZeroed() {
-        maxSpeed = 0;
-        for (int i = 0; i < speed.length; i++){
-            if (Math.abs(speed[i]) > maxSpeed){
-                maxSpeed = Math.abs(speed[i]);
-            }
-        }
-        for (int i = 0; i < speed.length; i++){
-            if (Math.abs(speed[i]) + 0.01 <= maxSpeed * 0.1){
-                return false;
-            }
-        }
-        return true;
+    public SwerveSignal(double vert, double hori, double rot){
+        this.verticalSpeed = vert;
+        this.horizontalSpeed = hori;
+        this.rotationSpeed = rot;
+        driveLockedCommand.HeadingController = new PhoenixPIDController(DriveConstants.heading_P, 0.0, DriveConstants.heading_D);
+        driveLockedCommand.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     }
-
-    /**speed is normalized value [0, 1] 
-     * @param i_module the module to get the speed from (1 through 4)
-     * @return double for the speed to set that module to
-    */
-    public double getSpeed(int i_module) {
-        return speed[i_module];
+    public void setTranslation(double vert, double hori){
+        this.verticalSpeed = vert;
+        this.horizontalSpeed = hori;
+        if (state != controlState.ROTLOCKED) state = controlState.MANUAL;
     }
-
-    /**returns speeds from the swerve signal
-     * @return double array of 4 speeds, % output
-     */
-    public double[] getSpeeds() {
-        return speed;
+    public void setFreeRotation(double rotation){
+        state = controlState.MANUAL;
+        rotationSpeed = rotation;
     }
-
-    /**angle is robot centric, in bearing degrees 
-     * @param i_module the module to get the angle from (1 through 4)
-     * @return double for the angle to set that module to
-    */
-    public double getAngle(int i_module) {
-        return angle[i_module];
+    public void setRotLocked(double rotation){
+        state = controlState.ROTLOCKED;
+        rotationTarget = rotation;
     }
-
-    /**returns angles from the swerve signal
-     * @return double array of 4 angles, bearing degrees
-     */
-    public double[] getAngles() {
-        return angle;
+    public void setDriveToPoint(Pose2d newTarget){
+        drivingPose = newTarget;
+        rotationTarget = newTarget.getRotation().getDegrees();
+        state = controlState.DRIVETOPOINT;
     }
-    
+    public void setXDriveToPoint(double hori, Pose2d newTarget){
+        this.horizontalSpeed = hori;
+        this.drivingPose = newTarget;
+        rotationTarget = newTarget.getRotation().getDegrees();
+        state = controlState.X_DRIVETOPOINT;
+    }
+    public void setYDriveToPoint(double vert, Pose2d newTarget){
+        this.verticalSpeed = vert;
+        this.drivingPose = newTarget;
+        rotationTarget = newTarget.getRotation().getDegrees();
+        state = controlState.Y_DRIVETOPOINT;
+    }
+    public double getVertical(){ 
+        return verticalSpeed;
+    }
+    public double getHorizontal(){ 
+        return horizontalSpeed;
+    }
+    public double getRotation(){
+        return rotationSpeed;
+    }
+    public double getRotTarget(){
+        return rotationTarget;
+    }
+    public Pose2d getDriveToPoint(){
+        return drivingPose;
+    }
+    public String currentState(){
+        return state.toString();
+    }
+    public boolean isRotLocked(){
+        return state == controlState.ROTLOCKED;
+    }
+    public boolean isManual(){
+        return state == controlState.MANUAL;
+    }
+    public boolean isTranslate(){
+        return state == controlState.DRIVETOPOINT;
+    }
+    public boolean isXTranslate(){
+        return state == controlState.X_DRIVETOPOINT;
+    }
+    public boolean isYTranslate(){
+        return state == controlState.Y_DRIVETOPOINT;
+    }
 }

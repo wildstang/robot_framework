@@ -19,18 +19,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class InputTestSubsystem implements Subsystem {
 
     WsInputs axes[] = {
-        WsInputs.DRIVER_LEFT_JOYSTICK_X,
-        WsInputs.DRIVER_LEFT_JOYSTICK_Y,
+        WsInputs.DRIVER_LEFT_JOYSTICK_HORIZONTAL,
+        WsInputs.DRIVER_LEFT_JOYSTICK_VERTICAL,
         WsInputs.DRIVER_LEFT_TRIGGER,
-        WsInputs.DRIVER_RIGHT_JOYSTICK_X,
-        WsInputs.DRIVER_RIGHT_JOYSTICK_Y,
+        WsInputs.DRIVER_RIGHT_JOYSTICK_HORIZONTAL,
+        WsInputs.DRIVER_RIGHT_JOYSTICK_VERTICAL,
         WsInputs.DRIVER_RIGHT_TRIGGER,
 
-        WsInputs.OPERATOR_LEFT_JOYSTICK_X,
-        WsInputs.OPERATOR_LEFT_JOYSTICK_Y,
+        WsInputs.OPERATOR_LEFT_JOYSTICK_HORIZONTAL,
+        WsInputs.OPERATOR_LEFT_JOYSTICK_VERTICAL,
         WsInputs.OPERATOR_LEFT_TRIGGER,
-        WsInputs.OPERATOR_RIGHT_JOYSTICK_X,
-        WsInputs.OPERATOR_RIGHT_JOYSTICK_Y,
+        WsInputs.OPERATOR_RIGHT_JOYSTICK_HORIZONTAL,
+        WsInputs.OPERATOR_RIGHT_JOYSTICK_VERTICAL,
         WsInputs.OPERATOR_RIGHT_TRIGGER
     };
 

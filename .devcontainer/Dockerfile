@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/devcontainers/java:1-17-bookworm
 
 # install dependencies
 RUN apt update
-RUN apt install -y python3-pip
+RUN apt install -y python3-pip git-lfs
 RUN pip3 install --break-system-packages requests
 
 # download WPILib extension

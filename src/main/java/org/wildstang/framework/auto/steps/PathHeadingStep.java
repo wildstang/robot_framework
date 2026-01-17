@@ -22,7 +22,7 @@ public class PathHeadingStep extends AutoStep {
     @Override
     public void initialize() {
         //give robot heading controller a new value
-        m_drive.setAutoHeading(Core.isBlue() ? heading : 360-heading);
+        m_drive.setAutoHeading(heading);
     }
 
     @Override

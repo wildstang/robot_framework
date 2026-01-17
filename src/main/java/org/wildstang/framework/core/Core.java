@@ -15,7 +15,9 @@ import org.wildstang.framework.subsystems.Subsystem;
 import org.wildstang.framework.subsystems.SubsystemManager;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Core of robot framework.
@@ -32,9 +34,30 @@ public class Core {
 
     private Class<?> m_inputFactoryClass;
     private Class<?> m_outputFactoryClass;
-    private static Alliance s_alliance;
+    private static Alliance s_alliance = Alliance.Blue;
+    // Holds last value of network tables isBlue identify whether it has been edited
+    private static boolean isBlueToggle = true;
 
     private static boolean isDisabled = true;
+
+    public static final Mode simMode = Mode.SIM;
+    public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+
+    /**
+        * Defines the runtime mode used by AdvantageKit. The mode is always "real" when running
+        * on a roboRIO. Change the value of "simMode" to switch between "sim" (physics sim) and "replay"
+        * (log replay from a file).
+    */
+    public static enum Mode {
+        /** Running on a real robot. */
+        REAL,
+
+        /** Running a physics simulator. */
+        SIM,
+
+        /** Replaying from a log file. */
+        REPLAY
+    }
 
     /**
      * Constructor collects I/O factory and initialized framework components.
@@ -242,6 +265,15 @@ public class Core {
      * Runs update function of all managers belonging to the framework.
      */
     public void executeUpdate() {
+        if (SmartDashboard.getBoolean("isBlue", isBlueToggle) != isBlueToggle) {
+            isBlueToggle = !isBlueToggle;
+            setAlliance(isBlueToggle ? Alliance.Blue : Alliance.Red);
+        }
+        SmartDashboard.putBoolean("isBlue", isBlue());
+        isBlueToggle = isBlue();
+
+
+
         // Read input from hardware
         s_inputManager.update();
 

@@ -4,6 +4,7 @@ package org.wildstang.framework.auto;
  * Represents a single automated robot operation.
  * When it's the step's turn, initialize() is run once,
  * then update() is run until setFinished(true).
+ * Step will be initialized and the update method will be called for the first time in the same cycle
  */
 public abstract class AutoStep {
 

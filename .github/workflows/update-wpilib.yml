@@ -3,6 +3,7 @@ name: WPILib Update
 on:
   schedule:
     - cron: "11 1 * * *"
+  workflow_dispatch:
 
 jobs:
   sync:

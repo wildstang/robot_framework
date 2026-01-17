@@ -1,9 +1,6 @@
 package org.wildstang.sample.robot;
 
 import org.wildstang.framework.core.AutoPrograms;
-import org.wildstang.sample.auto.Programs.Jubilee;
-import org.wildstang.sample.auto.Programs.Line;
-import org.wildstang.sample.auto.Programs.TestProgram;
 
 
 /**
@@ -14,9 +11,7 @@ public enum WsAutoPrograms implements AutoPrograms {
 
     // enumerate programs
     //SAMPLE_PROGRAM("Sample", SampleAutoProgram.class),
-    Line("Line", Line.class),
-    TEST_PROGRAM("Test Program", TestProgram.class),
-    Jubilee("Jubilee", Jubilee.class),
+    
     ;
 
     /**

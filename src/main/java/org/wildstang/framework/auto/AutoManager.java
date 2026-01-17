@@ -36,6 +36,7 @@ public class AutoManager {
         lockinChooser.addOption("Locked", true);
 
         defineDefaultPrograms();
+        chooser.setDefaultOption(programs.get(0).toString(), programs.get(0));
 
         SmartDashboard.putData("Select Autonomous Program", chooser);
         SmartDashboard.putData("Lock in auto program", lockinChooser);
@@ -106,9 +107,11 @@ public class AutoManager {
             }
         }
 
-        runningProgram = program;
-        program.defineSteps();
-        Log.info("Preloading auto program: " + program.toString());
+        if (program != null) {
+            runningProgram = program;
+            program.defineSteps();
+            Log.info("Preloading auto program: " + program.toString());
+        }
     }
 
     /**

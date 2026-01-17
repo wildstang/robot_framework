@@ -60,10 +60,10 @@ public enum WsInputs implements Inputs {
     // ---------------------------------
     // Driver Joysticks
     // ---------------------------------
-    DRIVER_LEFT_JOYSTICK_Y  ("Driver left joystick y",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_Y)),
-    DRIVER_LEFT_JOYSTICK_X  ("Driver left joystick x",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_X)),
-    DRIVER_RIGHT_JOYSTICK_Y ("Driver right joystick y", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_Y)),
-    DRIVER_RIGHT_JOYSTICK_X ("Driver right joystick x", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_X)),
+    DRIVER_LEFT_JOYSTICK_VERTICAL  ("Driver left joystick vertical",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_Y)),
+    DRIVER_LEFT_JOYSTICK_HORIZONTAL  ("Driver left joystick horizontal",  new WsJSJoystickInputConfig(0, JoystickConstants.LEFT_JOYSTICK_X)),
+    DRIVER_RIGHT_JOYSTICK_VERTICAL ("Driver right joystick vertical", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_Y)),
+    DRIVER_RIGHT_JOYSTICK_HORIZONTAL ("Driver right joystick horizontal", new WsJSJoystickInputConfig(0, JoystickConstants.RIGHT_JOYSTICK_X)),
     
     // ---------------------------------
     // Driver DPAD Buttons
@@ -96,10 +96,10 @@ public enum WsInputs implements Inputs {
     // ---------------------------------
     // Operator Joysticks
     // ---------------------------------
-    OPERATOR_LEFT_JOYSTICK_Y  ("Operator left joystick y",  new WsJSJoystickInputConfig(1, JoystickConstants.LEFT_JOYSTICK_Y)),
-    OPERATOR_LEFT_JOYSTICK_X  ("Operator left joystick x",  new WsJSJoystickInputConfig(1, JoystickConstants.LEFT_JOYSTICK_X)),
-    OPERATOR_RIGHT_JOYSTICK_Y ("Operator right joystick y", new WsJSJoystickInputConfig(1, JoystickConstants.RIGHT_JOYSTICK_Y)),
-    OPERATOR_RIGHT_JOYSTICK_X ("Operator right joystick x", new WsJSJoystickInputConfig(1, JoystickConstants.RIGHT_JOYSTICK_X)),
+    OPERATOR_LEFT_JOYSTICK_VERTICAL  ("Operator left joystick vertical",  new WsJSJoystickInputConfig(1, JoystickConstants.LEFT_JOYSTICK_Y)),
+    OPERATOR_LEFT_JOYSTICK_HORIZONTAL  ("Operator left joystick horizontal",  new WsJSJoystickInputConfig(1, JoystickConstants.LEFT_JOYSTICK_X)),
+    OPERATOR_RIGHT_JOYSTICK_VERTICAL ("Operator right joystick vertical", new WsJSJoystickInputConfig(1, JoystickConstants.RIGHT_JOYSTICK_Y)),
+    OPERATOR_RIGHT_JOYSTICK_HORIZONTAL ("Operator right joystick horizontal", new WsJSJoystickInputConfig(1, JoystickConstants.RIGHT_JOYSTICK_X)),
 
     // ---------------------------------
     // Operator DPAD Buttons

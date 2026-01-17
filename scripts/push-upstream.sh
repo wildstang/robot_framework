@@ -3,7 +3,7 @@
 # push-upstream.sh
 # this script pushes the given branch to the given upstream repo
 
-GITHUB="ssh://git@github.com:wildstang"
+GITHUB="ssh://git@github.com/wildstang"
 REMOTE="temp-upstream"
 
 # check parameters
